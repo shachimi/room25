@@ -4,11 +4,16 @@
 # include "game/enum.hh"
 
 class Room;
+class Action;
 
 class Player {
 public:
     Player(void);
     ~Player(void);
+
+    /* Game mechanics */
+    virtual Action *getAction(void) = 0;
+    virtual direction_t execMove(int allowed_dir) = 0;
 
     /* Getters and setters */
     Room *getRoom(void) { return this->room; };
@@ -23,5 +28,6 @@ protected:
 };
 
 #include "room/room.hh"
+#include "game/action.hh"
 
 #endif /* !PLAYER_HH_ */

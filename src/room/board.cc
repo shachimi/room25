@@ -1,6 +1,6 @@
 #include "board.hh"
 #include <assert.h>
-
+#include "player/human_player.hh"
 
 Board::Board(void)
     : cells(std::vector<Cell *>())
@@ -29,7 +29,7 @@ Board::Board(void)
     }
 
     {
-        Player *p = new Player();
+        Player *p = (Player *) new HumanPlayer();
         Room *room = new Room();
         RoomEffect *effect = new RoomEffect();
 
