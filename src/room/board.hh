@@ -4,15 +4,8 @@
 # include <iostream>
 # include <vector>
 
-# include "cell.hh"
-
-typedef enum {
-    DIRECTION_N = -5,
-    DIRECTION_S = 5,
-    DIRECTION_E = 1,
-    DIRECTION_O = -1,
-} direction_t;
-
+# include "game/enum.hh"
+# include "room/cell.hh"
 
 class Board {
 public:

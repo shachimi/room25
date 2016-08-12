@@ -144,6 +144,7 @@ void Board::slide(int x, int y, direction_t direction)
 {
     int origin = x + y * 5;
     Cell *cur = NULL;
+    Cell *begin = NULL;
     Room *room = NULL;
 
     if (x < 0 || 4 < x) {
@@ -163,43 +164,52 @@ void Board::slide(int x, int y, direction_t direction)
     }
 #if 0
     /* Column */
-    if (origin + direction < 0 || 5 < origin + direction) {
-        std::cerr << "attempting to move into a wrong direction" << std::endl;
+    if ((y == 0 && direction == DIRECTION_N)
+    ||  (y == 4 && direction == DIRECTION_S))
+    {
+        std::cerr << "attempting to move into a wrong direction NS" << std::endl;
         return;
     }
-
     /* Line */
-    if (x + direction < 0 || 5 < x + direction) {
-        std::cerr << "attempting to move into a wrong direction" << std::endl;
+    if ((x == 0 && direction == DIRECTION_O)
+    ||  (x == 4 && direction == DIRECTION_E))
+    {
+        std::cerr << "attempting to move into a wrong direction OE" << std::endl;
         return;
     }
 
 #endif
-    /* TODO: mark the direction of the column */
+
+    /* TODO: mark the direction of the column/line */
     switch (direction) {
-      case DIRECTION_S: {
-          cur = get_line_beginning(this->cells[origin], DIRECTION_N);
+      case DIRECTION_DOWN: {
+          /* Get extremity */
+          cur = get_line_beginning(this->cells[origin], DIRECTION_DOWN);
           room = cur->getRoom();
+          /* Move room by going the awaiting way and putting the room inside */
+          while (cur->getUp()) {
+              cur->setRoom(cur->getUp()->getRoom());
+              cur = cur->getUp();
+          }
+          cur->setRoom(room);
+      } break;
+      case DIRECTION_UP: {
+          /* Get extremity */
+          cur = get_line_beginning(this->cells[origin], DIRECTION_UP);
+          room = cur->getRoom();
+          /* Move room by going the awaiting way and putting the room inside */
           while (cur->getDown()) {
               cur->setRoom(cur->getDown()->getRoom());
               cur = cur->getDown();
           }
           cur->setRoom(room);
       } break;
-      case DIRECTION_N: {
-          cur = get_line_beginning(this->cells[origin], DIRECTION_S);
-          room = cur->getRoom();
-          while (cur->getUp()) {
 
-              cur->setRoom(cur->getUp()->getRoom());
-              cur = cur->getUp();
-          }
-          cur->setRoom(room);
-      } break;
-
-      case DIRECTION_O: {
-          cur = get_line_beginning(this->cells[origin], DIRECTION_E);
+      case DIRECTION_RIGHT: {
+          /* Get extremity */
+          cur = get_line_beginning(this->cells[origin], DIRECTION_RIGHT);
           room = cur->getRoom();
+          /* Move room by going the awaiting way and putting the room inside */
           while (cur->getLeft()) {
               cur->setRoom(cur->getLeft()->getRoom());
               cur = cur->getLeft();
@@ -207,9 +217,11 @@ void Board::slide(int x, int y, direction_t direction)
           cur->setRoom(room);
       } break;
 
-      case DIRECTION_E: {
-          cur = get_line_beginning(this->cells[origin], DIRECTION_O);
+      case DIRECTION_LEFT: {
+          /* Get extremity */
+          cur = get_line_beginning(this->cells[origin], DIRECTION_LEFT);
           room = cur->getRoom();
+          /* Move room by going the awaiting way and putting the room inside */
           while (cur->getRight()) {
               cur->setRoom(cur->getRight()->getRoom());
               cur = cur->getRight();
@@ -226,14 +238,16 @@ void Board::move(Player *owner, direction_t direction)
     int y = origin->getPos() / 5;
 
     /* Column */
-    std::cerr << origin->getPos() << "  |  " << direction << std::endl;
-    if (origin->getPos() + direction < 0 || 24 < origin->getPos() + direction)
+    if ((y == 0 && direction == DIRECTION_N)
+    ||  (y == 4 && direction == DIRECTION_S))
     {
         std::cerr << "attempting to move into a wrong direction NS" << std::endl;
         return;
     }
     /* Line */
-    if (x + direction % 5 < 0 || 4 < x + direction % 5) {
+    if ((x == 0 && direction == DIRECTION_O)
+    ||  (x == 4 && direction == DIRECTION_E))
+    {
         std::cerr << "attempting to move into a wrong direction OE" << std::endl;
         return;
     }
@@ -241,16 +255,16 @@ void Board::move(Player *owner, direction_t direction)
     /* TODO: is the room locked (flooding) */
     origin->getRoom()->removePlayer(owner);
     switch (direction) {
-      case DIRECTION_N:
+      case DIRECTION_UP:
         origin->getUp()->getRoom()->addPlayer(owner, true);
         break;
-      case DIRECTION_S:
+      case DIRECTION_DOWN:
         origin->getDown()->getRoom()->addPlayer(owner, true);
         break;
-      case DIRECTION_E:
+      case DIRECTION_RIGHT:
         origin->getRight()->getRoom()->addPlayer(owner, true);
         break;
-      case DIRECTION_O:
+      case DIRECTION_LEFT:
         origin->getLeft()->getRoom()->addPlayer(owner, true);
         break;
     }
