@@ -14,6 +14,7 @@ public:
     /* Game mechanics */
     virtual Action *getAction(void) = 0;
     virtual direction_t execMove(int allowed_dir) = 0;
+    virtual direction_t execSlide(int allowed_dir) = 0;
 
     /* Getters and setters */
     Room *getRoom(void) { return this->room; };

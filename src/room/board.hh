@@ -21,6 +21,7 @@ public:
 
 public: /* game mechanics */
     void slide(int x, int y, direction_t direction);
+    void slide(Player *owner, direction_t direction);
     void move(Player *owner, direction_t direction);
 
     void print(std::ostream& out);

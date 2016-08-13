@@ -56,6 +56,29 @@ void Game::exec(Move *move)
     this->board->move(move->getOwner(), dir);
 }
 
+void Game::exec(Slide *slide)
+{
+    direction_t dir;
+    int allowed_dir = 0;
+    int pos = slide->getOwner()->getRoom()->getCell()->getPos();
+
+    if (pos % 5 /* x */ != 2) {
+        allowed_dir |= DIRECTION_N | DIRECTION_S;
+    }
+    if (pos / 5 /* y */ != 2) {
+        allowed_dir |= DIRECTION_O | DIRECTION_E;
+    }
+
+    if (!allowed_dir) {
+        std::cerr << "you cannot slide in this cell" << std::endl;
+        return;
+    }
+    dir = slide->getOwner()->execSlide(allowed_dir);
+    /* TODO: do not assert */
+    assert (dir & allowed_dir);
+    this->board->slide(slide->getOwner(), dir);
+}
+
 /* }}} */
 
 void Game::rotatePlayer(void)

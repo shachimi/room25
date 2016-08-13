@@ -7,6 +7,7 @@
 # include "room/board.hh"
 # include "game/action.hh"
 # include "game/move.hh"
+# include "game/slide.hh"
 
 
 class Game {
@@ -16,6 +17,7 @@ public:
     void play_turn(void);
     void exec(Action *action);
     void exec(Move *move);
+    void exec(Slide *slide);
 
     void rotatePlayer(void);
 

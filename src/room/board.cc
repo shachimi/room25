@@ -140,6 +140,13 @@ static Cell *get_line_beginning(Cell *cell, direction_t dir)
     return cur;
 }
 
+void Board::slide(Player *player, direction_t direction)
+{
+    Cell *cell = player->getRoom()->getCell();
+
+    return this->slide(cell->getX(), cell->getY(), direction);
+}
+
 void Board::slide(int x, int y, direction_t direction)
 {
     int origin = x + y * 5;

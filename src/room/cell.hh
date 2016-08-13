@@ -13,6 +13,8 @@ public:
 
     /* Getter and setters */
     int getPos(void) { return this->pos; };
+    int getX(void) { return this->pos % 5; };
+    int getY(void) { return this->pos / 5; };
     Room *getRoom(void) { return this->room; };
     void setRoom(Room *room);
 

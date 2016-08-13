@@ -7,7 +7,7 @@ class HumanPlayer : Player {
 public:
     virtual Action *getAction(void);
     virtual direction_t execMove(int allowed_dir);
-
+    virtual direction_t execSlide(int allowed_dir);
 };
 
 
