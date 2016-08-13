@@ -7,7 +7,9 @@
 # include "room/board.hh"
 # include "game/action.hh"
 # include "game/move.hh"
+# include "game/push.hh"
 # include "game/slide.hh"
+# include "game/see.hh"
 
 
 class Game {
@@ -18,6 +20,8 @@ public:
     void exec(Action *action);
     void exec(Move *move);
     void exec(Slide *slide);
+    void exec(Push *slide);
+    void exec(See *see);
 
     void rotatePlayer(void);
 

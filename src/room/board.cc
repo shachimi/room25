@@ -2,6 +2,8 @@
 #include <assert.h>
 #include "player/human_player.hh"
 
+/* {{{ Initialize */
+
 Board::Board(void)
     : cells(std::vector<Cell *>())
 {
@@ -38,6 +40,7 @@ Board::Board(void)
         room->setEffect(effect);
         room->setVisible(true);
         room->addPlayer(p, false);
+        room->addPlayer((Player *) new HumanPlayer(), false);
         cell->setRoom(room);
     }
     {
@@ -106,6 +109,7 @@ void Board::print(std::ostream& out)
     }
 }
 
+/* }}} */
 /* {{{ Game mechanics */
 
 static Cell *get_line_beginning(Cell *cell, direction_t dir)
@@ -162,30 +166,13 @@ void Board::slide(int x, int y, direction_t direction)
         assert (false);
         return;
     }
-    /* TODO look if the CENTER room is inside the line */
+
     if (x == 2 && (direction == DIRECTION_N || direction == DIRECTION_S)
     ||  y == 2 && (direction == DIRECTION_O || direction == DIRECTION_E))
     {
         std::cerr << "could not slide with the center" << std::endl;
         return;
     }
-#if 0
-    /* Column */
-    if ((y == 0 && direction == DIRECTION_N)
-    ||  (y == 4 && direction == DIRECTION_S))
-    {
-        std::cerr << "attempting to move into a wrong direction NS" << std::endl;
-        return;
-    }
-    /* Line */
-    if ((x == 0 && direction == DIRECTION_O)
-    ||  (x == 4 && direction == DIRECTION_E))
-    {
-        std::cerr << "attempting to move into a wrong direction OE" << std::endl;
-        return;
-    }
-
-#endif
 
     /* TODO: mark the direction of the column/line */
     switch (direction) {
@@ -273,6 +260,91 @@ void Board::move(Player *owner, direction_t direction)
         break;
       case DIRECTION_LEFT:
         origin->getLeft()->getRoom()->addPlayer(owner, true);
+        break;
+    }
+}
+
+void Board::push(Player *owner, Player *target, direction_t direction)
+{
+    Cell *origin = owner->getRoom()->getCell();
+    int x = origin->getPos() % 5;
+    int y = origin->getPos() / 5;
+
+    /* Column */
+    if ((y == 0 && direction == DIRECTION_N)
+    ||  (y == 4 && direction == DIRECTION_S))
+    {
+        std::cerr << "attempting to push into a wrong direction NS" << std::endl;
+        return;
+    }
+    /* Line */
+    if ((x == 0 && direction == DIRECTION_O)
+    ||  (x == 4 && direction == DIRECTION_E))
+    {
+        std::cerr << "attempting to push into a wrong direction OE" << std::endl;
+        return;
+    }
+
+    if (x == 2 && y == 2) {
+        std::cerr << "you cannot push from the center room" << std::endl;
+        return;
+    }
+
+    /* TODO: is the room locked (flooding) */
+    origin->getRoom()->removePlayer(target);
+    switch (direction) {
+      case DIRECTION_UP:
+        origin->getUp()->getRoom()->addPlayer(target, true);
+        break;
+      case DIRECTION_DOWN:
+        origin->getDown()->getRoom()->addPlayer(target, true);
+        break;
+      case DIRECTION_RIGHT:
+        origin->getRight()->getRoom()->addPlayer(target, true);
+        break;
+      case DIRECTION_LEFT:
+        origin->getLeft()->getRoom()->addPlayer(target, true);
+        break;
+    }
+}
+
+void Board::see(Player *owner, direction_t direction)
+{
+    Cell *origin = owner->getRoom()->getCell();
+    int x = origin->getPos() % 5;
+    int y = origin->getPos() / 5;
+
+    /* Column */
+    if ((y == 0 && direction == DIRECTION_N)
+    ||  (y == 4 && direction == DIRECTION_S))
+    {
+        std::cerr << "attempting to see into a wrong direction NS" << std::endl;
+        return;
+    }
+    /* Line */
+    if ((x == 0 && direction == DIRECTION_O)
+    ||  (x == 4 && direction == DIRECTION_E))
+    {
+        std::cerr << "attempting to see into a wrong direction OE" << std::endl;
+        return;
+    }
+
+    switch (direction) {
+      case DIRECTION_UP:
+        assert (!origin->getUp()->getRoom()->isVisible());
+        owner->seeRoom(origin->getUp()->getRoom());
+        break;
+      case DIRECTION_DOWN:
+        assert (!origin->getDown()->getRoom()->isVisible());
+        owner->seeRoom(origin->getDown()->getRoom());
+        break;
+      case DIRECTION_RIGHT:
+        assert (!origin->getRight()->getRoom()->isVisible());
+        owner->seeRoom(origin->getRight()->getRoom());
+        break;
+      case DIRECTION_LEFT:
+        assert (!origin->getLeft()->getRoom()->isVisible());
+        owner->seeRoom(origin->getLeft()->getRoom());
         break;
     }
 }

@@ -23,13 +23,13 @@ public:
     void removePlayer(Player *player);
 
     /* Getter and setters */
-    RoomEffect *getEffect(void) { return this->effect; };
+    RoomEffect *getEffect(void) const { return this->effect; };
     void setEffect(RoomEffect *effect) { this->effect = effect; };
-    std::vector<Player *> getPlayers(void) { return this->players; };
+    std::vector<Player *> getPlayers(void) const { return this->players; };
     void setPlayers(std::vector<Player *> players) { this->players = players; };
-    Cell *getCell(void) { return this->cell; };
+    Cell *getCell(void) const { return this->cell; };
     void setCell(Cell *cell) { this->cell = cell; };
-    bool isVisible(void) { return this->visible; };
+    bool isVisible(void) const { return this->visible; };
     void setVisible(bool visible) { this->visible = visible; };
 
 protected:

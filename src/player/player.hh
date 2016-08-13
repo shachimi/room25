@@ -1,6 +1,7 @@
 #ifndef PLAYER_HH_
 # define PLAYER_HH_
 
+# include <vector>
 # include "game/enum.hh"
 
 class Room;
@@ -12,14 +13,27 @@ public:
     ~Player(void);
 
     /* Game mechanics */
-    virtual Action *getAction(void) = 0;
-    virtual direction_t execMove(int allowed_dir) = 0;
-    virtual direction_t execSlide(int allowed_dir) = 0;
+    /* {{{ Actions */
 
+    virtual Action *getAction(void) = 0;
+    virtual direction_t selectMove(int allowed_dir) = 0;
+    virtual direction_t selectSlide(int allowed_dir) = 0;
+    virtual direction_t selectSee(int allowed_dir) = 0;
+    virtual direction_t selectPushDirection(int allowed_dir) = 0;
+    virtual Player *selectPushTarget(std::vector<Player *> players) = 0;
+
+    /* }}} */
+    /* {{{ captor */
+
+    virtual void seeRoom(const Room *room) = 0;
+
+    /* }}} */
+
+public:
     /* Getters and setters */
-    Room *getRoom(void) { return this->room; };
+    Room *getRoom(void) const { return this->room; };
     void setRoom(Room *room) { this->room = room; };
-    int getActionsStock(void) { return this->actions_stock; };
+    int getActionsStock(void) const { return this->actions_stock; };
     int setActionsStock(action_t action) { this->actions_stock |= action; };
 
 

@@ -50,10 +50,85 @@ void Game::exec(Move *move)
     if (pos / 5 /* y */ < 4) {
         allowed_dir |= DIRECTION_S;
     }
-    dir = move->getOwner()->execMove(allowed_dir);
+    dir = move->getOwner()->selectMove(allowed_dir);
     /* TODO: do not assert */
     assert (dir & allowed_dir);
     this->board->move(move->getOwner(), dir);
+}
+
+void Game::exec(Push *push)
+{
+    direction_t dir;
+    int allowed_dir = 0;
+    int pos = push->getOwner()->getRoom()->getCell()->getPos();
+    std::vector<Player *> targets = push->getOwner()->getRoom()->getPlayers();
+
+    if (pos == 12) {
+        std::cerr << "cannot push from center room" << std::endl;
+        return;
+    }
+
+    {
+        std::vector<Player *>::iterator it;
+
+        for (it = targets.begin() ; it != targets.end(); ++it) {
+            if (*it == push->getOwner()) {
+                targets.erase(it);
+                break;
+            }
+        }
+    }
+
+    if (!targets.size()) {
+        std::cerr << "nobody to push" << std::endl;
+        return;
+    }
+    if (pos % 5 /* x */ > 0) {
+        allowed_dir |= DIRECTION_O;
+    }
+    if (pos % 5 /* x */ < 4) {
+        allowed_dir |= DIRECTION_E;
+    }
+    if (pos / 5 /* y */ > 0) {
+        allowed_dir |= DIRECTION_N;
+    }
+    if (pos / 5 /* y */ < 4) {
+        allowed_dir |= DIRECTION_S;
+    }
+    dir = push->getOwner()->selectPushDirection(allowed_dir);
+
+    /* TODO: do not assert */
+    assert (dir & allowed_dir);
+    this->board->push(push->getOwner(),
+                      push->getOwner()->selectPushTarget(targets), dir);
+}
+
+void Game::exec(See *see)
+{
+    direction_t dir;
+    int allowed_dir = 0;
+    Cell *cell = see->getOwner()->getRoom()->getCell();
+
+    if (cell->getLeft() && !cell->getLeft()->getRoom()->isVisible()) {
+        allowed_dir |= DIRECTION_O;
+    }
+    if (cell->getRight() && !cell->getRight()->getRoom()->isVisible()) {
+        allowed_dir |= DIRECTION_E;
+    }
+    if (cell->getUp() && !cell->getUp()->getRoom()->isVisible()) {
+        allowed_dir |= DIRECTION_N;
+    }
+    if (cell->getDown() && !cell->getDown()->getRoom()->isVisible()) {
+        allowed_dir |= DIRECTION_S;
+    }
+    dir = see->getOwner()->selectSee(allowed_dir);
+    if (!allowed_dir) {
+        std::cerr << "nothing to see here" << std::endl;
+        return;
+    }
+    /* TODO: do not assert */
+    assert (dir & allowed_dir);
+    this->board->see(see->getOwner(), dir);
 }
 
 void Game::exec(Slide *slide)
@@ -73,7 +148,7 @@ void Game::exec(Slide *slide)
         std::cerr << "you cannot slide in this cell" << std::endl;
         return;
     }
-    dir = slide->getOwner()->execSlide(allowed_dir);
+    dir = slide->getOwner()->selectSlide(allowed_dir);
     /* TODO: do not assert */
     assert (dir & allowed_dir);
     this->board->slide(slide->getOwner(), dir);
