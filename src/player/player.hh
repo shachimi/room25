@@ -23,7 +23,7 @@ public:
     virtual Player *selectPushTarget(std::vector<Player *> players) = 0;
 
     /* }}} */
-    /* {{{ captor */
+    /* {{{ Captor */
 
     virtual void seeRoom(const Room *room) = 0;
 
