@@ -28,17 +28,22 @@ public:
     virtual void seeRoom(const Room *room) = 0;
 
     /* }}} */
+    /* {{{ Getters and setters */
 
 public:
-    /* Getters and setters */
     Room *getRoom(void) const { return this->room; };
     void setRoom(Room *room) { this->room = room; };
     int getActionsStock(void) const { return this->actions_stock; };
     int setActionsStock(action_t action) { this->actions_stock |= action; };
+    int isAlive(void) const { return this->is_alive; };
+    int setIsAlive(bool is_alive) { this->is_alive = is_alive; };
 
+    /* }}} */
 
 protected:
+    /* TODO: add an avatar to split behavior from function */
     Room *room;
+    bool is_alive;
     int  actions_stock; /* mask of action_t */
 };
 

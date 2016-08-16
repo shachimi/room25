@@ -4,6 +4,11 @@ RoomEffect::RoomEffect(void)
 {
 }
 
+RoomEffect::RoomEffect(room_kind_t kind)
+    : kind(kind)
+{
+}
+
 RoomEffect::~RoomEffect(void)
 {
 }

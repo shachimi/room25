@@ -47,3 +47,13 @@ void Room::print(std::ostream& out)
     }
     out << "|";
 }
+
+
+void Room::setEffect(RoomEffect *effect)
+{
+    if (this->effect) {
+        this->effect->setRoom(NULL);
+    }
+    this->effect = effect;
+    this->effect->setRoom(this);
+}
