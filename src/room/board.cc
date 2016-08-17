@@ -1,6 +1,5 @@
 #include "board.hh"
 #include <assert.h>
-#include "player/term-player.hh"
 
 /* {{{ Initialize */
 
@@ -31,7 +30,6 @@ Board::Board(void)
     }
 
     {
-        Player *p = (Player *) new TermPlayer();
         Room *room = new Room();
         RoomEffect *effect = new RoomEffect();
 
@@ -39,8 +37,6 @@ Board::Board(void)
         effect->setKind(ROOM_KIND_CENTER);
         room->setEffect(effect);
         room->setVisible(true);
-        room->addPlayer(p, false);
-        room->addPlayer((Player *) new TermPlayer(), false);
         cell->setRoom(room);
     }
     {
@@ -146,7 +142,7 @@ static Cell *get_line_beginning(Cell *cell, direction_t dir)
 
 void Board::slide(Player *player, direction_t direction)
 {
-    Cell *cell = player->getRoom()->getCell();
+    Cell *cell = player->getAvatar()->getRoom()->getCell();
 
     return this->slide(cell->getX(), cell->getY(), direction);
 }
@@ -227,7 +223,7 @@ void Board::slide(int x, int y, direction_t direction)
 
 void Board::move(Player *owner, direction_t direction)
 {
-    Cell *origin = owner->getRoom()->getCell();
+    Cell *origin = owner->getAvatar()->getRoom()->getCell();
     int x = origin->getPos() % 5;
     int y = origin->getPos() / 5;
 
@@ -247,26 +243,26 @@ void Board::move(Player *owner, direction_t direction)
     }
 
     /* TODO: is the room locked (flooding) */
-    origin->getRoom()->removePlayer(owner);
+    origin->getRoom()->removeAvatar(owner->getAvatar());
     switch (direction) {
       case DIRECTION_UP:
-        origin->getUp()->getRoom()->addPlayer(owner, true);
+        origin->getUp()->getRoom()->addAvatar(owner->getAvatar(), true);
         break;
       case DIRECTION_DOWN:
-        origin->getDown()->getRoom()->addPlayer(owner, true);
+        origin->getDown()->getRoom()->addAvatar(owner->getAvatar(), true);
         break;
       case DIRECTION_RIGHT:
-        origin->getRight()->getRoom()->addPlayer(owner, true);
+        origin->getRight()->getRoom()->addAvatar(owner->getAvatar(), true);
         break;
       case DIRECTION_LEFT:
-        origin->getLeft()->getRoom()->addPlayer(owner, true);
+        origin->getLeft()->getRoom()->addAvatar(owner->getAvatar(), true);
         break;
     }
 }
 
-void Board::push(Player *owner, Player *target, direction_t direction)
+void Board::push(Player *owner, Avatar *target, direction_t direction)
 {
-    Cell *origin = owner->getRoom()->getCell();
+    Cell *origin = owner->getAvatar()->getRoom()->getCell();
     int x = origin->getPos() % 5;
     int y = origin->getPos() / 5;
 
@@ -291,26 +287,26 @@ void Board::push(Player *owner, Player *target, direction_t direction)
     }
 
     /* TODO: is the room locked (flooding) */
-    origin->getRoom()->removePlayer(target);
+    origin->getRoom()->removeAvatar(target);
     switch (direction) {
       case DIRECTION_UP:
-        origin->getUp()->getRoom()->addPlayer(target, true);
+        origin->getUp()->getRoom()->addAvatar(target, true);
         break;
       case DIRECTION_DOWN:
-        origin->getDown()->getRoom()->addPlayer(target, true);
+        origin->getDown()->getRoom()->addAvatar(target, true);
         break;
       case DIRECTION_RIGHT:
-        origin->getRight()->getRoom()->addPlayer(target, true);
+        origin->getRight()->getRoom()->addAvatar(target, true);
         break;
       case DIRECTION_LEFT:
-        origin->getLeft()->getRoom()->addPlayer(target, true);
+        origin->getLeft()->getRoom()->addAvatar(target, true);
         break;
     }
 }
 
 void Board::see(Player *owner, direction_t direction)
 {
-    Cell *origin = owner->getRoom()->getCell();
+    Cell *origin = owner->getAvatar()->getRoom()->getCell();
     int x = origin->getPos() % 5;
     int y = origin->getPos() / 5;
 

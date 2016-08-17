@@ -36,7 +36,7 @@ void Game::exec(Move *move)
 {
     direction_t dir;
     int allowed_dir = 0;
-    int pos = move->getOwner()->getRoom()->getCell()->getPos();
+    int pos = move->getOwner()->getAvatar()->getRoom()->getCell()->getPos();
 
     if (pos % 5 /* x */ > 0) {
         allowed_dir |= DIRECTION_O;
@@ -60,8 +60,8 @@ void Game::exec(Push *push)
 {
     direction_t dir;
     int allowed_dir = 0;
-    int pos = push->getOwner()->getRoom()->getCell()->getPos();
-    std::vector<Player *> targets = push->getOwner()->getRoom()->getPlayers();
+    int pos = push->getOwner()->getAvatar()->getRoom()->getCell()->getPos();
+    std::vector<Avatar *> targets = push->getOwner()->getAvatar()->getRoom()->getAvatars();
 
     if (pos == 12) {
         std::cerr << "cannot push from center room" << std::endl;
@@ -69,10 +69,10 @@ void Game::exec(Push *push)
     }
 
     {
-        std::vector<Player *>::iterator it;
+        std::vector<Avatar *>::iterator it;
 
         for (it = targets.begin() ; it != targets.end(); ++it) {
-            if (*it == push->getOwner()) {
+            if (*it == push->getOwner()->getAvatar()) {
                 targets.erase(it);
                 break;
             }
@@ -107,7 +107,7 @@ void Game::exec(See *see)
 {
     direction_t dir;
     int allowed_dir = 0;
-    Cell *cell = see->getOwner()->getRoom()->getCell();
+    Cell *cell = see->getOwner()->getAvatar()->getRoom()->getCell();
 
     if (cell->getLeft() && !cell->getLeft()->getRoom()->isVisible()) {
         allowed_dir |= DIRECTION_O;
@@ -135,7 +135,7 @@ void Game::exec(Slide *slide)
 {
     direction_t dir;
     int allowed_dir = 0;
-    int pos = slide->getOwner()->getRoom()->getCell()->getPos();
+    int pos = slide->getOwner()->getAvatar()->getRoom()->getCell()->getPos();
 
     if (pos % 5 /* x */ != 2) {
         allowed_dir |= DIRECTION_N | DIRECTION_S;

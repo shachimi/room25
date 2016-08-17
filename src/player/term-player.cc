@@ -146,7 +146,7 @@ direction_t TermPlayer::selectPushDirection(int allowed_dir)
     return DIRECTION_N;
 }
 
-Player *TermPlayer::selectPushTarget(std::vector<Player *> players)
+Avatar *TermPlayer::selectPushTarget(std::vector<Avatar *> players)
 {
     return players.front();
 }

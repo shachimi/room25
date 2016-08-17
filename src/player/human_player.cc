@@ -80,7 +80,7 @@ direction_t HumanPlayer::selectPushDirection(int allowed_dir)
     return DIRECTION_N;
 }
 
-Player *HumanPlayer::selectPushTarget(std::vector<Player *> players)
+Avatar *HumanPlayer::selectPushTarget(std::vector<Avatar *> players)
 {
     return players.front();
 }

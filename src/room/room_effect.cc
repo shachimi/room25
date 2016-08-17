@@ -13,7 +13,7 @@ RoomEffect::~RoomEffect(void)
 {
 }
 
-void RoomEffect::prisoner_enter(Player *prisoner)
+void RoomEffect::prisoner_enter(Avatar *prisoner)
 {
 }
 
@@ -21,7 +21,7 @@ void RoomEffect::turn_starts(void)
 {
 }
 
-void RoomEffect::prisoner_stay(Player *prisoner)
+void RoomEffect::prisoner_stay(Avatar *prisoner)
 {
 }
 

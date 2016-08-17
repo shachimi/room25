@@ -1,8 +1,8 @@
 #include "player.hh"
 
 Player::Player(void)
-    : room(NULL),
-      actions_stock(ACTION_ALL)
+    : actions_stock(ACTION_ALL),
+      avatar(NULL)
 {
 }
 

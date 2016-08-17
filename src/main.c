@@ -1,11 +1,13 @@
 #include <iostream>
 #include "game/game.hh"
+#include "player/term-player.hh"
+#include "player/avatar.hh"
 
 
 int main(int argc, char **argv)
 {
-    Player *p1 = NULL;
-    Player *p2 = NULL;
+    Player *p1 = (Player *) new TermPlayer();
+    Player *p2 = (Player *) new TermPlayer();
     Game *game = Game::getInstance();
     Board *board = game->getBoard();
     Move move1, move2;
@@ -13,8 +15,10 @@ int main(int argc, char **argv)
     Push push;
     Slide slide;
 
-    p1 = board->getCell(2, 2)->getRoom()->getPlayers().front();
-    p2 = board->getCell(2, 2)->getRoom()->getPlayers().back();
+    p1->setAvatar(new Avatar());
+    p2->setAvatar(new Avatar());
+    board->getCell(2, 2)->getRoom()->addAvatar(p1->getAvatar(), false);
+    board->getCell(2, 2)->getRoom()->addAvatar(p2->getAvatar(), false);
     move1.setOwner(p1);
     move2.setOwner(p2);
     slide.setOwner(p1);

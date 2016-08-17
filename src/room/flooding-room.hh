@@ -7,9 +7,9 @@ class FloodingRoom : public RoomEffect {
 public:
     FloodingRoom(void);
     ~FloodingRoom(void);
-    virtual void prisoner_enter(Player * prisoner);
+    virtual void prisoner_enter(Avatar *prisoner);
     virtual void turn_starts(void);
-    virtual void prisoner_stay(Player * prisoner);
+    virtual void prisoner_stay(Avatar *prisoner);
     virtual void turn_ends(void);
 
 private:

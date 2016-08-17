@@ -8,13 +8,13 @@ AcidRoom::~AcidRoom(void)
 {
 }
 
-void AcidRoom::prisoner_enter(Player *prisoner)
+void AcidRoom::prisoner_enter(Avatar *prisoner)
 {
-    std::vector<Player *> players = this->room->getPlayers();
+    std::vector<Avatar *> players = this->room->getAvatars();
 
     for (int i = 0; i < players.size(); i++) {
         if (players[i] != prisoner) {
-            players[i]->setIsAlive(false);
+            // players[i]->setIsAlive(false);
         }
     }
 }
@@ -23,7 +23,7 @@ void AcidRoom::turn_starts(void)
 {
 }
 
-void AcidRoom::prisoner_stay(Player * prisoner)
+void AcidRoom::prisoner_stay(Avatar *prisoner)
 {
 }
 

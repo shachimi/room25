@@ -12,7 +12,7 @@ enum room_kind_t {
     ROOM_KIND_DANGER,
 };
 
-class Player;
+class Avatar;
 class Room;
 
 class RoomEffect {
@@ -21,9 +21,9 @@ public:
     RoomEffect(room_kind_t kind);
     ~RoomEffect(void);
     /** The prisoner is already inside the room when the method is called. */
-    virtual void prisoner_enter(Player * prisoner);
+    virtual void prisoner_enter(Avatar *prisoner);
     virtual void turn_starts(void);
-    virtual void prisoner_stay(Player * prisoner);
+    virtual void prisoner_stay(Avatar *prisoner);
     virtual void turn_ends(void);
 
     virtual void print(std::ostream& out);
@@ -37,7 +37,7 @@ protected:
     Room *room;
 };
 
-# include "player/player.hh"
+# include "player/avatar.hh"
 # include "room/room.hh"
 
 #endif /* !ROOM_EFFECT_HH_ */

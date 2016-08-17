@@ -6,6 +6,8 @@
 
 # include "game/enum.hh"
 # include "room/cell.hh"
+# include "player/player.hh"
+# include "player/avatar.hh"
 
 class Board {
 public:
@@ -23,7 +25,7 @@ public: /* game mechanics */
     void slide(int x, int y, direction_t direction);
     void slide(Player *owner, direction_t direction);
     void move(Player *owner, direction_t direction);
-    void push(Player *owner, Player *target, direction_t direction);
+    void push(Player *owner, Avatar *target, direction_t direction);
     void see(Player *owner, direction_t direction);
 
     void print(std::ostream& out);

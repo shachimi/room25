@@ -4,7 +4,7 @@
 # include <iostream>
 # include <vector>
 
-# include "player/player.hh"
+# include "player/avatar.hh"
 # include "room/room_effect.hh"
 
 class Cell;
@@ -19,14 +19,13 @@ public:
 
 public:
     /* Mechanic */
-    void addPlayer(Player *player, bool activate_effect);
-    void removePlayer(Player *player);
+    void addAvatar(Avatar *avatar, bool activate_effect);
+    void removeAvatar(Avatar *avatar);
 
     /* {{{ Getter and setters */
     RoomEffect *getEffect(void) const { return this->effect; };
     void setEffect(RoomEffect *effect);
-    std::vector<Player *> getPlayers(void) const { return this->players; };
-    void setPlayers(std::vector<Player *> players) { this->players = players; };
+    std::vector<Avatar *> getAvatars(void) const { return this->avatars; };
     Cell *getCell(void) const { return this->cell; };
     void setCell(Cell *cell) { this->cell = cell; };
     bool isVisible(void) const { return this->visible; };
@@ -36,7 +35,10 @@ public:
     /* }}} */
 
 protected:
-    std::vector<Player *> players;
+    void setAvatars(std::vector<Avatar *> avatars) { this->avatars = avatars; };
+
+protected:
+    std::vector<Avatar *> avatars;
     Cell *cell;
     RoomEffect *effect;
     bool visible;
