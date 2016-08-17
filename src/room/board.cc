@@ -1,6 +1,6 @@
 #include "board.hh"
 #include <assert.h>
-#include "player/human_player.hh"
+#include "player/term-player.hh"
 
 /* {{{ Initialize */
 
@@ -31,7 +31,7 @@ Board::Board(void)
     }
 
     {
-        Player *p = (Player *) new HumanPlayer();
+        Player *p = (Player *) new TermPlayer();
         Room *room = new Room();
         RoomEffect *effect = new RoomEffect();
 
@@ -40,7 +40,7 @@ Board::Board(void)
         room->setEffect(effect);
         room->setVisible(true);
         room->addPlayer(p, false);
-        room->addPlayer((Player *) new HumanPlayer(), false);
+        room->addPlayer((Player *) new TermPlayer(), false);
         cell->setRoom(room);
     }
     {
