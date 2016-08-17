@@ -155,6 +155,12 @@ void Game::exec(Slide *slide)
 }
 
 /* }}} */
+/* {{{ Management board */
+
+void Game::removeAvatar(Avatar *avatar)
+{
+    /* TODO: remove the robot and see what to do with prisoner */
+}
 
 void Game::rotatePlayer(void)
 {
@@ -163,3 +169,6 @@ void Game::rotatePlayer(void)
     this->players.pop();
     this->players.push(tmp);
 }
+
+
+/* }}} */

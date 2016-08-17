@@ -24,6 +24,7 @@ public:
     void exec(See *see);
 
     void rotatePlayer(void);
+    void removeAvatar(Avatar *avatar);
 
     /* Getter and setters */
     std::queue<Player *> getPlayers(void) { return this->players; };

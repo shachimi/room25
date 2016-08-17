@@ -8,6 +8,8 @@ public:
     Avatar(void);
     ~Avatar(void);
 
+    virtual void destroy(void) = 0;
+
     /* {{{ Getters and setters */
 
 public:

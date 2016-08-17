@@ -5,9 +5,9 @@
 # include <vector>
 
 # include "player/avatar.hh"
-# include "room/room_effect.hh"
 
 class Cell;
+class RoomEffect;
 
 class Room {
 public:
@@ -45,6 +45,7 @@ protected:
     bool accessible;
 };
 
-# include "cell.hh"
+# include "room/cell.hh"
+# include "room/room_effect.hh"
 
 #endif /* !ROOM_HH_ */

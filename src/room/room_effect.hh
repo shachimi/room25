@@ -21,8 +21,8 @@ public:
     RoomEffect(room_kind_t kind);
     ~RoomEffect(void);
     /** The prisoner is already inside the room when the method is called. */
-    virtual void prisoner_enter(Avatar *prisoner);
     virtual void turn_starts(void);
+    virtual void prisoner_enter(Avatar *prisoner);
     virtual void prisoner_stay(Avatar *prisoner);
     virtual void turn_ends(void);
 

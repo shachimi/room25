@@ -1,3 +1,4 @@
+#include "player/prisoner.hh"
 #include "room.hh"
 
 Room::Room(void)

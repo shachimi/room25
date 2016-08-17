@@ -1,7 +1,8 @@
 #include "player.hh"
 
-Player::Player(void)
-    : actions_stock(ACTION_ALL),
+Player::Player(int id)
+    : id(id),
+      actions_stock(ACTION_ALL),
       avatar(NULL)
 {
 }

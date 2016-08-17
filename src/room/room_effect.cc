@@ -13,11 +13,11 @@ RoomEffect::~RoomEffect(void)
 {
 }
 
-void RoomEffect::prisoner_enter(Avatar *prisoner)
+void RoomEffect::turn_starts(void)
 {
 }
 
-void RoomEffect::turn_starts(void)
+void RoomEffect::prisoner_enter(Avatar *prisoner)
 {
 }
 

@@ -1,7 +1,7 @@
 #ifndef ACTION_HH_
 # define ACTION_HH_
 
-# include "player/player.hh"
+class Player;
 
 class Action {
 public:
@@ -18,5 +18,6 @@ protected:
     Player *owner;
 };
 
+# include "player/player.hh"
 
 #endif /* !ACTION_HH_ */

@@ -10,7 +10,7 @@ class Action;
 
 class Player {
 public:
-    Player(void);
+    Player(int id);
     ~Player(void);
 
     /* Game mechanics */
@@ -33,15 +33,17 @@ public:
     /* {{{ Getters and setters */
 
 public:
+    int getId(void) { return this->id; };
     int getActionsStock(void) const { return this->actions_stock; };
-    int setActionsStock(action_t action) { this->actions_stock |= action; };
+    void setActionsStock(action_t action) { this->actions_stock |= action; };
     Avatar *getAvatar(void) const { return this->avatar; };
     void setAvatar(Avatar *avatar) { this->avatar = avatar; };
 
     /* }}} */
 
 protected:
-    int  actions_stock; /* mask of action_t */
+    int id;
+    int actions_stock; /* mask of action_t */
     Avatar *avatar;
 };
 

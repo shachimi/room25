@@ -2,6 +2,16 @@
 #include <assert.h>
 #include <iostream>
 
+TermPlayer::TermPlayer(int id)
+    : Player(id)
+{
+}
+
+TermPlayer::~TermPlayer(void)
+{
+}
+
+
 static char *itod(int allowed_dir)
 {
     static char dir[5] = { 0 };
