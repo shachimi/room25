@@ -1,0 +1,23 @@
+room25
+* class Rule to handle specific game config such as:
+** Board init
+** win/lose condition
+** turn handling (cpt, rotation of player)
+** action available
+
+* resolve effect of room:
+** freezeroom -> Scheduling should have only one action
+** vortexroom -> avatar send on center room
+** wormroom -> avatar should go to another visible wormroom
+** visionroom -> select a room and apply see on it (change Board::see to be able to take a Cell directly)
+** gearroom -> select a cell (except center) and apply a valid slide on it (change Board::slide to be able to take a Cell directly)
+** illusionroom -> give a list of coordinate to player that should return the index in the vector of the one he want to see, then if valid switch roomeffect and activate the one of the room taken
+** warproom -> give a list of coordinate to player that should return the index in the vector of the one he want to see, then if valid  switch the room inside the two cell
+
+* Scheduling/Game handle mono action (first or second sequence)
+* Guardian programmation
+* add static Sheduling::validate(scheduling, Avatar)
+
+* In Game::execPush only append valid target (not myself and not Robot) /* maybe in Rule? */
+* truly handle turn (dead people does not play anymore)
+
