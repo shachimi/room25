@@ -9,7 +9,7 @@ public:
     ~Cell(void);
 
     void print(std::ostream& out);
-
+    void print(std::ostream& out, int inner_line);
 
     /* Getter and setters */
     int getPos(void) { return this->pos; };

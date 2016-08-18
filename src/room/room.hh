@@ -15,6 +15,7 @@ public:
     ~Room(void);
 
     void print(std::ostream& out);
+    void print(std::ostream& out, int inner_line);
 
 
 public:

@@ -49,6 +49,37 @@ void Room::print(std::ostream& out)
     out << "|";
 }
 
+void Room::print(std::ostream& out, int inner_line)
+{
+    int cpt = (inner_line - 1) * 3;
+    bool is_avatar_here[9] = { false };
+
+    for (int i = 0; i < this->avatars.size(); i++) {
+        Prisoner *prisoner = static_cast<Prisoner *>(this->avatars[i]);
+
+        if (!prisoner) {
+            continue;
+        }
+
+        is_avatar_here[prisoner->getOwner()->getId() - 1] = true;
+    }
+
+    if (inner_line == 2) {
+        out << (is_avatar_here[3] ? "P" : " ");
+        if (this->visible) {
+            this->effect->print(out);
+        } else {
+            out << " ";
+        }
+        out << (is_avatar_here[4] ? "P" : " ");
+        return;
+    }
+    out << (is_avatar_here[cpt] ? "P" : " ")
+        << (is_avatar_here[cpt + 1] ? "P" : " ")
+        << (is_avatar_here[cpt + 2] ? "P" : " ");
+}
+
+
 
 void Room::setEffect(RoomEffect *effect)
 {

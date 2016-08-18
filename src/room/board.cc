@@ -90,18 +90,31 @@ void Board::shuffle(void)
 
 void Board::print(std::ostream& out)
 {
-    out << " |";
+    out << "   |";
     for (int x = 0; x < 5; x++) {
-        out << x + 1 << "|";
+        out << " " << x + 1 << " |";
     }
     out << std::endl;
+    out << "---+---+---+---+---+---+" << std::endl;
 
     for (int x = 0; x < 5; x++) {
-        out << x + 1 << "|";
+        out << "   |";
         for (int y = 0; y < 5; y++) {
-            this->cells[x * 5 + y]->print(out);
+            this->cells[x * 5 + y]->print(out, 1);
+            out << "|";
+        }
+        out << std::endl << " " << x + 1 << " |";
+        for (int y = 0; y < 5; y++) {
+            this->cells[x * 5 + y]->print(out, 2);
+            out << "|";
+        }
+        out << std::endl << "   |";
+        for (int y = 0; y < 5; y++) {
+            this->cells[x * 5 + y]->print(out, 3);
+            out << "|";
         }
         out << std::endl;
+        out << "---+---+---+---+---+---+" << std::endl;
     }
 }
 
