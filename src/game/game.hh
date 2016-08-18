@@ -18,25 +18,24 @@ public:
 
     void play_turn(void);
     void exec(Action *action);
-    void exec(Move *move);
-    void exec(Slide *slide);
-    void exec(Push *slide);
-    void exec(See *see);
+    void execMove(Player *player);
+    void execSlide(Player *player);
+    void execPush(Player *player);
+    void execSee(Player *player);
 
     void rotatePlayer(void);
     void removeAvatar(Avatar *avatar);
 
     /* Getter and setters */
-    std::queue<Player *> getPlayers(void) { return this->players; };
-    void setPlayers(std::queue<Player *> players) { this->players = players; };
+    void pushPlayer(Player *player) { this->players.push_back(player); };
+    std::vector<Player *> getPlayers(void) { return this->players; };
+    void setPlayers(std::vector<Player *> players) { this->players = players; };
     Board *getBoard(void) { return this->board; };
     void setBoard(Board *board) { this->board = board; };
 
-private:
-
-
 protected:
-    std::queue<Player *> players;
+    /* TODO: made a Rule class to abstract win/lose/play_turn method */
+    std::vector<Player *> players;
     Board *board;
 
 private:

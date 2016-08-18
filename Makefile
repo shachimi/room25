@@ -4,7 +4,8 @@ src/room/board.o src/game/game.o src/game/action.o src/game/move.o           \
 src/game/slide.o src/game/see.o src/game/push.o src/room/deadly-room.o       \
 src/player/player.o src/player/human_player.o src/player/term-player.o       \
 src/room/acid-room.o src/room/torture-room.o src/room/flooding-room.o        \
-src/player/avatar.o src/player/prisoner.o src/player/robot.o
+src/player/avatar.o src/player/prisoner.o src/player/robot.o                 \
+src/game/scheduling.o
 
 LIBS=
 CFLAGS=-Werror -Wextra -Wall

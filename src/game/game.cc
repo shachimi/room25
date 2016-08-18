@@ -1,10 +1,11 @@
-#include "game.hh"
 #include <assert.h>
+#include <vector>
+#include "game.hh"
 
 Game *Game::instance = NULL;
 
 Game::Game(void)
-    : players(std::queue<Player *>()),
+    : players(std::vector<Player *>()),
       board(new Board())
 {
 }
@@ -23,6 +24,61 @@ Game *Game::getInstance(void)
 
 void Game::play_turn(void)
 {
+    std::vector<Scheduling *> schedule = std::vector<Scheduling *>();
+
+    for (int i = 0; i < this->players.size(); i++) {
+        schedule.push_back(this->players[i]->getScheduling());
+    }
+
+    std::cout << "First programmation turn" << std::endl;
+    for (int i = 0; i < schedule.size(); i++) {
+        action_t action = schedule[i]->getAction(1);
+
+        switch (action) {
+          case ACTION_MOVE:
+            this->execMove(schedule[i]->getOwner());
+            break;
+          case ACTION_PUSH:
+            this->execPush(schedule[i]->getOwner());
+            break;
+          case ACTION_SLIDE:
+            this->execSlide(schedule[i]->getOwner());
+            break;
+          case ACTION_SEE:
+            this->execSee(schedule[i]->getOwner());
+            break;
+          default:
+            assert (false && "should only be one action");
+            break;
+        }
+    }
+
+    std::cout << "Second programmation turn" << std::endl;
+    for (int i = 0; i < schedule.size(); i++) {
+        action_t action = schedule[i]->getAction(2);
+
+        switch (action) {
+          case ACTION_MOVE:
+            this->execMove(schedule[i]->getOwner());
+            break;
+          case ACTION_PUSH:
+            this->execPush(schedule[i]->getOwner());
+            break;
+          case ACTION_SLIDE:
+            this->execSlide(schedule[i]->getOwner());
+            break;
+          case ACTION_SEE:
+            this->execSee(schedule[i]->getOwner());
+            break;
+          default:
+            assert (false && "should only be one action");
+            break;
+        }
+    }
+    for (int i = 0; i < schedule.size(); i++) {
+        delete schedule[i];
+        schedule[i] = NULL;
+    }
 }
 
 /* {{{ Execution of action */
@@ -32,11 +88,11 @@ void Game::exec(Action *action)
     std::cerr << "not implemented yet" << std::endl;
 }
 
-void Game::exec(Move *move)
+void Game::execMove(Player *owner)
 {
     direction_t dir;
     int allowed_dir = 0;
-    int pos = move->getOwner()->getAvatar()->getRoom()->getCell()->getPos();
+    int pos = owner->getAvatar()->getRoom()->getCell()->getPos();
 
     if (pos % 5 /* x */ > 0) {
         allowed_dir |= DIRECTION_O;
@@ -50,20 +106,21 @@ void Game::exec(Move *move)
     if (pos / 5 /* y */ < 4) {
         allowed_dir |= DIRECTION_S;
     }
-    dir = move->getOwner()->selectMove(allowed_dir);
+    dir = owner->selectMove(allowed_dir);
     /* TODO: do not assert */
     assert (dir & allowed_dir);
-    this->board->move(move->getOwner(), dir);
+    this->board->move(owner, dir);
 }
 
-void Game::exec(Push *push)
+void Game::execPush(Player *player)
 {
     direction_t dir;
     int allowed_dir = 0;
-    int pos = push->getOwner()->getAvatar()->getRoom()->getCell()->getPos();
-    std::vector<Avatar *> targets = push->getOwner()->getAvatar()->getRoom()->getAvatars();
+    int pos = player->getAvatar()->getRoom()->getCell()->getPos();
+    std::vector<Avatar *> targets = player->getAvatar()->getRoom()->getAvatars();
 
     if (pos == 12) {
+        /* TODO: replace by validateAction of center room (rename secure?) */
         std::cerr << "cannot push from center room" << std::endl;
         return;
     }
@@ -72,7 +129,7 @@ void Game::exec(Push *push)
         std::vector<Avatar *>::iterator it;
 
         for (it = targets.begin() ; it != targets.end(); ++it) {
-            if (*it == push->getOwner()->getAvatar()) {
+            if (*it == player->getAvatar()) {
                 targets.erase(it);
                 break;
             }
@@ -95,19 +152,18 @@ void Game::exec(Push *push)
     if (pos / 5 /* y */ < 4) {
         allowed_dir |= DIRECTION_S;
     }
-    dir = push->getOwner()->selectPushDirection(allowed_dir);
+    dir = player->selectPushDirection(allowed_dir);
 
     /* TODO: do not assert */
     assert (dir & allowed_dir);
-    this->board->push(push->getOwner(),
-                      push->getOwner()->selectPushTarget(targets), dir);
+    this->board->push(player, player->selectPushTarget(targets), dir);
 }
 
-void Game::exec(See *see)
+void Game::execSee(Player *player)
 {
     direction_t dir;
     int allowed_dir = 0;
-    Cell *cell = see->getOwner()->getAvatar()->getRoom()->getCell();
+    Cell *cell = player->getAvatar()->getRoom()->getCell();
 
     if (cell->getLeft() && !cell->getLeft()->getRoom()->isVisible()) {
         allowed_dir |= DIRECTION_O;
@@ -121,21 +177,21 @@ void Game::exec(See *see)
     if (cell->getDown() && !cell->getDown()->getRoom()->isVisible()) {
         allowed_dir |= DIRECTION_S;
     }
-    dir = see->getOwner()->selectSee(allowed_dir);
+    dir = player->selectSee(allowed_dir);
     if (!allowed_dir) {
         std::cerr << "nothing to see here" << std::endl;
         return;
     }
     /* TODO: do not assert */
     assert (dir & allowed_dir);
-    this->board->see(see->getOwner(), dir);
+    this->board->see(player, dir);
 }
 
-void Game::exec(Slide *slide)
+void Game::execSlide(Player *player)
 {
     direction_t dir;
     int allowed_dir = 0;
-    int pos = slide->getOwner()->getAvatar()->getRoom()->getCell()->getPos();
+    int pos = player->getAvatar()->getRoom()->getCell()->getPos();
 
     if (pos % 5 /* x */ != 2) {
         allowed_dir |= DIRECTION_N | DIRECTION_S;
@@ -148,10 +204,10 @@ void Game::exec(Slide *slide)
         std::cerr << "you cannot slide in this cell" << std::endl;
         return;
     }
-    dir = slide->getOwner()->selectSlide(allowed_dir);
+    dir = player->selectSlide(allowed_dir);
     /* TODO: do not assert */
     assert (dir & allowed_dir);
-    this->board->slide(slide->getOwner(), dir);
+    this->board->slide(player, dir);
 }
 
 /* }}} */
@@ -164,10 +220,10 @@ void Game::removeAvatar(Avatar *avatar)
 
 void Game::rotatePlayer(void)
 {
-    Player *tmp = this->players.front();
+    // Player *tmp = this->players.front();
 
-    this->players.pop();
-    this->players.push(tmp);
+    // this->players.pop();
+    // this->players.push(tmp);
 }
 
 

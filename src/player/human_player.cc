@@ -2,7 +2,7 @@
 #include <assert.h>
 
 
-Action *HumanPlayer::getAction(void)
+Scheduling *HumanPlayer::getScheduling(void)
 {
     return NULL;
 }

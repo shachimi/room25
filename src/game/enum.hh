@@ -2,12 +2,13 @@
 # define ENUM_HH_
 
 typedef enum {
+    ACTION_NONE  = 0,
     ACTION_MOVE  = 1 << 0,
     ACTION_PUSH  = 1 << 1,
     ACTION_SLIDE = 1 << 2,
     ACTION_SEE   = 1 << 3,
     ACTION_SPEC  = 1 << 4,
-    ACTION_ALL   = 0xff,
+    ACTION_ALL   = 0x1f,
 } action_t;
 
 typedef enum {

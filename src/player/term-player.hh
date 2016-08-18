@@ -8,7 +8,8 @@ public:
     TermPlayer(int id);
     ~TermPlayer(void);
 
-    virtual Action *getAction(void);
+
+    virtual Scheduling *getScheduling(void);
     virtual direction_t selectMove(int allowed_dir);
     virtual direction_t selectSlide(int allowed_dir);
     virtual direction_t selectSee(int allowed_dir);

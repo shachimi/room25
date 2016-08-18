@@ -11,7 +11,6 @@ TermPlayer::~TermPlayer(void)
 {
 }
 
-
 static char *itod(int allowed_dir)
 {
     static char dir[5] = { 0 };
@@ -30,9 +29,69 @@ static char *itod(int allowed_dir)
     return dir;
 }
 
-Action *TermPlayer::getAction(void)
+static action_t get_action_from_command(char command)
 {
-    return NULL;
+    if (command == 'M') {
+        return ACTION_MOVE;
+    } else
+    if (command == 'S') {
+        return ACTION_SEE;
+    } else
+    if (command == 'P') {
+        return ACTION_PUSH;
+    } else
+    if (command == 'C') {
+        return ACTION_SLIDE;
+    }
+    assert (false);
+    return ACTION_NONE;
+}
+
+static direction_t get_direction_from_command(char command)
+{
+    if (command == 'N') {
+        return DIRECTION_N;
+    } else
+    if (command == 'O') {
+        return DIRECTION_O;
+    } else
+    if (command == 'S') {
+        return DIRECTION_S;
+    } else
+    if (command == 'E') {
+        return DIRECTION_E;
+    }
+    assert (false);
+    return DIRECTION_N;
+}
+
+Scheduling *TermPlayer::getScheduling(void)
+{
+    char str[255];
+    Scheduling *scheduling = new Scheduling();
+
+    scheduling->setOwner(this);
+    std::cout << "Choose your first action [MSPC]" << std::endl;
+    std::cin.getline(str, 255);
+    while ((str[0] != 'M' && str[0] != 'S' && str[0] != 'P' && str[0] != 'C')
+    ||      str[1])
+    {
+        std::cout << "Only enter one between [MSPC] please" << std::endl;
+        std::cin.getline(str, 255);
+    }
+    scheduling->setAction(get_action_from_command(str[0]), 1);
+
+    std::cout << "Choose your second action [MSPC]" << std::endl;
+    std::cin.getline(str, 255);
+    while ((str[0] != 'M' && str[0] != 'S' && str[0] != 'P' && str[0] != 'C')
+    ||      str[1])
+    {
+        std::cout << "Only enter one between [MSPC] please" << std::endl;
+        std::cin.getline(str, 255);
+    }
+    scheduling->setAction(get_action_from_command(str[0]), 2);
+
+    return scheduling;
 }
 
 direction_t TermPlayer::selectMove(int allowed_dir)
@@ -50,19 +109,7 @@ direction_t TermPlayer::selectMove(int allowed_dir)
                   << "] please" << std::endl;
         std::cin.getline(str, 255);
     }
-    switch (str[0]) {
-      case 'N':
-        return DIRECTION_N;
-      case 'O':
-        return DIRECTION_O;
-      case 'S':
-        return DIRECTION_S;
-      case 'E':
-        return DIRECTION_E;
-      default:
-        assert (false);
-    }
-    return DIRECTION_N;
+    return get_direction_from_command(str[0]);
 }
 
 direction_t TermPlayer::selectSlide(int allowed_dir)
@@ -80,19 +127,8 @@ direction_t TermPlayer::selectSlide(int allowed_dir)
                   << "] please" << std::endl;
         std::cin.getline(str, 255);
     }
-    switch (str[0]) {
-      case 'N':
-        return DIRECTION_N;
-      case 'O':
-        return DIRECTION_O;
-      case 'S':
-        return DIRECTION_S;
-      case 'E':
-        return DIRECTION_E;
-      default:
-        assert (false);
-    }
-    return DIRECTION_N;
+
+    return get_direction_from_command(str[0]);
 }
 
 
@@ -111,19 +147,8 @@ direction_t TermPlayer::selectSee(int allowed_dir)
                   << "] please" << std::endl;
         std::cin.getline(str, 255);
     }
-    switch (str[0]) {
-      case 'N':
-        return DIRECTION_N;
-      case 'O':
-        return DIRECTION_O;
-      case 'S':
-        return DIRECTION_S;
-      case 'E':
-        return DIRECTION_E;
-      default:
-        assert (false);
-    }
-    return DIRECTION_N;
+
+    return get_direction_from_command(str[0]);
 }
 
 direction_t TermPlayer::selectPushDirection(int allowed_dir)
@@ -141,19 +166,8 @@ direction_t TermPlayer::selectPushDirection(int allowed_dir)
                   << "] please" << std::endl;
         std::cin.getline(str, 255);
     }
-    switch (str[0]) {
-      case 'N':
-        return DIRECTION_N;
-      case 'O':
-        return DIRECTION_O;
-      case 'S':
-        return DIRECTION_S;
-      case 'E':
-        return DIRECTION_E;
-      default:
-        assert (false);
-    }
-    return DIRECTION_N;
+
+    return get_direction_from_command(str[0]);
 }
 
 Avatar *TermPlayer::selectPushTarget(std::vector<Avatar *> players)

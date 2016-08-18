@@ -6,7 +6,7 @@
 # include "player/avatar.hh"
 
 class Room;
-class Action;
+class Scheduling;
 
 class Player {
 public:
@@ -16,7 +16,7 @@ public:
     /* Game mechanics */
     /* {{{ Actions */
 
-    virtual Action *getAction(void) = 0;
+    virtual Scheduling *getScheduling(void) = 0;
     virtual direction_t selectMove(int allowed_dir) = 0;
     virtual direction_t selectSlide(int allowed_dir) = 0;
     virtual direction_t selectSee(int allowed_dir) = 0;
@@ -48,6 +48,6 @@ protected:
 };
 
 #include "room/room.hh"
-#include "game/action.hh"
+#include "game/scheduling.hh"
 
 #endif /* !PLAYER_HH_ */
