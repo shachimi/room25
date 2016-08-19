@@ -25,8 +25,28 @@ static char *itod(int allowed_dir)
     ALLOWED_DIR(O);
     ALLOWED_DIR(S);
     ALLOWED_DIR(E);
+#undef ALLOWED_DIR
     dir[cpt] = 0;
     return dir;
+}
+
+static char *action_available(char already_choose='\0')
+{
+    static char action[5] = { 0 };
+    int cpt = 0;
+
+#define  ALLOWED_ACTION(_action)                                             \
+    if (already_choose != _action) {                                         \
+        action[cpt++] = _action;                                             \
+    }
+
+    ALLOWED_ACTION('M');
+    ALLOWED_ACTION('P');
+    ALLOWED_ACTION('C');
+    ALLOWED_ACTION('S');
+#undef ALLOWED_ACTION
+    action[cpt] = 0;
+    return action;
 }
 
 static action_t get_action_from_command(char command)
@@ -43,7 +63,6 @@ static action_t get_action_from_command(char command)
     if (command == 'C') {
         return ACTION_SLIDE;
     }
-    assert (false);
     return ACTION_NONE;
 }
 
@@ -68,30 +87,52 @@ static direction_t get_direction_from_command(char command)
 Scheduling *TermPlayer::getScheduling(void)
 {
     char str[255];
+    char *actions;
     Scheduling *scheduling = new Scheduling();
 
     scheduling->setOwner(this);
-    std::cout << "Choose your first action [MSPC]" << std::endl;
+    actions = action_available();
+    std::cout << "Choose your first action [" << actions << "]" << std::endl;
     std::cin.getline(str, 255);
     while ((str[0] != 'M' && str[0] != 'S' && str[0] != 'P' && str[0] != 'C')
     ||      str[1])
     {
-        std::cout << "Only enter one between [MSPC] please" << std::endl;
+        std::cout << "Only enter one between [" << actions
+                  << "] please" << std::endl;
         std::cin.getline(str, 255);
     }
     scheduling->setAction(get_action_from_command(str[0]), 1);
+    actions = action_available(str[0]);
 
-    std::cout << "Choose your second action [MSPC]" << std::endl;
+    std::cout << "Choose your second action [" << actions
+              << "] or None(N)" << std::endl;
     std::cin.getline(str, 255);
-    while ((str[0] != 'M' && str[0] != 'S' && str[0] != 'P' && str[0] != 'C')
+    while ((str[0] != 'M' && str[0] != 'S' && str[0] != 'P' && str[0] != 'C' && str[0] != 'N')
     ||      str[1])
     {
-        std::cout << "Only enter one between [MSPC] please" << std::endl;
+        std::cout << "Only enter one between [" << actions
+                  << "] or N please" << std::endl;
         std::cin.getline(str, 255);
     }
     scheduling->setAction(get_action_from_command(str[0]), 2);
 
     return scheduling;
+}
+
+bool TermPlayer::useAction(void)
+{
+    char str[255];
+
+    std::cout << "Do you want to use your action [y/n]?" << std::endl;
+
+    std::cin.getline(str, 255);
+    while ((str[0] != 'y' && str[0] != 'Y' && str[0] != 'n' && str[0] != 'N')
+    ||      str[1])
+    {
+        std::cout << "Yes or No?" << std::endl;
+        std::cin.getline(str, 255);
+    }
+    return str[0] == 'y' || str[0] == 'Y';
 }
 
 direction_t TermPlayer::selectMove(int allowed_dir)

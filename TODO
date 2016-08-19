@@ -14,9 +14,9 @@ room25
 ** illusionroom -> give a list of coordinate to player that should return the index in the vector of the one he want to see, then if valid switch roomeffect and activate the one of the room taken
 ** warproom -> give a list of coordinate to player that should return the index in the vector of the one he want to see, then if valid  switch the room inside the two cell
 
-* Scheduling/Game handle mono action (first or second sequence)
-* Guardian programmation
-* add static Sheduling::validate(scheduling, Avatar)
+* Scheduling/Game handle mono action (first or second sequence) (DONE)
+* Guardian programmation (no scheduling for guardian?)
+* add static Sheduling::validate(scheduling, Avatar) (DONE without avatar)
 
 * In Game::execPush only append valid target (not myself and not Robot) /* maybe in Rule? */
 * truly handle turn (dead people does not play anymore)

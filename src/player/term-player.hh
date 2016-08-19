@@ -10,12 +10,12 @@ public:
 
 
     virtual Scheduling *getScheduling(void);
+    virtual bool useAction(void);
     virtual direction_t selectMove(int allowed_dir);
     virtual direction_t selectSlide(int allowed_dir);
     virtual direction_t selectSee(int allowed_dir);
     virtual direction_t selectPushDirection(int allowed_dir);
     virtual Avatar *selectPushTarget(std::vector<Avatar *> players);
-
 
     virtual void seeRoom(const Room *room);
 };

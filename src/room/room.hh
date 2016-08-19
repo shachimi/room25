@@ -8,6 +8,7 @@
 
 class Cell;
 class RoomEffect;
+class Scheduling;
 
 class Room {
 public:
@@ -17,6 +18,7 @@ public:
     void print(std::ostream& out);
     void print(std::ostream& out, int inner_line);
 
+    bool validateSchedule(Scheduling *scheduling);
 
 public:
     /* Mechanic */
@@ -46,7 +48,9 @@ protected:
     bool accessible;
 };
 
+# include "game/scheduling.hh"
 # include "room/cell.hh"
 # include "room/room_effect.hh"
+
 
 #endif /* !ROOM_HH_ */

@@ -25,6 +25,11 @@ void RoomEffect::prisoner_stay(Avatar *prisoner)
 {
 }
 
+bool RoomEffect::validateSchedule(Scheduling *scheduling)
+{
+    return true;
+}
+
 void RoomEffect::turn_ends(void)
 {
 }

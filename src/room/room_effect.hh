@@ -4,6 +4,8 @@
 # include <iostream>
 # include <vector>
 
+# include "game/scheduling.hh"
+
 enum room_kind_t {
     ROOM_KIND_CENTER,
     ROOM_KIND_EXIT,
@@ -24,6 +26,7 @@ public:
     virtual void turn_starts(void);
     virtual void prisoner_enter(Avatar *prisoner);
     virtual void prisoner_stay(Avatar *prisoner);
+    virtual bool validateSchedule(Scheduling *scheduling);
     virtual void turn_ends(void);
 
     virtual void print(std::ostream& out);

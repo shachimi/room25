@@ -27,7 +27,10 @@ void Game::play_turn(void)
     std::vector<Scheduling *> schedule = std::vector<Scheduling *>();
 
     for (int i = 0; i < this->players.size(); i++) {
-        schedule.push_back(this->players[i]->getScheduling());
+        Scheduling *scheduling = this->players[i]->getScheduling();
+
+        assert (scheduling->isValid());
+        schedule.push_back(scheduling);
     }
 
     std::cout << "First programmation turn" << std::endl;
@@ -46,6 +49,8 @@ void Game::play_turn(void)
             break;
           case ACTION_SEE:
             this->execSee(schedule[i]->getOwner());
+            break;
+          case ACTION_NONE:
             break;
           default:
             assert (false && "should only be one action");
@@ -69,6 +74,8 @@ void Game::play_turn(void)
             break;
           case ACTION_SEE:
             this->execSee(schedule[i]->getOwner());
+            break;
+          case ACTION_NONE:
             break;
           default:
             assert (false && "should only be one action");

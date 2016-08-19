@@ -17,6 +17,7 @@ public:
     /* {{{ Actions */
 
     virtual Scheduling *getScheduling(void) = 0;
+    virtual bool useAction(void) = 0;
     virtual direction_t selectMove(int allowed_dir) = 0;
     virtual direction_t selectSlide(int allowed_dir) = 0;
     virtual direction_t selectSee(int allowed_dir) = 0;

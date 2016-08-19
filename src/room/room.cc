@@ -36,6 +36,11 @@ void Room::removeAvatar(Avatar *avatar)
     }
 }
 
+bool Room::validateSchedule(Scheduling *scheduling)
+{
+    return this->effect->validateSchedule(scheduling);
+}
+
 void Room::print(std::ostream& out)
 {
     if (this->visible) {
