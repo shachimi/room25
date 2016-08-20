@@ -30,6 +30,18 @@ static char *itod(int allowed_dir)
     return dir;
 }
 
+static bool is_in_ref(char c, char *ref)
+{
+    int i = 0;
+
+    while (ref[i]) {
+        if (ref[i++] == c) {
+            return true;
+        }
+    }
+    return false;
+}
+
 static char *action_available(char already_choose='\0')
 {
     static char action[5] = { 0 };
@@ -94,24 +106,20 @@ Scheduling *TermPlayer::getScheduling(void)
     actions = action_available();
     Log::print() << "Choose your 1st action [" << actions << "]";
     std::cin.getline(str, 255);
-    while ((str[0] != 'M' && str[0] != 'S' && str[0] != 'P' && str[0] != 'C')
-    ||      str[1])
-    {
+    while (!is_in_ref(str[0], actions) || str[1]) {
         Log::print() << "Only enter one between [" << actions
-			<< "] please";
+                     << "] please";
         std::cin.getline(str, 255);
     }
     scheduling->setAction(get_action_from_command(str[0]), 1);
     actions = action_available(str[0]);
 
-	Log::print() << "Choose your 2nd action [" << actions
-		<< "] or None(N)";
+    Log::print() << "Choose your 2nd action [" << actions
+                 << "] or None(N)";
     std::cin.getline(str, 255);
-    while ((str[0] != 'M' && str[0] != 'S' && str[0] != 'P' && str[0] != 'C' && str[0] != 'N')
-    ||      str[1])
-    {
-		Log::print() << "Only enter one between [" << actions
-			<< "] or N please";
+    while ((!is_in_ref(str[0], actions) && str[0] != 'N') || str[1]) {
+        Log::print() << "Only enter one between [" << actions
+                     << "] or N please";
         std::cin.getline(str, 255);
     }
     scheduling->setAction(get_action_from_command(str[0]), 2);
@@ -123,13 +131,11 @@ bool TermPlayer::useAction(void)
 {
     char str[255];
 
-	Log::print() << "Do you want to use your action [y/n]?";
+    Log::print() << "Do you want to use your action [y/n]?";
 
     std::cin.getline(str, 255);
-    while ((str[0] != 'y' && str[0] != 'Y' && str[0] != 'n' && str[0] != 'N')
-    ||      str[1])
-    {
-		Log::print() << "Yes or No?";
+    while (is_in_ref(str[0],  "yYnN") || str[1]) {
+        Log::print() << "Yes or No?";
         std::cin.getline(str, 255);
     }
     return str[0] == 'y' || str[0] == 'Y';
@@ -138,16 +144,14 @@ bool TermPlayer::useAction(void)
 direction_t TermPlayer::selectMove(int allowed_dir)
 {
     char str[255];
+    char *allowed = itod(allowed_dir);
 
-	Log::print() << "Choose a direction to move [" << itod(allowed_dir)
-              << "]";
+    Log::print() << "Choose a direction to move [" << allowed << "]";
 
     std::cin.getline(str, 255);
-    while ((str[0] != 'N' && str[0] != 'O' && str[0] != 'S' && str[0] != 'E')
-    ||      str[1])
-    {
-		Log::print() << "Only enter one between [" << itod(allowed_dir)
-                  << "] please" << std::endl;
+    while (is_in_ref(str[0], allowed) || str[1]) {
+        Log::print() << "Only enter one between [" << allowed_dir
+                     << "] please";
         std::cin.getline(str, 255);
     }
     return get_direction_from_command(str[0]);
@@ -156,16 +160,13 @@ direction_t TermPlayer::selectMove(int allowed_dir)
 direction_t TermPlayer::selectSlide(int allowed_dir)
 {
     char str[255];
+    char *allowed = itod(allowed_dir);
 
-	Log::print() << "Choose a direction to slide [" << itod(allowed_dir)
-              << "]";
+    Log::print() << "Choose a direction to slide [" << allowed << "]";
 
     std::cin.getline(str, 255);
-    while ((str[0] != 'N' && str[0] != 'O' && str[0] != 'S' && str[0] != 'E')
-    ||      str[1])
-    {
-		Log::print() << "Only enter one between [" << itod(allowed_dir)
-                  << "] please";
+    while (is_in_ref(str[0], allowed) || str[1]) {
+        Log::print() << "Only enter one between [" << allowed << "] please";
         std::cin.getline(str, 255);
     }
 
@@ -176,16 +177,14 @@ direction_t TermPlayer::selectSlide(int allowed_dir)
 direction_t TermPlayer::selectSee(int allowed_dir)
 {
     char str[255];
+    char *allowed = itod(allowed_dir);
 
-	Log::print() << "Choose a direction to see [" << itod(allowed_dir)
-              << "]";
+    Log::print() << "Choose a direction to see [" << allowed << "]";
 
     std::cin.getline(str, 255);
-    while ((str[0] != 'N' && str[0] != 'O' && str[0] != 'S' && str[0] != 'E')
-    ||      str[1])
-    {
-		Log::print() << "Only enter one between [" << itod(allowed_dir)
-                  << "] please";
+    while (is_in_ref(str[0], allowed) || str[1]) {
+        Log::print() << "Only enter one between [" << allowed
+                     << "] please";
         std::cin.getline(str, 255);
     }
 
@@ -195,16 +194,14 @@ direction_t TermPlayer::selectSee(int allowed_dir)
 direction_t TermPlayer::selectPushDirection(int allowed_dir)
 {
     char str[255];
+    char *allowed = itod(allowed_dir);
 
-	Log::print() << "Choose a direction to push [" << itod(allowed_dir)
-              << "]";
+    Log::print() << "Choose a direction to push [" << allowed << "]";
 
     std::cin.getline(str, 255);
-    while ((str[0] != 'N' && str[0] != 'O' && str[0] != 'S' && str[0] != 'E')
-    ||      str[1])
-    {
-		Log::print() << "Only enter one between [" << itod(allowed_dir)
-                  << "] please";
+    while (is_in_ref(str[0], allowed) || str[1]) {
+        Log::print() << "Only enter one between [" << allowed
+                     << "] please";
         std::cin.getline(str, 255);
     }
 
@@ -219,7 +216,7 @@ Avatar *TermPlayer::selectPushTarget(std::vector<Avatar *> players)
 
 void TermPlayer::seeRoom(const Room *room)
 {
-	Log::print() << "I see a room ";
+    Log::print() << "I see a room ";
     room->getEffect()->print(std::cout);
-	Log::print() << std::endl;
+    Log::print() << std::endl;
 }

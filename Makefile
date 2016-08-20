@@ -5,7 +5,7 @@ src/game/slide.o src/game/see.o src/game/push.o src/room/deadly-room.o       \
 src/player/player.o src/player/human_player.o src/player/term-player.o       \
 src/room/acid-room.o src/room/torture-room.o src/room/flooding-room.o        \
 src/player/avatar.o src/player/prisoner.o src/player/robot.o                 \
-src/game/scheduling.o
+src/game/scheduling.o src/utils/Log.o
 
 LIBS=
 CFLAGS=-Werror -Wextra -Wall
@@ -14,6 +14,9 @@ all: $(BIN)
 
 
 %.o: %.c
+	g++ -g -c $^ -Isrc -o $@
+
+%.o: %.cpp
 	g++ -g -c $^ -Isrc -o $@
 
 %.o: %.cc
