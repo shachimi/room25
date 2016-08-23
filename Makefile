@@ -28,3 +28,6 @@ clean:
 
 .phony:
 	clean
+
+make-doc:
+	@(cd doc && doxygen conf_file)
