@@ -29,6 +29,7 @@ void Game::play_turn(void)
 
 	//All the players planify their actions
     for (int i = 0; i < this->players.size(); i++) {
+		Log::print() << "# Player" << this->players[i]->getId() << std::endl;
         Scheduling *scheduling = this->players[i]->getScheduling();
 
         assert (scheduling->isValid());
@@ -38,7 +39,7 @@ void Game::play_turn(void)
 	Log::print() << "First programmation turn" << std::endl;
     for (int i = 0; i < schedule.size(); i++) {
         action_t action = schedule[i]->getAction(1);
-
+		Log::print() << "# Player" << schedule[i]->getOwner()->getId() << std::endl;
         switch (action) {
           case ACTION_MOVE:
             this->execMove(schedule[i]->getOwner());
@@ -63,7 +64,7 @@ void Game::play_turn(void)
 	Log::print() << "Second programmation turn" << std::endl;
     for (int i = 0; i < schedule.size(); i++) {
         action_t action = schedule[i]->getAction(2);
-
+		Log::print() << "# Player" << schedule[i]->getOwner()->getId() << std::endl;
         switch (action) {
           case ACTION_MOVE:
             this->execMove(schedule[i]->getOwner());
