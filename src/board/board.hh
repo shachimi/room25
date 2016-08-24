@@ -28,7 +28,7 @@ public: /* game mechanics */
     void push(Player *owner, Avatar *target, direction_t direction);
     void see(Player *owner, direction_t direction);
 
-    void print(std::ostream& out);
+    void print(std::ostream& out) const;
 
 protected:
     std::vector<Cell *> cells;

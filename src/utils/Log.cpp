@@ -146,7 +146,7 @@ Log& Log::operator <<(std::ostream& (*data)(std::ostream&)){
 	return *this;
 }
 
-Log& Log::operator <<(Board&				data){
+Log& Log::operator <<(const Board&				data){
 	data.print(logFile);
 	data.print(std::cout);
 	return *this;

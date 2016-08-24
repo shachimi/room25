@@ -88,7 +88,7 @@ void Board::shuffle(void)
 
 }
 
-void Board::print(std::ostream& out)
+void Board::print(std::ostream& out) const
 {
     out << "   |";
     for (int x = 0; x < 5; x++) {

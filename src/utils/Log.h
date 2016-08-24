@@ -59,7 +59,7 @@ public:
 
 	Log& operator<< (std::ostream& (*pf)(std::ostream&));
 
-	Log& operator <<(Board&				data);
+	Log& operator <<(const Board&				data);
 	
 private:
 	enum Level
