@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <vector>
 #include "game.hh"
+#include "utils/Log.h"
 
 Game *Game::instance = NULL;
 
@@ -26,6 +27,7 @@ void Game::play_turn(void)
 {
     std::vector<Scheduling *> schedule = std::vector<Scheduling *>();
 
+	//All the players planify their actions
     for (int i = 0; i < this->players.size(); i++) {
         Scheduling *scheduling = this->players[i]->getScheduling();
 
@@ -33,7 +35,7 @@ void Game::play_turn(void)
         schedule.push_back(scheduling);
     }
 
-    std::cout << "First programmation turn" << std::endl;
+	Log::print() << "First programmation turn" << std::endl;
     for (int i = 0; i < schedule.size(); i++) {
         action_t action = schedule[i]->getAction(1);
 
@@ -58,7 +60,7 @@ void Game::play_turn(void)
         }
     }
 
-    std::cout << "Second programmation turn" << std::endl;
+	Log::print() << "Second programmation turn" << std::endl;
     for (int i = 0; i < schedule.size(); i++) {
         action_t action = schedule[i]->getAction(2);
 

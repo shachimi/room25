@@ -1,8 +1,8 @@
 #include <iostream>
+#include "utils/Log.h"
 #include "game/game.hh"
 #include "player/term-player.hh"
 #include "player/prisoner.hh"
-
 
 int main(int argc, char **argv)
 {
@@ -18,21 +18,13 @@ int main(int argc, char **argv)
     game->pushPlayer(p1);
     game->pushPlayer(p2);
 
-    std::cout << "Turn 1" << std::endl;
-    game->play_turn();
-    board->print(std::cout);
-    std::cout << "Turn 2" << std::endl;
-    game->play_turn();
-    board->print(std::cout);
-    std::cout << "Turn 3" << std::endl;
-    game->play_turn();
-    board->print(std::cout);
-    std::cout << "Turn 4" << std::endl;
-    game->play_turn();
-    board->print(std::cout);
-    std::cout << "Turn 5" << std::endl;
-    game->play_turn();
-    board->print(std::cout);
+	int turn_count = 1;
+	while (1) {
+		Log::print() << "Turn" << turn_count << std::endl;
+		game->play_turn();
+		board->print(std::cout);
+		turn_count++;
+	}
 
     return 0;
 }
