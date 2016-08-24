@@ -22,6 +22,6 @@ protected:
     Room *room;
 };
 
-# include "room/room.hh"
+# include "board/room.hh"
 
 #endif /* !AVATAR_HH_ */

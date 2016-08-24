@@ -49,8 +49,8 @@ protected:
 };
 
 # include "game/scheduling.hh"
-# include "room/cell.hh"
-# include "room/room_effect.hh"
+# include "board/cell.hh"
+# include "board/room_effect.hh"
 
 
 #endif /* !ROOM_HH_ */

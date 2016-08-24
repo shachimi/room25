@@ -20,9 +20,9 @@ int main(int argc, char **argv)
 
 	int turn_count = 1;
 	while (1) {
+		Log::print() << *board;
 		Log::print() << "Turn" << turn_count << std::endl;
 		game->play_turn();
-		board->print(std::cout);
 		turn_count++;
 	}
 

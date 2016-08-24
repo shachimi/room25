@@ -4,7 +4,7 @@
 # include <queue>
 
 # include "player/player.hh"
-# include "room/board.hh"
+# include "board/board.hh"
 # include "game/action.hh"
 # include "game/move.hh"
 # include "game/push.hh"

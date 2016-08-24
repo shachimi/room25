@@ -5,7 +5,7 @@
 # include <vector>
 
 # include "game/enum.hh"
-# include "room/cell.hh"
+# include "board/cell.hh"
 # include "player/player.hh"
 # include "player/avatar.hh"
 

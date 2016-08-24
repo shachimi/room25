@@ -140,8 +140,14 @@ Log& Log::operator <<(std::string  data){
 	return *this;
 }
 
-Log& Log::operator <<(std::ostream& (*pf)(std::ostream&)){
-	logFile << pf;
-	std::cout << pf;
+Log& Log::operator <<(std::ostream& (*data)(std::ostream&)){
+	logFile << data;
+	std::cout << data;
+	return *this;
+}
+
+Log& Log::operator <<(Board&				data){
+	data.print(logFile);
+	data.print(std::cout);
 	return *this;
 }

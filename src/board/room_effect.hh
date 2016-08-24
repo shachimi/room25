@@ -41,6 +41,6 @@ protected:
 };
 
 # include "player/avatar.hh"
-# include "room/room.hh"
+# include "board/room.hh"
 
 #endif /* !ROOM_EFFECT_HH_ */

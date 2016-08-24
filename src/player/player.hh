@@ -48,7 +48,7 @@ protected:
     Avatar *avatar;
 };
 
-#include "room/room.hh"
+#include "board/room.hh"
 #include "game/scheduling.hh"
 
 #endif /* !PLAYER_HH_ */

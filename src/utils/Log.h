@@ -16,6 +16,8 @@
 #include <fstream>
 #include <string>
 
+#include "board/board.hh"
+
 class Log
 {
 public:
@@ -56,6 +58,8 @@ public:
 	Log& operator <<(std::string		data);
 
 	Log& operator<< (std::ostream& (*pf)(std::ostream&));
+
+	Log& operator <<(Board&				data);
 	
 private:
 	enum Level
