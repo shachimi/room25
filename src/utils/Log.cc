@@ -3,7 +3,7 @@
  * \author Monkeypac
  */
 
-#include "Log.h"
+#include "Log.hh"
 
 Log* Log::m_instance = NULL; /// Global static pointer to ensure the singleton pattern of the class
 std::string Log::fileName = "log.txt"; ///Global static var to save log file name
@@ -146,7 +146,7 @@ Log& Log::operator <<(std::ostream& (*data)(std::ostream&)){
 	return *this;
 }
 
-Log& Log::operator <<(const Board&				data){
+Log& Log::operator <<(Board& data){
 	data.print(logFile);
 	data.print(std::cout);
 	return *this;

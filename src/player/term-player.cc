@@ -1,6 +1,6 @@
 #include "term-player.hh"
 #include <assert.h>
-#include "utils/Log.h"
+#include "utils/Log.hh"
 
 TermPlayer::TermPlayer(int id)
     : Player(id)
@@ -134,7 +134,7 @@ bool TermPlayer::useAction(void)
     Log::print() << "Do you want to use your action [y/n]?";
 
     std::cin.getline(str, 255);
-    while (is_in_ref(str[0],  "yYnN") || str[1]) {
+    while (!is_in_ref(str[0],  "yYnN") || str[1]) {
         Log::print() << "Yes or No?";
         std::cin.getline(str, 255);
     }
@@ -149,8 +149,9 @@ direction_t TermPlayer::selectMove(int allowed_dir)
     Log::print() << "Choose a direction to move [" << allowed << "]";
 
     std::cin.getline(str, 255);
-    while (is_in_ref(str[0], allowed) || str[1]) {
-        Log::print() << "Only enter one between [" << allowed_dir
+    while (!is_in_ref(str[0], allowed) || str[1]) {
+        Log::error("term_player") << "Direction entered :" << str << (int)str[1] << std::endl;
+        Log::print() << "Only enter one between [" << allowed
                      << "] please";
         std::cin.getline(str, 255);
     }
@@ -165,7 +166,7 @@ direction_t TermPlayer::selectSlide(int allowed_dir)
     Log::print() << "Choose a direction to slide [" << allowed << "]";
 
     std::cin.getline(str, 255);
-    while (is_in_ref(str[0], allowed) || str[1]) {
+    while (!is_in_ref(str[0], allowed) || str[1]) {
         Log::print() << "Only enter one between [" << allowed << "] please";
         std::cin.getline(str, 255);
     }
@@ -182,7 +183,7 @@ direction_t TermPlayer::selectSee(int allowed_dir)
     Log::print() << "Choose a direction to see [" << allowed << "]";
 
     std::cin.getline(str, 255);
-    while (is_in_ref(str[0], allowed) || str[1]) {
+    while (!is_in_ref(str[0], allowed) || str[1]) {
         Log::print() << "Only enter one between [" << allowed
                      << "] please";
         std::cin.getline(str, 255);
@@ -199,7 +200,7 @@ direction_t TermPlayer::selectPushDirection(int allowed_dir)
     Log::print() << "Choose a direction to push [" << allowed << "]";
 
     std::cin.getline(str, 255);
-    while (is_in_ref(str[0], allowed) || str[1]) {
+    while (!is_in_ref(str[0], allowed) || str[1]) {
         Log::print() << "Only enter one between [" << allowed
                      << "] please";
         std::cin.getline(str, 255);

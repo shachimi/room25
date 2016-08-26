@@ -1,5 +1,5 @@
 #include <iostream>
-#include "utils/Log.h"
+#include "utils/Log.hh"
 #include "game/game.hh"
 #include "player/term-player.hh"
 #include "player/prisoner.hh"

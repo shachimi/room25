@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <vector>
 #include "game.hh"
-#include "utils/Log.h"
+#include "utils/Log.hh"
 
 Game *Game::instance = NULL;
 
