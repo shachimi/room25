@@ -31,6 +31,7 @@ public: /* game mechanics */
     void print(std::ostream& out) const;
 
 protected:
+    int l;
     std::vector<Cell *> cells;
 };
 

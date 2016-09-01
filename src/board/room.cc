@@ -5,7 +5,8 @@ Room::Room(void)
     : avatars(std::vector<Avatar *>()),
       cell(NULL),
       effect(NULL),
-      visible(false)
+      visible(false),
+      accessible(true)
 {
 }
 

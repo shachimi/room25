@@ -32,6 +32,7 @@ public:
     virtual void print(std::ostream& out);
 
     /* Getter and setters */
+    room_kind_t getKind(void) { return this->kind; };
     void setKind(room_kind_t kind) { this->kind = kind; };
     void setRoom(Room *room) { this->room = room; };
 

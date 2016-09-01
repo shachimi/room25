@@ -1,10 +1,13 @@
 #include "board.hh"
 #include <assert.h>
+#include <time.h>
+#include <stdlib.h>
 
 /* {{{ Initialize */
 
 Board::Board(void)
-    : cells(std::vector<Cell *>())
+    : l(5),
+      cells(std::vector<Cell *>())
 {
     int   i = 0;
     Cell *cell;
@@ -77,6 +80,7 @@ Board::Board(void)
         room->setEffect(effect);
         this->getCell(i)->setRoom(room);
     }
+    this->shuffle();
 }
 
 Board::~Board(void)
@@ -85,7 +89,66 @@ Board::~Board(void)
 
 void Board::shuffle(void)
 {
+    Room *center;
+    Room *exit;
+    std::vector<Room *> rooms;
 
+    for (int i = 0; i < this->cells.size(); i++) {
+        Room *room = this->cells[i]->getRoom();
+
+        if (room->getEffect()->getKind() == ROOM_KIND_CENTER) {
+            center = room;
+        } else
+        if (room->getEffect()->getKind() == ROOM_KIND_EXIT) {
+            exit = room;
+        } else {
+            rooms.push_back(room);
+        }
+        this->cells[i]->setRoom(NULL);
+    }
+    assert (rooms.size() == this->cells.size() - 2);
+
+    srand(time(NULL));
+    for (int i = 0; i < rooms.size() * 2; i++) {
+        Room *tmp;
+        int idx = rand() % rooms.size();
+
+        tmp = rooms[idx];
+        rooms[idx] = rooms[i % rooms.size()];
+        rooms[i % rooms.size()] = tmp;
+    }
+    for (int i = 0; i < this->l / 2; i++) {
+        for (int j = -i; j <= i; j++) {
+            Cell *cell = this->cells[this->l / 2 + i * j + this->l * i];
+
+            cell->setRoom(rooms.back());
+            rooms.pop_back();
+        }
+    }
+    this->cells[this->l * this->l / 2]->setRoom(center);
+    for (int i = this->l / 2 + 1; i < this->l; i++) {
+        for (int j = (i + 1) - this->l; j <= this->l - (i + 1); j++) {
+            Cell *cell = this->cells[this->l / 2 + i * j + this->l * i];
+
+            cell->setRoom(rooms.back());
+            rooms.pop_back();
+        }
+    }
+    rooms.push_back(exit);
+    {
+        Room *tmp;
+        int idx = rand() % rooms.size();
+
+        tmp = rooms[idx];
+        rooms[idx] = rooms[rooms.size() - 1];
+        rooms[rooms.size() - 1] = tmp;
+    }
+    for (int i = 0; i < this->l * this->l; i++) {
+        if (!this->cells[i]->getRoom()) {
+            this->cells[i]->setRoom(rooms.back());
+            rooms.pop_back();
+        }
+    }
 }
 
 void Board::print(std::ostream& out) const
