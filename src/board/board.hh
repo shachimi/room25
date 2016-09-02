@@ -12,6 +12,7 @@
 class Board {
 public:
     Board(void);
+    Board(std::vector<Room *> rooms);
     ~Board(void);
 
     void shuffle(void);

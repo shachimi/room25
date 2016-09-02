@@ -12,19 +12,19 @@ Board::Board(void)
     int   i = 0;
     Cell *cell;
 
-    for (int y = 0; y < 5; y++) {
-        for (int x = 0; x < 5; x++) {
-            Cell *cell = new Cell(x + 5 * y);
+    for (int y = 0; y < this->l; y++) {
+        for (int x = 0; x < this->l; x++) {
+            Cell *cell = new Cell(x + this->l * y);
 
             this->cells.push_back(cell);
             if (0 < x) {
-                Cell *tmp = this->cells[x - 1 + y * 5];
+                Cell *tmp = this->cells[x - 1 + y * this->l];
 
                 tmp->setRight(cell);
                 cell->setLeft(tmp);
             }
             if (0 < y) {
-                Cell *tmp = this->cells[x + (y - 1) * 5];
+                Cell *tmp = this->cells[x + (y - 1) * this->l];
 
                 tmp->setDown(cell);
                 cell->setUp(tmp);
@@ -36,7 +36,7 @@ Board::Board(void)
         Room *room = new Room();
         RoomEffect *effect = new RoomEffect();
 
-        cell = this->getCell(2, 2);
+        cell = this->getCell(this->l / 2, this->l / 2);
         effect->setKind(ROOM_KIND_CENTER);
         room->setEffect(effect);
         room->setVisible(true);
@@ -62,7 +62,7 @@ Board::Board(void)
         Room *room = new Room();
         RoomEffect *effect = new RoomEffect();
 
-        if (i == 12) {
+        if (i == this->l * this->l / 2) {
             delete room;
             delete effect;
             continue;
@@ -79,6 +79,57 @@ Board::Board(void)
         effect->setKind(ROOM_KIND_SAFE);
         room->setEffect(effect);
         this->getCell(i)->setRoom(room);
+    }
+    this->shuffle();
+}
+
+Board::Board(std::vector<Room *> rooms)
+    : l(5),
+      cells(std::vector<Cell *>())
+{
+    int   i = 0;
+    Cell *cell;
+
+    for (int y = 0; y < this->l; y++) {
+        for (int x = 0; x < this->l; x++) {
+            Cell *cell = new Cell(x + this->l * y);
+
+            this->cells.push_back(cell);
+            if (0 < x) {
+                Cell *tmp = this->cells[x - 1 + y * this->l];
+
+                tmp->setRight(cell);
+                cell->setLeft(tmp);
+            }
+            if (0 < y) {
+                Cell *tmp = this->cells[x + (y - 1) * this->l];
+
+                tmp->setDown(cell);
+                cell->setUp(tmp);
+            }
+        }
+    }
+    {
+        Room *room = new Room();
+        RoomEffect *effect = new RoomEffect();
+
+        effect->setKind(ROOM_KIND_CENTER);
+        room->setEffect(effect);
+        room->setVisible(true);
+        rooms.push_back(room);
+    }
+    {
+        Room *room = new Room();
+        RoomEffect *effect = new RoomEffect();
+
+        effect->setKind(ROOM_KIND_EXIT);
+        room->setEffect(effect);
+        rooms.push_back(room);
+    }
+    assert (rooms.size() == this->cells.size());
+
+    for (int i = 0; i < this->l * this->l; i++) {
+        this->cells[i]->setRoom(rooms[i]);
     }
     this->shuffle();
 }
