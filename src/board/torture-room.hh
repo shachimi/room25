@@ -3,7 +3,7 @@
 
 # include "player/player.hh"
 
-class TortureRoom : RoomEffect {
+class TortureRoom : public RoomEffect {
 public:
     TortureRoom(void);
     ~TortureRoom(void);
