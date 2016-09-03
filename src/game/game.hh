@@ -6,10 +6,8 @@
 # include "player/player.hh"
 # include "board/board.hh"
 # include "game/action.hh"
-# include "game/move.hh"
-# include "game/push.hh"
-# include "game/slide.hh"
-# include "game/see.hh"
+# include "game/rule.hh"
+# include "player/prisoner.hh"
 
 
 class Game {
@@ -37,6 +35,9 @@ protected:
     /* TODO: made a Rule class to abstract win/lose/play_turn method */
     std::vector<Player *> players;
     Board *board;
+
+    Rule *rule;
+    int first_player;
 
 private:
     Game(void);

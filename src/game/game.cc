@@ -3,11 +3,15 @@
 #include "game.hh"
 #include "utils/Log.hh"
 
+/* {{{ Initialize */
+
 Game *Game::instance = NULL;
 
 Game::Game(void)
     : players(std::vector<Player *>()),
-      board(new Board())
+      board(new Board()),
+      rule(NULL),
+      first_player(0)
 {
 }
 
@@ -23,23 +27,31 @@ Game *Game::getInstance(void)
     return Game::instance;
 }
 
+/* }}} */
+
 void Game::play_turn(void)
 {
     std::vector<Scheduling *> schedule = std::vector<Scheduling *>();
 
-	//All the players planify their actions
-    for (int i = 0; i < this->players.size(); i++) {
-		Log::print() << "# Player" << this->players[i]->getId() << std::endl;
-        Scheduling *scheduling = this->players[i]->getScheduling();
+    /* All the players planify their actions */
+    for (int i = this->first_player;
+         i < this->players.size() + this->first_player; i++)
+    {
+        Scheduling *scheduling;
+        Player *player = this->players[i % this->players.size()];
 
+        Log::print() << "# Player" << player->getId();
+
+        scheduling = this->players[i]->getScheduling();
         assert (scheduling->isValid());
         schedule.push_back(scheduling);
     }
 
-	Log::print() << "First programmation turn" << std::endl;
+    Log::print() << "First programmation turn" << std::endl;
     for (int i = 0; i < schedule.size(); i++) {
         action_t action = schedule[i]->getAction(1);
-		Log::print() << "# Player" << schedule[i]->getOwner()->getId() << std::endl;
+
+        Log::print() << "# Player" << schedule[i]->getOwner()->getId();
         switch (action) {
           case ACTION_MOVE:
             this->execMove(schedule[i]->getOwner());
@@ -61,10 +73,11 @@ void Game::play_turn(void)
         }
     }
 
-	Log::print() << "Second programmation turn" << std::endl;
+    Log::print() << "Second programmation turn" << std::endl;
     for (int i = 0; i < schedule.size(); i++) {
         action_t action = schedule[i]->getAction(2);
-		Log::print() << "# Player" << schedule[i]->getOwner()->getId() << std::endl;
+
+        Log::print() << "# Player" << schedule[i]->getOwner()->getId();
         switch (action) {
           case ACTION_MOVE:
             this->execMove(schedule[i]->getOwner());
@@ -225,15 +238,22 @@ void Game::execSlide(Player *player)
 
 void Game::removeAvatar(Avatar *avatar)
 {
-    /* TODO: remove the robot and see what to do with prisoner */
+    Prisoner *prisoner = static_cast<Prisoner *>(avatar);
+
+    avatar->destroy();
+    if (prisoner && this->rule->destroyPrisoner(prisoner)) {
+        Log::print() << "GAME OVER";
+        /* TODO: do agraceful exit rather than this. */
+        // exit(0);
+    }
 }
 
 void Game::rotatePlayer(void)
 {
-    // Player *tmp = this->players.front();
-
-    // this->players.pop();
-    // this->players.push(tmp);
+    /* TODO: replace players.size by the number total of prisoner in case
+     *       one is player control several prisoner
+     */
+    this->first_player = (this->first_player + 1) % this->players.size();
 }
 
 
