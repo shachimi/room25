@@ -19,6 +19,8 @@ public:
     void print(std::ostream& out);
     void print(std::ostream& out, int inner_line);
 
+    void setPrintParamAllowed(bool allow) { this->printParamAllowed = allow; };
+
     bool validateSchedule(Scheduling *scheduling);
 
 public:
@@ -49,6 +51,9 @@ protected:
     RoomEffect *effect;
     bool visible;
     bool accessible;
+
+protected:
+    bool printParamAllowed;
 };
 
 # include "game/scheduling.hh"

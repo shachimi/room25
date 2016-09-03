@@ -7,7 +7,8 @@ src/board/acid-room.o src/board/torture-room.o src/board/flooding-room.o        
 src/player/avatar.o src/player/prisoner.o src/player/robot.o                 \
 src/game/scheduling.o src/utils/Log.o src/board/room-factory.o               \
 src/game/standard-rule.o src/game/rule.o src/board/prison-room.o             \
-src/board/fog-room.o
+src/board/fog-room.o src/board/gear-room.o src/utils/utils.o
+
 
 LIBS=
 CFLAGS=-Werror -Wextra -Wall
