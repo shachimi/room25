@@ -40,3 +40,12 @@ Room *RoomFactory::getTortureRoom(void)
     room->setEffect(effect);
     return room;
 }
+
+Room *RoomFactory::getSafeRoom(void)
+{
+    Room *room = new Room();
+    RoomEffect *effect = new RoomEffect(ROOM_KIND_SAFE);
+
+    room->setEffect(effect);
+    return room;
+}

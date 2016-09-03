@@ -5,10 +5,11 @@
 
 class RoomFactory {
 public:
-    Room *getDeadlyRoom(void);
-    Room *getAcidRoom(void);
-    Room *getFloodingRoom(void);
-    Room *getTortureRoom(void);
+    static Room *getDeadlyRoom(void);
+    static Room *getAcidRoom(void);
+    static Room *getFloodingRoom(void);
+    static Room *getTortureRoom(void);
+    static Room *getSafeRoom(void);
 
 private: /* Should never be instanciated */
     RoomFactory() {};
