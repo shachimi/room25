@@ -31,6 +31,7 @@ Board::Board(void)
             }
         }
     }
+    this->center = this->cells[this->l * this->l / 2];
 
     {
         Room *room = new Room();
@@ -109,6 +110,7 @@ Board::Board(std::vector<Room *> rooms)
             }
         }
     }
+    this->center = this->cells[this->l * this->l / 2];
     {
         Room *room = new Room();
         RoomEffect *effect = new RoomEffect();
@@ -142,7 +144,7 @@ void Board::shuffle(void)
 {
     Room *center;
     Room *exit;
-    std::vector<Room *> rooms;
+    std::vector<Room *> rooms = std::vector<Room *>();
 
     for (int i = 0; i < this->cells.size(); i++) {
         Room *room = this->cells[i]->getRoom();
@@ -478,6 +480,11 @@ void Board::see(Player *owner, direction_t direction)
         owner->seeRoom(origin->getLeft()->getRoom());
         break;
     }
+}
+
+void Board::set_avatar_to_center(Avatar *avatar)
+{
+    this->center->getRoom()->addAvatar(avatar, false);
 }
 
 /* }}} */
