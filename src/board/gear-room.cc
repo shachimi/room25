@@ -31,7 +31,7 @@ void GearRoom::prisoner_enter(Avatar *avatar)
     }
     Log::print() << *Game::getInstance()->getBoard();
     for (it_cells = cells.begin(); it_cells < cells.end(); it_cells++) {
-        (*it_cells)->getRoom()->setPrintParamAllowed(true);
+        (*it_cells)->getRoom()->setPrintParamAllowed(false);
     }
 
     //Choose one possible
