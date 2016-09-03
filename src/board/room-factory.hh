@@ -9,6 +9,12 @@ public:
     static Room *getAcidRoom(void);
     static Room *getFloodingRoom(void);
     static Room *getTortureRoom(void);
+
+    static Room *getPrisonRoom(void);
+    static Room *getFogRoom(void);
+
+    static Room *getCenterRoom(void);
+    static Room *getExitRoom(void);
     static Room *getSafeRoom(void);
 
 private: /* Should never be instanciated */
