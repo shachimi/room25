@@ -21,6 +21,7 @@ public:
     Cell *getCell(int pos) { return this->cells[pos]; };
     Cell *getCell(int x, int y) { return this->cells[x + y * 5]; };
     std::vector<Cell *> getCells(void) { return this->cells; };
+    std::vector<Cell *> getNoCenterCells(void);
 
 public: /* game mechanics */
     void slide(int x, int y, direction_t direction);

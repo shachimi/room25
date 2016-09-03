@@ -482,3 +482,16 @@ void Board::see(Player *owner, direction_t direction)
 
 /* }}} */
 
+std::vector<Cell *> Board::getNoCenterCells(void)
+{
+    std::vector<Cell *> cells = this->getCells();
+    std::vector<Cell *>::iterator it;
+
+    for ( it = cells.begin(); it < cells.end(); it++) {
+        if ( (*it)->getRoom()->getEffect()->getKind() == ROOM_KIND_CENTER ) {
+            cells.erase(it);
+        }
+    }
+    
+    return cells;
+}

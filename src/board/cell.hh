@@ -32,6 +32,8 @@ public:
     void setUp(Cell *cell) {  this->up = cell; };
     void setDown(Cell *cell) {  this->down = cell; };
 
+    void print(void) { 
+
 private:
     int pos;
     int slide_dirs;

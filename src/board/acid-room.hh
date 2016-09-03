@@ -1,6 +1,7 @@
 #ifndef ACID_ROOM_HH_
 # define ACID_ROOM_HH_
 
+# include "board/room_effect.hh"
 # include "player/player.hh"
 
 class AcidRoom : public RoomEffect {
