@@ -1,6 +1,7 @@
 #include "acid-room.hh"
 
 AcidRoom::AcidRoom(void)
+    : RoomEffect(ROOM_KIND_DANGER)
 {
 }
 

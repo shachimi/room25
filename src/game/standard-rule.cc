@@ -20,17 +20,16 @@ Board *StandardRule::init_board(std::vector<RoomEffect *> rooms)
     rooms.push_back(RoomFactory::getDeadlyRoom());
     rooms.push_back(RoomFactory::getDeadlyRoom());
 
-    /* 10 safe room */
-    room.push_back(RoomFactory::getSafeRoom());
-    room.push_back(RoomFactory::getSafeRoom());
-    room.push_back(RoomFactory::getSafeRoom());
-    room.push_back(RoomFactory::getSafeRoom());
-    room.push_back(RoomFactory::getSafeRoom());
-    room.push_back(RoomFactory::getSafeRoom());
-    room.push_back(RoomFactory::getSafeRoom());
-    room.push_back(RoomFactory::getSafeRoom());
-    room.push_back(RoomFactory::getSafeRoom());
-    room.push_back(RoomFactory::getSafeRoom());
+    /* 9 safe room */
+    rooms.push_back(RoomFactory::getSafeRoom());
+    rooms.push_back(RoomFactory::getSafeRoom());
+    rooms.push_back(RoomFactory::getSafeRoom());
+    rooms.push_back(RoomFactory::getSafeRoom());
+    rooms.push_back(RoomFactory::getSafeRoom());
+    rooms.push_back(RoomFactory::getSafeRoom());
+    rooms.push_back(RoomFactory::getSafeRoom());
+    rooms.push_back(RoomFactory::getSafeRoom());
+    rooms.push_back(RoomFactory::getSafeRoom());
 
     /* 5 flooding room */
     rooms.push_back(RoomFactory::getFloodingRoom());
