@@ -26,6 +26,7 @@ public:
     virtual void turn_starts(void);
     virtual void prisoner_enter(Avatar *prisoner);
     virtual void prisoner_stay(Avatar *prisoner);
+    virtual void prisoner_leave(Avatar *prisoner) {};
     /* TODO: take action + avatar instead */
     virtual bool validateSchedule(Scheduling *scheduling);
     virtual void turn_ends(void);

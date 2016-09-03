@@ -15,7 +15,7 @@ public:
     static Game *getInstance(void);
 
     void play_turn(void);
-    void exec(Action *action);
+    void exec(action_t action, Player *player);
     void execMove(Player *player);
     void execSlide(Player *player);
     void execPush(Player *player);
