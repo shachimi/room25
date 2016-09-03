@@ -6,7 +6,8 @@ src/player/player.o src/player/human_player.o src/player/term-player.o       \
 src/board/acid-room.o src/board/torture-room.o src/board/flooding-room.o        \
 src/player/avatar.o src/player/prisoner.o src/player/robot.o                 \
 src/game/scheduling.o src/utils/Log.o src/board/room-factory.o               \
-src/game/standard-rule.o src/game/rule.o
+src/game/standard-rule.o src/game/rule.o src/board/prison-room.o             \
+src/board/fog-room.o
 
 LIBS=
 CFLAGS=-Werror -Wextra -Wall

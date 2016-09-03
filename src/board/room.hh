@@ -4,6 +4,7 @@
 # include <iostream>
 # include <vector>
 
+# include "game/enum.hh"
 # include "player/avatar.hh"
 
 class Cell;
@@ -26,6 +27,7 @@ public:
     void removeAvatar(Avatar *avatar);
 
     /* {{{ Getter and setters */
+    room_kind_t getRoomKind(void) const;
     RoomEffect *getEffect(void) const { return this->effect; };
     void setEffect(RoomEffect *effect);
     std::vector<Avatar *> getAvatars(void) const { return this->avatars; };
@@ -35,6 +37,7 @@ public:
     void setVisible(bool visible) { this->visible = visible; };
     bool isAccessible(void) const { return this->accessible; };
     void setAccessible(bool accessible) { this->accessible = accessible; };
+    int getAvatarsNb(void) { return this->avatars.size(); };
     /* }}} */
 
 protected:

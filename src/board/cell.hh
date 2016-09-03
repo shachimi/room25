@@ -18,6 +18,7 @@ public:
     int getY(void) { return this->pos / 5; };
     Room *getRoom(void) { return this->room; };
     void setRoom(Room *room);
+    room_kind_t getRoomKind(void) { return this->room->getRoomKind(); };
 
     void markCell(direction_t dir) { this->slide_dirs |= dir; };
     int getSlideDirs(void) { return this->slide_dirs; };

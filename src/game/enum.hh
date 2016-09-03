@@ -23,4 +23,12 @@ typedef enum {
 #define DIRECTION_LEFT   DIRECTION_O
 #define DIRECTION_RIGHT  DIRECTION_E
 
+typedef enum {
+    ROOM_KIND_CENTER,
+    ROOM_KIND_EXIT,
+    ROOM_KIND_SAFE,
+    ROOM_KIND_OBS,
+    ROOM_KIND_DANGER,
+} room_kind_t;
+
 #endif /* !ENUM_HH_ */
