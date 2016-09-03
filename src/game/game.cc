@@ -2,6 +2,7 @@
 #include <vector>
 #include "game.hh"
 #include "utils/Log.hh"
+#include "player/term-player.hh"
 
 /* {{{ Initialize */
 
@@ -25,6 +26,28 @@ Game *Game::getInstance(void)
         Game::instance = new Game();
     }
     return Game::instance;
+}
+
+void Game::init_game(Rule *rule, int nb_players, int nb_turn)
+{
+    this->rule = rule;
+    this->board = this->rule->init_board();
+
+    rule->setTurn(nb_turn);
+    for (int i =0; i < nb_players; i++) {
+        Player *p = (Player *) new TermPlayer(i + 1);
+
+        p->setAvatar(new Prisoner(p));
+        this->addPlayer(p);
+    }
+}
+
+void Game::addPlayer(Player *player)
+{
+    this->players.push_back(player);
+    if (this->board) {
+        this->board->set_avatar_to_center(player->getAvatar());
+    }
 }
 
 /* }}} */

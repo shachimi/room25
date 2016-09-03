@@ -14,6 +14,7 @@ class Game {
 public:
     static Game *getInstance(void);
 
+    void init_game(Rule *rule, int nb_players, int nb_turn);
     void play_turn(void);
     void exec(action_t action, Player *player);
     void execMove(Player *player);
@@ -23,6 +24,7 @@ public:
 
     void rotatePlayer(void);
     void removeAvatar(Avatar *avatar);
+    void addPlayer(Player *player);
 
     /* Getter and setters */
     void pushPlayer(Player *player) { this->players.push_back(player); };
