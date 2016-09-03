@@ -28,4 +28,5 @@
 *.out
 *.app
 room25
+log.txt
 *_flymake*

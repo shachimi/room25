@@ -1,7 +1,8 @@
 #include "flooding-room.hh"
 
 FloodingRoom::FloodingRoom(void)
-    : flooded_cpt(0)
+    : RoomEffect(ROOM_KIND_DANGER),
+      flooded_cpt(0)
 {
 }
 

@@ -85,7 +85,10 @@ void Room::print(std::ostream& out, int inner_line)
         << (is_avatar_here[cpt + 2] ? "P" : " ");
 }
 
-
+room_kind_t Room::getRoomKind(void) const
+{
+    return this->effect->getKind();
+}
 
 void Room::setEffect(RoomEffect *effect)
 {
@@ -95,3 +98,4 @@ void Room::setEffect(RoomEffect *effect)
     this->effect = effect;
     this->effect->setRoom(this);
 }
+

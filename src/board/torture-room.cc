@@ -1,6 +1,7 @@
 #include "torture-room.hh"
 
 TortureRoom::TortureRoom(void)
+    : RoomEffect(ROOM_KIND_DANGER)
 {
 }
 

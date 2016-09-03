@@ -5,14 +5,7 @@
 # include <vector>
 
 # include "game/scheduling.hh"
-
-enum room_kind_t {
-    ROOM_KIND_CENTER,
-    ROOM_KIND_EXIT,
-    ROOM_KIND_SAFE,
-    ROOM_KIND_OBS,
-    ROOM_KIND_DANGER,
-};
+# include "game/enum.hh"
 
 class Avatar;
 class Room;
@@ -29,7 +22,10 @@ public:
     virtual void prisoner_leave(Avatar *prisoner) {};
     /* TODO: take action + avatar instead */
     virtual bool validateSchedule(Scheduling *scheduling);
-    virtual int validateDirection(int directions, action_t action) { return directions; };
+    virtual int validateDirection(int directions, action_t action) {
+        return directions;
+    };
+
     virtual void turn_ends(void);
 
     virtual bool is_accessible(Avatar *avatar) { return this->room->isAccessible(); };

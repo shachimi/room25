@@ -17,6 +17,8 @@ public:
 
     void shuffle(void);
 
+    void set_avatar_to_center(Avatar *avatar);
+
     /* Getter and setters */
     Cell *getCell(int pos) { return this->cells[pos]; };
     Cell *getCell(int x, int y) { return this->cells[x + y * 5]; };
@@ -35,6 +37,7 @@ public: /* game mechanics */
 protected:
     int l;
     std::vector<Cell *> cells;
+    Cell *center; /* do not free */
 };
 
 #endif /* !BOARD_HH_ */
