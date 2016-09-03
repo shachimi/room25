@@ -11,24 +11,12 @@ AcidRoom::~AcidRoom(void)
 
 void AcidRoom::prisoner_enter(Avatar *prisoner)
 {
-    std::vector<Avatar *> players = this->room->getAvatars();
+    std::vector<Avatar *> avatars = this->room->getAvatars();
 
-    for (int i = 0; i < players.size(); i++) {
-        if (players[i] != prisoner) {
-            // players[i]->setIsAlive(false);
+    for (int i = 0; i < avatars.size(); i++) {
+        if (avatars[i] != prisoner) {
+            avatars[i]->destroy();
         }
     }
-}
-
-void AcidRoom::turn_starts(void)
-{
-}
-
-void AcidRoom::prisoner_stay(Avatar *prisoner)
-{
-}
-
-void AcidRoom::turn_ends(void)
-{
 }
 

@@ -16,23 +16,15 @@ void FloodingRoom::prisoner_enter(Avatar *prisoner)
     this->flooded_cpt = 1;
 }
 
-void FloodingRoom::turn_starts(void)
-{
-}
-
-void FloodingRoom::prisoner_stay(Avatar *prisoner)
-{
-}
-
 void FloodingRoom::turn_ends(void)
 {
     if (this->flooded_cpt > 0) {
         this->flooded_cpt--;
     } else {
-        std::vector<Avatar *> players = this->room->getAvatars();
+        std::vector<Avatar *> avatars = this->room->getAvatars();
 
-        for (int i = 0; i < players.size(); i++) {
-            // players[i]->setIsAlive(false);
+        for (int i = 0; i < avatars.size(); i++) {
+            avatars[i]->destroy();
         }
     }
 }
