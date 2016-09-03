@@ -286,11 +286,9 @@ void Game::removeAvatar(Avatar *avatar)
 {
     Prisoner *prisoner = static_cast<Prisoner *>(avatar);
 
-    avatar->destroy();
     if (prisoner && this->rule->destroyPrisoner(prisoner)) {
-        Log::print() << "GAME OVER";
+        throw "Game Over";
         /* TODO: do agraceful exit rather than this. */
-        // exit(0);
     }
 }
 
