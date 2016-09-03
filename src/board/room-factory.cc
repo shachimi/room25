@@ -2,6 +2,7 @@
 #include "deadly-room.hh"
 #include "acid-room.hh"
 #include "torture-room.hh"
+#include "freeze-room.hh"
 #include "prison-room.hh"
 #include "fog-room.hh"
 #include "room-factory.hh"
@@ -46,6 +47,15 @@ Room *RoomFactory::getTortureRoom(void)
 
 /* }}} */
 /* {{{ Obstacle room */
+
+Room *RoomFactory::getFreezeRoom(void)
+{
+    Room *room = new Room();
+    RoomEffect *effect = new FreezeRoom();
+
+    room->setEffect(effect);
+    return room;
+}
 
 Room *RoomFactory::getFogRoom(void)
 {

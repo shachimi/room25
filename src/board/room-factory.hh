@@ -10,6 +10,7 @@ public:
     static Room *getFloodingRoom(void);
     static Room *getTortureRoom(void);
 
+    static Room *getFreezeRoom(void);
     static Room *getPrisonRoom(void);
     static Room *getFogRoom(void);
 
