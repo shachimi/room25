@@ -1,8 +1,9 @@
-#include "flooding-room.hh"
-#include "deadly-room.hh"
-#include "acid-room.hh"
-#include "torture-room.hh"
-#include "room-factory.hh"
+#include "board/flooding-room.hh"
+#include "board/deadly-room.hh"
+#include "board/acid-room.hh"
+#include "board/torture-room.hh"
+#include "board/room-factory.hh"
+#include "board/gear-room.hh"
 
 
 Room *RoomFactory::getDeadlyRoom(void)
@@ -36,6 +37,15 @@ Room *RoomFactory::getTortureRoom(void)
 {
     Room *room = new Room();
     RoomEffect *effect = new TortureRoom();
+
+    room->setEffect(effect);
+    return room;
+}
+
+Room *RoomFactory::getGearRoom(void)
+{
+    Room *room = new Room();
+    RoomEffect *effect = new GearRoom();
 
     room->setEffect(effect);
     return room;

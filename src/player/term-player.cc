@@ -1,6 +1,7 @@
 #include "term-player.hh"
 #include <assert.h>
 #include "utils/Log.hh"
+#include "utils/utils.hh"
 
 TermPlayer::TermPlayer(int id)
     : Player(id)
@@ -9,37 +10,6 @@ TermPlayer::TermPlayer(int id)
 
 TermPlayer::~TermPlayer(void)
 {
-}
-
-static char *itod(int allowed_dir)
-{
-    static char dir[5] = { 0 };
-    int cpt = 0;
-
-#define  ALLOWED_DIR(_dir)                                                   \
-    if (allowed_dir & DIRECTION_##_dir) {                                    \
-        dir[cpt++] = #_dir[0];                                               \
-    }
-
-    ALLOWED_DIR(N);
-    ALLOWED_DIR(O);
-    ALLOWED_DIR(S);
-    ALLOWED_DIR(E);
-#undef ALLOWED_DIR
-    dir[cpt] = 0;
-    return dir;
-}
-
-static bool is_in_ref(char c, char *ref)
-{
-    int i = 0;
-
-    while (ref[i]) {
-        if (ref[i++] == c) {
-            return true;
-        }
-    }
-    return false;
 }
 
 static char *action_available(char already_choose='\0')
@@ -212,6 +182,32 @@ direction_t TermPlayer::selectPushDirection(int allowed_dir)
 Avatar *TermPlayer::selectPushTarget(std::vector<Avatar *> players)
 {
     return players.front();
+}
+
+Cell* TermPlayer::selectCell(std::vector<Cell *> allowed_cells)
+{
+    char str[255];
+    int selected;
+
+    Log::print() << "Choose a highlighted cell :" << std::endl;
+
+    for (int i = 0; i < allowed_cells.size(); ++i) {
+        Log::print() << "\t" << i+1 << ".(" 
+            << allowed_cells.at(i)->getX() << "," 
+            << allowed_cells.at(i)->getY() << ")" << std::endl;
+    }
+
+    std::cin.getline(str, 255);
+    selected = atoi(str);
+    while (selected < 1 || selected > allowed_cells.size() + 1) {
+        Log::print() << "Only enter one between 1-" 
+                    << (int)(allowed_cells.size() + 1)
+                    << " please";
+        std::cin.getline(str, 255);
+        selected = atoi(str);
+    }
+
+    return allowed_cells.at(selected-1);
 }
 
 

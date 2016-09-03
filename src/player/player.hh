@@ -4,6 +4,7 @@
 # include <vector>
 # include "game/enum.hh"
 # include "player/avatar.hh"
+# include "board/cell.hh"
 
 class Room;
 class Scheduling;
@@ -22,6 +23,7 @@ public:
     virtual direction_t selectSlide(int allowed_dir) = 0;
     virtual direction_t selectSee(int allowed_dir) = 0;
     virtual direction_t selectPushDirection(int allowed_dir) = 0;
+    virtual Cell* selectCell(std::vector<Cell *> allowed_cells) { return NULL; };
     /* TODO: distinguish complex avatar from player one */
     virtual Avatar *selectPushTarget(std::vector<Avatar *> players) = 0;
 
