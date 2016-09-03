@@ -10,7 +10,7 @@ Game *Game::instance = NULL;
 
 Game::Game(void)
     : players(std::vector<Player *>()),
-      board(new Board()),
+      board(NULL),
       rule(NULL),
       first_player(0)
 {
@@ -58,8 +58,14 @@ void Game::play_turn(void)
 
     /* All the players planify their actions */
     for (int i = 0; i < this->players.size(); i++) {
+        Scheduling *scheduling;
+
+        if (!this->players[i]->isAvatarAlive()) {
+            schedule.push_back(NULL);
+            continue;
+        }
+
         Log::print() << "# Player" << this->players[i]->getId() << std::endl;
-        Scheduling *scheduling = this->players[i]->getScheduling();
 
         scheduling = this->players[i]->getScheduling();
         assert (scheduling->isValid());
@@ -68,7 +74,12 @@ void Game::play_turn(void)
 
     Log::print() << "First programmation turn" << std::endl;
     for (int i = 0; i < schedule.size(); i++) {
-        action_t action = schedule[i]->getAction(1);
+        action_t action;
+
+        if (!schedule[i]) {
+            continue;
+        }
+        action = schedule[i]->getAction(1);
 
         Log::print() << "# Player" << schedule[i]->getOwner()->getId()
                      << std::endl;
@@ -77,7 +88,12 @@ void Game::play_turn(void)
 
     Log::print() << "Second programmation turn" << std::endl;
     for (int i = 0; i < schedule.size(); i++) {
-        action_t action = schedule[i]->getAction(2);
+        action_t action;
+
+        if (!schedule[i]) {
+            continue;
+        }
+        action = schedule[i]->getAction(2);
 
         Log::print() << "# Player" << schedule[i]->getOwner()->getId() << std::endl;
         this->exec(action, schedule[i]->getOwner());
@@ -283,7 +299,9 @@ void Game::rotatePlayer(void)
     /* TODO: replace players.size by the number total of prisoner in case
      *       one is player control several prisoner
      */
-    this->first_player = (this->first_player + 1) % this->players.size();
+    do {
+        this->first_player = (this->first_player + 1) % this->players.size();
+    } while (!this->players[this->first_player]->isAvatarAlive());
 }
 
 

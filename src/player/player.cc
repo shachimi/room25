@@ -1,4 +1,5 @@
 #include "player.hh"
+#include "player/prisoner.hh"
 
 Player::Player(int id)
     : id(id),
@@ -11,3 +12,9 @@ Player::~Player(void)
 {
 }
 
+bool Player::isAvatarAlive(void)
+{
+    Prisoner *prisoner = static_cast<Prisoner *>(this->avatar);
+
+    return prisoner && prisoner->isAlive();
+}
