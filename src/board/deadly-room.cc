@@ -9,11 +9,9 @@ DeadlyRoom::~DeadlyRoom(void)
 {
 }
 
-void DeadlyRoom::prisoner_enter(Avatar *prisoner)
+void DeadlyRoom::prisoner_enter(Avatar *avatar)
 {
-    // Game *game = Game::getInstance();
-
-    // prisoner->setIsAlive(false);
+    avatar->destroy();
 }
 
 void DeadlyRoom::turn_starts(void)
