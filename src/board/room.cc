@@ -68,6 +68,9 @@ void Room::print(std::ostream& out, int inner_line)
     if (this->printParamAllowed) {
         out << printBgGreen;
     }
+    else if (!this->accessible) {
+        out << printBgRed;
+    }
 
     for (int i = 0; i < this->avatars.size(); i++) {
         Prisoner *prisoner = static_cast<Prisoner *>(this->avatars[i]);
@@ -96,9 +99,7 @@ void Room::print(std::ostream& out, int inner_line)
         << (is_avatar_here[cpt + 1] ? "P" : " ")
         << (is_avatar_here[cpt + 2] ? "P" : " ");
 
-    if (this->printParamAllowed) {
-        out << printBgDefault;
-    }
+    out << printBgDefault;
 }
 
 room_kind_t Room::getRoomKind(void) const
