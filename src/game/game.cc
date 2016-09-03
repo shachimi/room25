@@ -34,13 +34,9 @@ void Game::play_turn(void)
     std::vector<Scheduling *> schedule = std::vector<Scheduling *>();
 
     /* All the players planify their actions */
-    for (int i = this->first_player;
-         i < this->players.size() + this->first_player; i++)
-    {
-        Scheduling *scheduling;
-        Player *player = this->players[i % this->players.size()];
-
-        Log::print() << "# Player" << player->getId();
+    for (int i = 0; i < this->players.size(); i++) {
+        Log::print() << "# Player" << this->players[i]->getId() << std::endl;
+        Scheduling *scheduling = this->players[i]->getScheduling();
 
         scheduling = this->players[i]->getScheduling();
         assert (scheduling->isValid());
@@ -51,52 +47,17 @@ void Game::play_turn(void)
     for (int i = 0; i < schedule.size(); i++) {
         action_t action = schedule[i]->getAction(1);
 
-        Log::print() << "# Player" << schedule[i]->getOwner()->getId();
-        switch (action) {
-          case ACTION_MOVE:
-            this->execMove(schedule[i]->getOwner());
-            break;
-          case ACTION_PUSH:
-            this->execPush(schedule[i]->getOwner());
-            break;
-          case ACTION_SLIDE:
-            this->execSlide(schedule[i]->getOwner());
-            break;
-          case ACTION_SEE:
-            this->execSee(schedule[i]->getOwner());
-            break;
-          case ACTION_NONE:
-            break;
-          default:
-            assert (false && "should only be one action");
-            break;
-        }
+        Log::print() << "# Player" << schedule[i]->getOwner()->getId()
+                     << std::endl;
+        this->exec(action, schedule[i]->getOwner());
     }
 
     Log::print() << "Second programmation turn" << std::endl;
     for (int i = 0; i < schedule.size(); i++) {
         action_t action = schedule[i]->getAction(2);
 
-        Log::print() << "# Player" << schedule[i]->getOwner()->getId();
-        switch (action) {
-          case ACTION_MOVE:
-            this->execMove(schedule[i]->getOwner());
-            break;
-          case ACTION_PUSH:
-            this->execPush(schedule[i]->getOwner());
-            break;
-          case ACTION_SLIDE:
-            this->execSlide(schedule[i]->getOwner());
-            break;
-          case ACTION_SEE:
-            this->execSee(schedule[i]->getOwner());
-            break;
-          case ACTION_NONE:
-            break;
-          default:
-            assert (false && "should only be one action");
-            break;
-        }
+        Log::print() << "# Player" << schedule[i]->getOwner()->getId() << std::endl;
+        this->exec(action, schedule[i]->getOwner());
     }
     for (int i = 0; i < schedule.size(); i++) {
         delete schedule[i];
@@ -106,16 +67,39 @@ void Game::play_turn(void)
 
 /* {{{ Execution of action */
 
-void Game::exec(Action *action)
+void Game::exec(action_t action, Player *player)
 {
-    std::cerr << "not implemented yet" << std::endl;
+    Avatar *avatar = player->getAvatar();
+
+    /* TODO: validate the action */
+    switch (action) {
+      case ACTION_MOVE:
+        this->execMove(player);
+        break;
+      case ACTION_PUSH:
+        this->execPush(player);
+        break;
+      case ACTION_SLIDE:
+        this->execSlide(player);
+        break;
+      case ACTION_SEE:
+        this->execSee(player);
+        break;
+        /* Add action SlideToWin with check */
+      case ACTION_NONE:
+        break;
+      default:
+        assert (false && "should only be one action");
+        break;
+    }
 }
 
 void Game::execMove(Player *owner)
 {
     direction_t dir;
     int allowed_dir = 0;
-    int pos = owner->getAvatar()->getRoom()->getCell()->getPos();
+    Room *previous_room = owner->getAvatarRoom();
+    int pos = previous_room->getCell()->getPos();
 
     if (pos % 5 /* x */ > 0) {
         allowed_dir |= DIRECTION_O;
@@ -129,16 +113,24 @@ void Game::execMove(Player *owner)
     if (pos / 5 /* y */ < 4) {
         allowed_dir |= DIRECTION_S;
     }
+    if (!allowed_dir) {
+        std::cerr << "nowhere to move" << std::endl;
+        return;
+    }
+
     dir = owner->selectMove(allowed_dir);
     /* TODO: do not assert */
     assert (dir & allowed_dir);
     this->board->move(owner, dir);
+    previous_room->getEffect()->prisoner_leave(owner->getAvatar());
+    owner->getAvatarRoom()->getEffect()->prisoner_enter(owner->getAvatar());
 }
 
 void Game::execPush(Player *player)
 {
     direction_t dir;
     int allowed_dir = 0;
+    Avatar *victim = NULL;
     int pos = player->getAvatar()->getRoom()->getCell()->getPos();
     std::vector<Avatar *> targets = player->getAvatar()->getRoom()->getAvatars();
 
@@ -163,6 +155,7 @@ void Game::execPush(Player *player)
         std::cerr << "nobody to push" << std::endl;
         return;
     }
+    /* TODO: get environment cell and check if accessible */
     if (pos % 5 /* x */ > 0) {
         allowed_dir |= DIRECTION_O;
     }
@@ -175,11 +168,19 @@ void Game::execPush(Player *player)
     if (pos / 5 /* y */ < 4) {
         allowed_dir |= DIRECTION_S;
     }
+    if (!allowed_dir) {
+        std::cerr << "nowhere to push" << std::endl;
+        return;
+    }
     dir = player->selectPushDirection(allowed_dir);
 
-    /* TODO: do not assert */
-    assert (dir & allowed_dir);
-    this->board->push(player, player->selectPushTarget(targets), dir);
+    victim = player->selectPushTarget(targets);
+    this->board->push(player, victim, dir);
+
+    /* resolve effects */
+    player->getAvatarRoom()->getEffect()->prisoner_leave(victim);
+    victim->getRoom()->getEffect()->prisoner_enter(victim);
+    player->getAvatarRoom()->getEffect()->prisoner_stay(player->getAvatar());
 }
 
 void Game::execSee(Player *player)
@@ -208,6 +209,9 @@ void Game::execSee(Player *player)
     /* TODO: do not assert */
     assert (dir & allowed_dir);
     this->board->see(player, dir);
+
+    /* resolve effects */
+    player->getAvatarRoom()->getEffect()->prisoner_stay(player->getAvatar());
 }
 
 void Game::execSlide(Player *player)
@@ -231,6 +235,9 @@ void Game::execSlide(Player *player)
     /* TODO: do not assert */
     assert (dir & allowed_dir);
     this->board->slide(player, dir);
+
+    /* resolve effects */
+    player->getAvatarRoom()->getEffect()->prisoner_stay(player->getAvatar());
 }
 
 /* }}} */

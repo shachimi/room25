@@ -39,6 +39,8 @@ public:
     void setActionsStock(action_t action) { this->actions_stock |= action; };
     Avatar *getAvatar(void) const { return this->avatar; };
     void setAvatar(Avatar *avatar) { this->avatar = avatar; };
+    /* TODO: prepare to handle several avatar */
+    Room *getAvatarRoom(void) { return this->avatar ? this->avatar->getRoom() : NULL; };
 
     /* }}} */
 

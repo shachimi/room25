@@ -26,9 +26,11 @@ public:
     virtual void turn_starts(void);
     virtual void prisoner_enter(Avatar *prisoner);
     virtual void prisoner_stay(Avatar *prisoner);
+    /* TODO: take action + avatar instead */
     virtual bool validateSchedule(Scheduling *scheduling);
     virtual void turn_ends(void);
 
+    virtual bool is_accessible(Avatar *avatar) { return true; };
     virtual void print(std::ostream& out);
 
     /* Getter and setters */

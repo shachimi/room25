@@ -297,7 +297,6 @@ void Board::slide(int x, int y, direction_t direction)
         return;
     }
 
-    /* TODO: mark the direction of the column/line */
     switch (direction) {
       case DIRECTION_DOWN: {
           /* Get extremity */
@@ -306,10 +305,13 @@ void Board::slide(int x, int y, direction_t direction)
           /* Move room by going the awaiting way and putting the room inside */
           while (cur->getUp()) {
               cur->setRoom(cur->getUp()->getRoom());
+              cur->markCell(DIRECTION_DOWN);
               cur = cur->getUp();
           }
           cur->setRoom(room);
+          cur->markCell(DIRECTION_DOWN);
       } break;
+
       case DIRECTION_UP: {
           /* Get extremity */
           cur = get_line_beginning(this->cells[origin], DIRECTION_UP);
@@ -317,9 +319,11 @@ void Board::slide(int x, int y, direction_t direction)
           /* Move room by going the awaiting way and putting the room inside */
           while (cur->getDown()) {
               cur->setRoom(cur->getDown()->getRoom());
+              cur->markCell(DIRECTION_UP);
               cur = cur->getDown();
           }
           cur->setRoom(room);
+          cur->markCell(DIRECTION_UP);
       } break;
 
       case DIRECTION_RIGHT: {
@@ -329,9 +333,11 @@ void Board::slide(int x, int y, direction_t direction)
           /* Move room by going the awaiting way and putting the room inside */
           while (cur->getLeft()) {
               cur->setRoom(cur->getLeft()->getRoom());
+              cur->markCell(DIRECTION_RIGHT);
               cur = cur->getLeft();
           }
           cur->setRoom(room);
+          cur->markCell(DIRECTION_RIGHT);
       } break;
 
       case DIRECTION_LEFT: {
@@ -341,9 +347,11 @@ void Board::slide(int x, int y, direction_t direction)
           /* Move room by going the awaiting way and putting the room inside */
           while (cur->getRight()) {
               cur->setRoom(cur->getRight()->getRoom());
+              cur->markCell(DIRECTION_LEFT);
               cur = cur->getRight();
           }
           cur->setRoom(room);
+          cur->markCell(DIRECTION_LEFT);
       } break;
     }
 }

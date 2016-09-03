@@ -1,6 +1,7 @@
 #ifndef CELL_HH_
 # define CELL_HH_
 
+# include "game/enum.hh"
 # include "room.hh"
 
 class Cell {
@@ -18,6 +19,10 @@ public:
     Room *getRoom(void) { return this->room; };
     void setRoom(Room *room);
 
+    void markCell(direction_t dir) { this->slide_dirs |= dir; };
+    int getSlideDirs(void) { return this->slide_dirs; };
+    void setSlideDirs(int dirs) { this->slide_dirs = dirs; };
+
     Cell *getLeft(void) { return this->left; };
     Cell *getRight(void) { return this->right; };
     Cell *getUp(void) { return this->up; };
@@ -29,6 +34,7 @@ public:
 
 private:
     int pos;
+    int slide_dirs;
     Room *room;
     Cell *left;
     Cell *right;

@@ -2,6 +2,7 @@
 
 Cell::Cell(int pos)
     : pos(pos),
+      slide_dirs(DIRECTION_NONE),
       room(NULL),
       left(NULL),
       right(NULL),

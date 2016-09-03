@@ -12,6 +12,7 @@ typedef enum {
 } action_t;
 
 typedef enum {
+    DIRECTION_NONE = 0,
     DIRECTION_N = 1 << 0,
     DIRECTION_S = 1 << 1,
     DIRECTION_E = 1 << 2,
