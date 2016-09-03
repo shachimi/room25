@@ -27,11 +27,12 @@ public:
     void addPlayer(Player *player);
 
     /* Getter and setters */
-    void pushPlayer(Player *player) { this->players.push_back(player); };
     std::vector<Player *> getPlayers(void) { return this->players; };
     void setPlayers(std::vector<Player *> players) { this->players = players; };
     Board *getBoard(void) { return this->board; };
     void setBoard(Board *board) { this->board = board; };
+    Rule *getRule(void) { return this->rule; };
+    void setRule(Rule *rule) { this->rule = rule; };
 
 protected:
     /* TODO: made a Rule class to abstract win/lose/play_turn method */
