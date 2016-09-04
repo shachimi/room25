@@ -34,6 +34,7 @@ public:
     room_kind_t getKind(void) { return this->kind; };
     void setKind(room_kind_t kind) { this->kind = kind; };
     void setRoom(Room *room) { this->room = room; };
+    Room *getRoom(void) { return this->room; };
 
 protected:
     room_kind_t kind;

@@ -6,6 +6,7 @@
 
 # include "game/enum.hh"
 # include "board/cell.hh"
+# include "board/tunnel-room.hh"
 # include "player/player.hh"
 # include "player/avatar.hh"
 
@@ -24,6 +25,7 @@ public:
     Cell *getCell(int x, int y) { return this->cells[x + y * 5]; };
     std::vector<Cell *> getCells(void) { return this->cells; };
     std::vector<Cell *> getNoCenterCells(void);
+    std::vector<RoomEffect *> getTunnelRoomEffects(void) { return this->tunnel_room_effects; };
 
 public: /* game mechanics */
     void slide(int x, int y, direction_t direction);
@@ -38,6 +40,7 @@ protected:
     int l;
     std::vector<Cell *> cells;
     Cell *center; /* do not free */
+    std::vector<RoomEffect *> tunnel_room_effects;
 };
 
 #endif /* !BOARD_HH_ */

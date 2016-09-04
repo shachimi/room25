@@ -7,7 +7,8 @@
 
 Board::Board(void)
     : l(5),
-      cells(std::vector<Cell *>())
+      cells(std::vector<Cell *>()),
+      tunnel_room_effects(std::vector<RoomEffect *>())
 {
     int   i = 0;
     Cell *cell;
@@ -86,7 +87,8 @@ Board::Board(void)
 
 Board::Board(std::vector<Room *> rooms)
     : l(5),
-      cells(std::vector<Cell *>())
+      cells(std::vector<Cell *>()),
+      tunnel_room_effects(std::vector<RoomEffect *>())
 {
     int   i = 0;
     Cell *cell;
@@ -132,6 +134,10 @@ Board::Board(std::vector<Room *> rooms)
 
     for (int i = 0; i < this->l * this->l; i++) {
         this->cells[i]->setRoom(rooms[i]);
+        if (this->cells[i]->getRoomKind() == ROOM_KIND_SAFE) {
+            if(static_cast<TunnelRoom *>(this->cells[i]->getRoom()->getEffect()) != NULL)
+                this->tunnel_room_effects.push_back(this->cells[i]->getRoom()->getEffect());
+        }
     }
     this->shuffle();
 }
