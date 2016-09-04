@@ -1,6 +1,7 @@
 #ifndef TORTURE_ROOM_HH_
 # define TORTURE_ROOM_HH_
 
+# include "board/room_effect.hh"
 # include "player/player.hh"
 
 class TortureRoom : public RoomEffect {

@@ -1,12 +1,17 @@
 #include "player/prisoner.hh"
 #include "room.hh"
 
+static std::string printBgRed = "\033[41m";
+static std::string printBgGreen = "\033[42;30m";
+static std::string printBgDefault = "\033[0m";
+
 Room::Room(void)
     : avatars(std::vector<Avatar *>()),
       cell(NULL),
       effect(NULL),
       visible(false),
-      accessible(true)
+      accessible(true),
+      printParamAllowed(false)
 {
 }
 
@@ -60,6 +65,13 @@ void Room::print(std::ostream& out, int inner_line)
     int cpt = (inner_line - 1) * 3;
     bool is_avatar_here[9] = { false };
 
+    if (this->printParamAllowed) {
+        out << printBgGreen;
+    }
+    else if (!this->accessible) {
+        out << printBgRed;
+    }
+
     for (int i = 0; i < this->avatars.size(); i++) {
         Prisoner *prisoner = static_cast<Prisoner *>(this->avatars[i]);
 
@@ -78,11 +90,16 @@ void Room::print(std::ostream& out, int inner_line)
             out << " ";
         }
         out << (is_avatar_here[4] ? "P" : " ");
+        if (this->printParamAllowed) {
+            out << printBgDefault;
+        }
         return;
     }
     out << (is_avatar_here[cpt] ? "P" : " ")
         << (is_avatar_here[cpt + 1] ? "P" : " ")
         << (is_avatar_here[cpt + 2] ? "P" : " ");
+
+    out << printBgDefault;
 }
 
 room_kind_t Room::getRoomKind(void) const

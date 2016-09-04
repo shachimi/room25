@@ -9,6 +9,7 @@ public:
     static Room *getAcidRoom(void);
     static Room *getFloodingRoom(void);
     static Room *getTortureRoom(void);
+    static Room *getIllusionRoom(void);
 
     static Room *getFreezeRoom(void);
     static Room *getPrisonRoom(void);
@@ -18,6 +19,9 @@ public:
 
     static Room *getCenterRoom(void);
     static Room *getExitRoom(void);
+    static Room *getGearRoom(void);
+    static Room *getVisionRoom(void);
+    static Room *getWarpRoom(void);
     static Room *getSafeRoom(void);
 
 private: /* Should never be instanciated */

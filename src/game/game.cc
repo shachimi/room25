@@ -138,18 +138,18 @@ void Game::execMove(Player *owner)
     direction_t dir;
     int allowed_dir = 0;
     Room *previous_room = owner->getAvatarRoom();
-    int pos = previous_room->getCell()->getPos();
+    Cell *cell = previous_room->getCell();
 
-    if (pos % 5 /* x */ > 0) {
+    if (cell->getLeft()) {
         allowed_dir |= DIRECTION_O;
     }
-    if (pos % 5 /* x */ < 4) {
+    if (cell->getRight()) {
         allowed_dir |= DIRECTION_E;
     }
-    if (pos / 5 /* y */ > 0) {
+    if (cell->getUp()) {
         allowed_dir |= DIRECTION_N;
     }
-    if (pos / 5 /* y */ < 4) {
+    if (cell->getDown()) {
         allowed_dir |= DIRECTION_S;
     }
     if (!allowed_dir) {
@@ -170,10 +170,10 @@ void Game::execPush(Player *player)
     direction_t dir;
     int allowed_dir = 0;
     Avatar *victim = NULL;
-    int pos = player->getAvatar()->getRoom()->getCell()->getPos();
+    Cell *cell = player->getAvatar()->getRoom()->getCell();
     std::vector<Avatar *> targets = player->getAvatar()->getRoom()->getAvatars();
 
-    if (pos == 12) {
+    if (cell->getRoom()->getEffect()->getKind() == ROOM_KIND_CENTER) {
         /* TODO: replace by validateAction of center room (rename secure?) */
         std::cerr << "cannot push from center room" << std::endl;
         return;
@@ -195,16 +195,16 @@ void Game::execPush(Player *player)
         return;
     }
     /* TODO: get environment cell and check if accessible */
-    if (pos % 5 /* x */ > 0) {
+    if (cell->getLeft()) {
         allowed_dir |= DIRECTION_O;
     }
-    if (pos % 5 /* x */ < 4) {
+    if (cell->getRight()) {
         allowed_dir |= DIRECTION_E;
     }
-    if (pos / 5 /* y */ > 0) {
+    if (cell->getUp()) {
         allowed_dir |= DIRECTION_N;
     }
-    if (pos / 5 /* y */ < 4) {
+    if (cell->getDown()) {
         allowed_dir |= DIRECTION_S;
     }
     if (!allowed_dir) {

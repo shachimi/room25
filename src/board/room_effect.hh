@@ -28,7 +28,7 @@ public:
 
     virtual void turn_ends(void);
 
-    virtual bool is_accessible(Avatar *avatar) { return true; };
+    virtual bool is_accessible(Avatar *avatar) { return this->room->isAccessible(); };
     virtual void print(std::ostream& out);
 
     /* Getter and setters */
