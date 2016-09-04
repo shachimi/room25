@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "player/prisoner.hh"
 #include "room.hh"
 
@@ -21,12 +22,15 @@ Room::~Room(void)
 
 void Room::addAvatar(Avatar *avatar, bool activate_effect)
 {
+    Cell *previous = !avatar->getRoom() ? NULL : avatar->getRoom()->getCell();
+
     this->avatars.push_back(avatar);
     avatar->setRoom(this);
 
-    if (activate_effect) {
+    if (activate_effect ) {
+        assert (previous);
         this->visible = true;
-        this->effect->prisoner_enter(avatar);
+        this->effect->prisoner_enter(avatar, previous);
     }
 }
 

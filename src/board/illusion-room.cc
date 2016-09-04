@@ -9,7 +9,7 @@ IllusionRoom::~IllusionRoom(void)
 {
 }
 
-void IllusionRoom::prisoner_enter(Avatar *avatar)
+void IllusionRoom::prisoner_enter(Avatar *avatar, Cell *from)
 {
     int pos, dir, allowed_dir = 0;
     Prisoner *prisoner;
@@ -38,23 +38,11 @@ void IllusionRoom::prisoner_enter(Avatar *avatar)
         Log::error("Gear room enter") << "Failed to select room" << std::endl;
         return;
     }
-    
+
     //Exchange rooms
     tmp_room_effect = choosen_cell->getRoom()->getEffect();
     choosen_cell->getRoom()->setEffect(avatar->getRoom()->getEffect());
     avatar->getRoom()->setEffect(tmp_room_effect);
 
-    tmp_room_effect->prisoner_enter(avatar);
-}
-
-void IllusionRoom::turn_starts(void)
-{
-}
-
-void IllusionRoom::prisoner_stay(Avatar *prisoner)
-{
-}
-
-void IllusionRoom::turn_ends(void)
-{
+    tmp_room_effect->prisoner_enter(avatar, from);
 }

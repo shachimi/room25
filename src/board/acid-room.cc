@@ -9,7 +9,7 @@ AcidRoom::~AcidRoom(void)
 {
 }
 
-void AcidRoom::prisoner_enter(Avatar *prisoner)
+void AcidRoom::prisoner_enter(Avatar *prisoner, Cell *from)
 {
     std::vector<Avatar *> avatars = this->room->getAvatars();
 

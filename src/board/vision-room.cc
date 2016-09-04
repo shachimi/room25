@@ -10,7 +10,7 @@ VisionRoom::~VisionRoom(void)
 {
 }
 
-void VisionRoom::prisoner_enter(Avatar *avatar)
+void VisionRoom::prisoner_enter(Avatar *avatar, Cell *from)
 {
     int pos, dir, allowed_dir = 0;
     Prisoner *prisoner;
@@ -44,16 +44,3 @@ void VisionRoom::prisoner_enter(Avatar *avatar)
     prisoner->getOwner()->seeRoom(choosen_cell->getRoom());
 
 }
-
-void VisionRoom::turn_starts(void)
-{
-}
-
-void VisionRoom::prisoner_stay(Avatar *prisoner)
-{
-}
-
-void VisionRoom::turn_ends(void)
-{
-}
-

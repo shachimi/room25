@@ -8,7 +8,7 @@ class AcidRoom : public RoomEffect {
 public:
     AcidRoom(void);
     ~AcidRoom(void);
-    virtual void prisoner_enter(Avatar *prisoner);
+    virtual void prisoner_enter(Avatar *prisoner, Cell *from);
 };
 
 #endif /* !ACID_ROOM_HH_ */

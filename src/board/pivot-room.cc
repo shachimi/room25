@@ -23,5 +23,5 @@ void PivotRoom::prisoner_enter(Avatar *avatar, Cell *from)
 
 int PivotRoom::validateDirection(int directions, action_t action)
 {
-    return action == ACTION_SLIDE ? direction : direction & this->directions;
+    return action == ACTION_SLIDE ? directions : directions & this->directions;
 }

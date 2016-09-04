@@ -10,7 +10,7 @@ FloodingRoom::~FloodingRoom(void)
 {
 }
 
-void FloodingRoom::prisoner_enter(Avatar *prisoner)
+void FloodingRoom::prisoner_enter(Avatar *prisoner, Cell *from)
 {
     this->room->setAccessible(false);
     this->flooded_cpt = 1;

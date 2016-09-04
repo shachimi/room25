@@ -16,17 +16,16 @@ public:
     RoomEffect(room_kind_t kind);
     ~RoomEffect(void);
     /** The prisoner is already inside the room when the method is called. */
-    virtual void turn_starts(void);
-    virtual void prisoner_enter(Avatar *prisoner);
-    virtual void prisoner_stay(Avatar *prisoner);
+    virtual void turn_starts(void) {};
+    virtual void prisoner_enter(Avatar *prisoner, Cell *from) {};
+    virtual void prisoner_stay(Avatar *prisoner) {};
     virtual void prisoner_leave(Avatar *prisoner) {};
-    /* TODO: take action + avatar instead */
-    virtual bool validateSchedule(Scheduling *scheduling);
+    virtual bool validateSchedule(Scheduling *scheduling) { return true; };
     virtual int validateDirection(int directions, action_t action) {
         return directions;
     };
 
-    virtual void turn_ends(void);
+    virtual void turn_ends(void) {};
 
     virtual bool is_accessible(Avatar *avatar) { return this->room->isAccessible(); };
     virtual void print(std::ostream& out);

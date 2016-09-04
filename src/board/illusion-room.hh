@@ -13,10 +13,7 @@ class IllusionRoom : public RoomEffect {
 public:
     IllusionRoom(void);
     ~IllusionRoom(void);
-    virtual void prisoner_enter(Avatar *prisoner);
-    virtual void turn_starts(void);
-    virtual void prisoner_stay(Avatar *prisoner);
-    virtual void turn_ends(void);
+    virtual void prisoner_enter(Avatar *prisoner, Cell *from);
 };
 
 #endif /* !ILLUSION_ROOM_HH_ */

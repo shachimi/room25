@@ -13,10 +13,7 @@ class GearRoom : public RoomEffect {
 public:
     GearRoom(void);
     ~GearRoom(void);
-    virtual void prisoner_enter(Avatar *prisoner);
-    virtual void turn_starts(void);
-    virtual void prisoner_stay(Avatar *prisoner);
-    virtual void turn_ends(void);
+    virtual void prisoner_enter(Avatar *prisoner, Cell *from);
 };
 
 #endif /* !GEAR_ROOM_HH_ */

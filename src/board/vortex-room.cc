@@ -10,7 +10,7 @@ VortexRoom::~VortexRoom(void)
 {
 }
 
-void VortexRoom::prisoner_enter(Avatar *avatar)
+void VortexRoom::prisoner_enter(Avatar *avatar, Cell *from)
 {
     Game::getInstance()->getBoard()->set_avatar_to_center(avatar);
 }

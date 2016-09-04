@@ -9,7 +9,7 @@ WarpRoom::~WarpRoom(void)
 {
 }
 
-void WarpRoom::prisoner_enter(Avatar *avatar)
+void WarpRoom::prisoner_enter(Avatar *avatar, Cell *from)
 {
     int pos, dir, allowed_dir = 0;
     Prisoner *prisoner;
@@ -40,22 +40,10 @@ void WarpRoom::prisoner_enter(Avatar *avatar)
         Log::error("Gear room enter") << "Failed to select room" << std::endl;
         return;
     }
-    
+
     //Exchange rooms
     tmp_room = choosen_cell->getRoom();
     tmp_cell = avatar->getRoom()->getCell();
     choosen_cell->setRoom(avatar->getRoom());
     tmp_cell->setRoom(tmp_room);
-}
-
-void WarpRoom::turn_starts(void)
-{
-}
-
-void WarpRoom::prisoner_stay(Avatar *prisoner)
-{
-}
-
-void WarpRoom::turn_ends(void)
-{
 }

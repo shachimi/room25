@@ -162,7 +162,8 @@ void Game::execMove(Player *owner)
     assert (dir & allowed_dir);
     this->board->move(owner, dir);
     previous_room->getEffect()->prisoner_leave(owner->getAvatar());
-    owner->getAvatarRoom()->getEffect()->prisoner_enter(owner->getAvatar());
+    owner->getAvatarRoom()->getEffect()->prisoner_enter(owner->getAvatar(),
+                                                        previous_room->getCell());
 }
 
 void Game::execPush(Player *player)
@@ -218,7 +219,8 @@ void Game::execPush(Player *player)
 
     /* resolve effects */
     player->getAvatarRoom()->getEffect()->prisoner_leave(victim);
-    victim->getRoom()->getEffect()->prisoner_enter(victim);
+    victim->getRoom()->getEffect()->prisoner_enter(victim,
+                                                   player->getAvatarRoom()->getCell());
     player->getAvatarRoom()->getEffect()->prisoner_stay(player->getAvatar());
 }
 

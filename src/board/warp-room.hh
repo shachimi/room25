@@ -13,10 +13,7 @@ class WarpRoom : public RoomEffect {
 public:
     WarpRoom(void);
     ~WarpRoom(void);
-    virtual void prisoner_enter(Avatar *prisoner);
-    virtual void turn_starts(void);
-    virtual void prisoner_stay(Avatar *prisoner);
-    virtual void turn_ends(void);
+    virtual void prisoner_enter(Avatar *prisoner, Cell *from);
 };
 
 #endif /* !WARP_ROOM_HH_ */

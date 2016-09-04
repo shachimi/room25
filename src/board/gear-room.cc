@@ -10,7 +10,7 @@ GearRoom::~GearRoom(void)
 {
 }
 
-void GearRoom::prisoner_enter(Avatar *avatar)
+void GearRoom::prisoner_enter(Avatar *avatar, Cell *from)
 {
     int pos, dir, allowed_dir = 0;
     Prisoner *prisoner;
@@ -61,19 +61,7 @@ void GearRoom::prisoner_enter(Avatar *avatar)
         return;
     }
     Game::getInstance()->getBoard()->slide(
-            choosen_cell->getX(), 
+            choosen_cell->getX(),
             choosen_cell->getY(), (direction_t)dir);
-}
-
-void GearRoom::turn_starts(void)
-{
-}
-
-void GearRoom::prisoner_stay(Avatar *prisoner)
-{
-}
-
-void GearRoom::turn_ends(void)
-{
 }
 

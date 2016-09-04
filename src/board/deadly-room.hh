@@ -8,7 +8,7 @@ class DeadlyRoom : public RoomEffect {
 public:
     DeadlyRoom(void);
     ~DeadlyRoom(void);
-    virtual void prisoner_enter(Avatar *prisoner);
+    virtual void prisoner_enter(Avatar *prisoner, Cell *from);
 };
 
 #endif /* !DEADLY_ROOM_HH_ */

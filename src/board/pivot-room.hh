@@ -7,7 +7,7 @@ class PivotRoom : public RoomEffect {
 public:
     PivotRoom(void);
     ~PivotRoom(void);
-    virtual void prisoner_enter(Avatar *prisoner);
+    virtual void prisoner_enter(Avatar *prisoner, Cell *from);
     virtual int validateDirection(int directions, action_t action);
 
 private:
