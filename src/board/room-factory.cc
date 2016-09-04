@@ -4,6 +4,9 @@
 #include "board/torture-room.hh"
 #include "board/room-factory.hh"
 #include "board/gear-room.hh"
+#include "board/vision-room.hh"
+#include "board/illusion-room.hh"
+#include "board/warp-room.hh"
 
 
 Room *RoomFactory::getDeadlyRoom(void)
@@ -46,6 +49,33 @@ Room *RoomFactory::getGearRoom(void)
 {
     Room *room = new Room();
     RoomEffect *effect = new GearRoom();
+
+    room->setEffect(effect);
+    return room;
+}
+
+Room *RoomFactory::getVisionRoom(void)
+{
+    Room *room = new Room();
+    RoomEffect *effect = new VisionRoom();
+
+    room->setEffect(effect);
+    return room;
+}
+
+Room *RoomFactory::getIllusionRoom(void)
+{
+    Room *room = new Room();
+    RoomEffect *effect = new IllusionRoom();
+
+    room->setEffect(effect);
+    return room;
+}
+
+Room *RoomFactory::getWarpRoom(void)
+{
+    Room *room = new Room();
+    RoomEffect *effect = new WarpRoom();
 
     room->setEffect(effect);
     return room;

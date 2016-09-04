@@ -10,6 +10,9 @@ public:
     static Room *getFloodingRoom(void);
     static Room *getTortureRoom(void);
     static Room *getGearRoom(void);
+    static Room *getVisionRoom(void);
+    static Room *getIllusionRoom(void);
+    static Room *getWarpRoom(void);
     static Room *getSafeRoom(void);
 
 private: /* Should never be instanciated */
