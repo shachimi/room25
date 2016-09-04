@@ -23,6 +23,7 @@ public:
     static Room *getVisionRoom(void);
     static Room *getWarpRoom(void);
     static Room *getSafeRoom(void);
+    static Room *getTunnelRoom(void);
 
 private: /* Should never be instanciated */
     RoomFactory() {};

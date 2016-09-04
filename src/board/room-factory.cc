@@ -12,6 +12,7 @@
 #include "board/vision-room.hh"
 #include "board/illusion-room.hh"
 #include "board/warp-room.hh"
+#include "board/tunnel-room.hh"
 
 /* {{{ Danger room */
 
@@ -164,5 +165,15 @@ Room *RoomFactory::getSafeRoom(void)
     room->setEffect(effect);
     return room;
 }
+
+Room *RoomFactory::getTunnelRoom(void)
+{
+    Room *room = new Room();
+    RoomEffect *effect = new TunnelRoom();
+
+    room->setEffect(effect);
+    return room;
+}
+
 
 /* }}} */

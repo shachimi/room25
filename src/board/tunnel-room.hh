@@ -9,7 +9,7 @@ class TunnelRoom : public RoomEffect {
 public:
     TunnelRoom(void);
     ~TunnelRoom(void);
-    virtual void prisoner_enter(Avatar *prisoner);
+    virtual void prisoner_enter(Avatar *prisoner, Cell *from);
 };
 
 #include "board/cell.hh"

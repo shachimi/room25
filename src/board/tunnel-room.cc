@@ -13,7 +13,7 @@ TunnelRoom::~TunnelRoom(void)
 {
 }
 
-void TunnelRoom::prisoner_enter(Avatar *avatar)
+void TunnelRoom::prisoner_enter(Avatar *avatar, Cell *from)
 {
     int pos, dir, allowed_dir = 0;
     Prisoner *prisoner;
