@@ -5,6 +5,7 @@
 #include "freeze-room.hh"
 #include "prison-room.hh"
 #include "vortex-room.hh"
+#include "pivot-room.hh"
 #include "fog-room.hh"
 #include "room-factory.hh"
 
@@ -80,6 +81,15 @@ Room *RoomFactory::getVortexRoom(void)
 {
     Room *room = new Room();
     RoomEffect *effect = new VortexRoom();
+
+    room->setEffect(effect);
+    return room;
+}
+
+Room *RoomFactory::getPivotRoom(void)
+{
+    Room *room = new Room();
+    RoomEffect *effect = new PivotRoom();
 
     room->setEffect(effect);
     return room;

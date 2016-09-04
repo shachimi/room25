@@ -14,6 +14,7 @@ public:
     static Room *getPrisonRoom(void);
     static Room *getFogRoom(void);
     static Room *getVortexRoom(void);
+    static Room *getPivotRoom(void);
 
     static Room *getCenterRoom(void);
     static Room *getExitRoom(void);
