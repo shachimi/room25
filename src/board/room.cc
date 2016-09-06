@@ -94,15 +94,13 @@ void Room::print(std::ostream& out, int inner_line)
             out << " ";
         }
         out << (is_avatar_here[4] ? "P" : " ");
-        if (this->printParamAllowed) {
-            out << printBgDefault;
-        }
-        return;
+        goto end_of_print;
     }
     out << (is_avatar_here[cpt] ? "P" : " ")
         << (is_avatar_here[cpt + 1] ? "P" : " ")
         << (is_avatar_here[cpt + 2] ? "P" : " ");
 
+  end_of_print:
     out << printBgDefault;
 }
 
