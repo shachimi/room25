@@ -1,8 +1,8 @@
 #include "z.h"
 
-std::vector<z_test_t> groups = std::vector<z_test_t>();
+GroupMap groups;
 
-static bool test_bidon(void)
+Z_TEST(test, bidon)
 {
     Z_ASSERT(42 == 69);
 
@@ -11,7 +11,7 @@ static bool test_bidon(void)
 
 Z_GROUP(test, "test the Z framework")
 {
-    Z_TEST("echec", test_bidon);
+    Z_ADD_TEST("echec", test, bidon);
 }
 
 int main(int argc, char **argv)
@@ -19,18 +19,25 @@ int main(int argc, char **argv)
     int i = 0;
     int nb_failed = 0, nb_success = 0;
 
-    init_test();
+    Z_GROUP_INIT(test);
 
-    while (i < groups.size()) {
-        std::cout << "Test `" << groups[i].name << "`:";
-        if (groups[i].test_cb()) {
-            std::cout << " Ok" << std::endl;
-            nb_success++;
-        } else {
-            std::cout << " Failed" << std::endl;
-            nb_failed++;
+    for (GroupMap::iterator map_it = groups.begin();
+         map_it != groups.end(); map_it++) {
+        Group group;
+
+        std::cout << "Group `" << map_it->first << "`:" << std::endl;
+
+        for (Group::iterator group_it = map_it->second.begin();
+             group_it != map_it->second.end(); group_it++) {
+            std::cout << "Test `" << (*group_it).name << "`:";
+            if ((*group_it).test_cb()) {
+                std::cout << " Ok" << std::endl;
+                nb_success++;
+            } else {
+                std::cout << " Failed" << std::endl;
+                nb_failed++;
+            }
         }
-        i++;
     }
 
     std::cout << "Results:\n\t"
