@@ -102,6 +102,19 @@ void Game::play_turn(void)
         delete schedule[i];
         schedule[i] = NULL;
     }
+    this->ends_turn();
+}
+
+void Game::ends_turn(void)
+{
+    std::vector<Cell *> cells = this->board->getCells();
+
+    for (int i = 0; i < cells.size(); i++) {
+        if (cells[i]->getRoom()->isVisible()) {
+            cells[i]->getRoom()->getEffect()->turn_ends();
+        }
+    }
+
 }
 
 /* {{{ Execution of action */

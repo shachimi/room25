@@ -35,6 +35,9 @@ public:
     void setRule(Rule *rule) { this->rule = rule; };
 
 protected:
+    void ends_turn(void);
+
+protected:
     /* TODO: made a Rule class to abstract win/lose/play_turn method */
     std::vector<Player *> players;
     Board *board;

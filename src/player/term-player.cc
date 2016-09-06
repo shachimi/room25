@@ -211,7 +211,6 @@ Cell* TermPlayer::selectCell(std::vector<Cell *> allowed_cells)
     return allowed_cells.at(selected-1);
 }
 
-
 void TermPlayer::seeRoom(const Room *room)
 {
     Log::print() << "I see a room ";
