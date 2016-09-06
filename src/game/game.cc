@@ -153,16 +153,16 @@ void Game::execMove(Player *owner)
     Room *previous_room = owner->getAvatarRoom();
     Cell *cell = previous_room->getCell();
 
-    if (cell->getLeft()) {
+    if (cell->getLeft() && cell->getLeft()->getRoom()->isAccessible()) {
         allowed_dir |= DIRECTION_O;
     }
-    if (cell->getRight()) {
+    if (cell->getRight() && cell->getRight()->getRoom()->isAccessible()) {
         allowed_dir |= DIRECTION_E;
     }
-    if (cell->getUp()) {
+    if (cell->getUp() && cell->getUp()->getRoom()->isAccessible()) {
         allowed_dir |= DIRECTION_N;
     }
-    if (cell->getDown()) {
+    if (cell->getDown() && cell->getDown()->getRoom()->isAccessible()) {
         allowed_dir |= DIRECTION_S;
     }
     if (!allowed_dir) {
@@ -208,17 +208,16 @@ void Game::execPush(Player *player)
         std::cerr << "nobody to push" << std::endl;
         return;
     }
-    /* TODO: get environment cell and check if accessible */
-    if (cell->getLeft()) {
+    if (cell->getLeft() && cell->getLeft()->getRoom()->isAccessible()) {
         allowed_dir |= DIRECTION_O;
     }
-    if (cell->getRight()) {
+    if (cell->getRight() && cell->getRight()->getRoom()->isAccessible()) {
         allowed_dir |= DIRECTION_E;
     }
-    if (cell->getUp()) {
+    if (cell->getUp() && cell->getUp()->getRoom()->isAccessible()) {
         allowed_dir |= DIRECTION_N;
     }
-    if (cell->getDown()) {
+    if (cell->getDown() && cell->getDown()->getRoom()->isAccessible()) {
         allowed_dir |= DIRECTION_S;
     }
     if (!allowed_dir) {
