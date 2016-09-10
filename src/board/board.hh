@@ -21,6 +21,7 @@ public:
     void set_avatar_to_center(Avatar *avatar);
 
     /* Getter and setters */
+    int getL(void) { return this->l; };
     Cell *getCell(int pos) { return this->cells[pos]; };
     Cell *getCell(int x, int y) { return this->cells[x + y * 5]; };
     std::vector<Cell *> getCells(void) { return this->cells; };

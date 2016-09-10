@@ -43,6 +43,22 @@ extern Group *groups;
         return false;                                                        \
     }
 
+# define Z_ASSERT_EQ(expr1, expr2)                                           \
+    if ((expr1) != (expr2)) {                                                \
+        std::cerr << "Test " << __func__ << ": `" << (expr1)                 \
+                  << "` not equal to `" << (expr2) << "` at line "           \
+                  << __LINE__ << std::endl;                                  \
+        return false;                                                        \
+    }
+# define Z_ASSERT_NEQ(expr1, expr2)                                          \
+    if ((expr1) == (expr2)) {                                                \
+        std::cerr << "Test " << __func__ << ": `" << (expr1)                 \
+                  << "` equal to `" << (expr2) << "` at line "               \
+                  << __LINE__ << std::endl;                                  \
+        return false;                                                        \
+    }
+
+
 # define Z_TEST_NAME(_name) z_##_name
 
 # define Z_TEST(_name, _desc)                                                \
@@ -57,7 +73,15 @@ extern Group *groups;
         printf("%s\n", __func__);                                            \
         DLIST_APPEND(groups->tests, z_test_##_name);                         \
     }                                                                        \
-    static bool Z_TEST_NAME(_name)(void)
+    static bool Z_TEST_NAME(_name)(void) {
+
+# define Z_TEST_END  return true; }
+
+# define Z_TEST_RAND(_name, _desc, _time)                                    \
+    Z_TEST(_name, _desc)                                                     \
+    for (int _z_rand_time = 0; _z_rand_time < _time; _z_rand_time++)
+
+
 
 # define Z_GROUP(_name, _desc)                                               \
     static z_group_t z_group_##_name = {                                     \

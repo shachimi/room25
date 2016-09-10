@@ -3,6 +3,7 @@
 Group *groups = NULL;
 
 
+#if 0
 Z_GROUP(test, "test the Z framework")
 {
     Z_TEST(test1, bidon)
@@ -19,6 +20,7 @@ Z_GROUP(test, "test the Z framework")
         return true;
     }
 }
+#endif
 
 int main(int argc, char **argv)
 {
