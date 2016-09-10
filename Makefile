@@ -1,5 +1,5 @@
 BIN=room25
-OBJS=src/main.o src/board/room.o src/board/room_effect.o src/board/cell.o    \
+OBJS=src/board/room.o src/board/room_effect.o src/board/cell.o               \
 src/board/board.o src/game/game.o src/game/action.o src/game/move.o          \
 src/game/slide.o src/game/see.o src/game/push.o src/board/deadly-room.o      \
 src/player/player.o src/player/human_player.o src/player/term-player.o       \
@@ -24,15 +24,21 @@ all: $(BIN)
 %.o: %.cc
 	g++ -g -c $^ -Isrc -o $@
 
-$(BIN): $(OBJS)
-	g++ -g $^ -o $@
+$(BIN): $(OBJS) src/main.o
+	g++ -g $^ -Isrc -o $@
+
+zchk: $(OBJS) src/check/z.o
+	g++ -g $^ -Isrc -o $@
+
+check: zchk
+	./zchk
 
 clean:
 	@find . -name '*.o' -delete -print
 	@find . -name '*_flymake.*' -delete -print
 
 .phony:
-	clean
+	clean check
 
 make-doc:
 	@(cd doc && doxygen conf_file)
