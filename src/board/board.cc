@@ -508,3 +508,86 @@ std::vector<Cell *> Board::getNoCenterCells(void)
     
     return cells;
 }
+
+
+
+
+#include "check/z.h"
+
+Z_GROUP(group_init, "")
+{
+    Z_TEST(cell_relative, "Cells are rightly place next to each other") {
+        Board *board = new Board();
+        std::vector<Cell *> cells = board->getCells();
+
+#define CHECK_WITH_UP(_pos)                                                  \
+        Z_ASSERT_EQ(cells[_pos]->getUp(), cells[_pos - board->getL()])
+#define CHECK_WITH_DOWN(_pos)                                                \
+        Z_ASSERT_EQ(cells[_pos]->getDown(), cells[_pos + board->getL()])
+#define CHECK_WITH_RIGHT(_pos)                                               \
+        Z_ASSERT_EQ(cells[_pos]->getRight(), cells[_pos + 1])
+#define CHECK_WITH_LEFT(_pos)                                                \
+        Z_ASSERT_EQ(cells[_pos]->getLeft(), cells[_pos - 1])
+
+        /* line without down cell */
+        for (int y = 1; y < board->getL() - 1; y++) {
+            /* XXX: x == 0 */
+            CHECK_WITH_UP(y * board->getL());
+            CHECK_WITH_DOWN(y * board->getL());
+            CHECK_WITH_RIGHT(y * board->getL());
+            Z_ASSERT(!cells[y * board->getL()]->getLeft());
+            for (int x = 1; x < board->getL() - 1; x++) {
+                CHECK_WITH_UP   (y * board->getL() + x);
+                CHECK_WITH_DOWN (y * board->getL() + x);
+                CHECK_WITH_RIGHT(y * board->getL() + x);
+                CHECK_WITH_LEFT (y * board->getL() + x);
+            }
+            /* XXX: x == l */
+            CHECK_WITH_UP(y * board->getL() + board->getL() - 1);
+            CHECK_WITH_DOWN(y * board->getL() + board->getL() - 1);
+            CHECK_WITH_LEFT(y * board->getL() + board->getL() - 1);
+            Z_ASSERT(!cells[y * board->getL() + board->getL() - 1]->getRight());
+        }
+        for (int x = 0; x < board->getL(); x++) {
+            int pos = x + board->getL() * (board->getL() - 1);
+
+            /* XXX: y == 0 */
+            Z_ASSERT(!cells[x]->getUp());
+            CHECK_WITH_DOWN(x);
+            if (x == board->getL() - 1) {
+                Z_ASSERT(!cells[x]->getRight());
+            } else {
+                CHECK_WITH_RIGHT(x);
+            }
+            if (x == 0) {
+                Z_ASSERT(!cells[x]->getLeft());
+            } else {
+                CHECK_WITH_LEFT(x);
+            }
+            /* XXX: y == l */
+            Z_ASSERT(!cells[pos]->getDown());
+            CHECK_WITH_UP(pos);
+            if (x == board->getL() - 1) {
+                Z_ASSERT(!cells[pos]->getRight());
+            } else {
+                CHECK_WITH_RIGHT(pos);
+            }
+            if (x == 0) {
+                Z_ASSERT(!cells[pos]->getLeft());
+            } else {
+                CHECK_WITH_LEFT(pos);
+            }
+        }
+#undef CHECK_WITH_UP
+#undef CHECK_WITH_DOWN
+#undef CHECK_WITH_LEFT
+#undef CHECK_WITH_RIGHT
+    }
+    Z_TEST(center_room, "Center rooms is indeed into the center") {
+        Board *board = new Board();
+        std::vector<Cell *> cells = board->getCells();
+
+        Z_ASSERT(cells[board->getL() * board->getL() / 2]->getRoomKind()
+                 == ROOM_KIND_CENTER);
+    }
+}

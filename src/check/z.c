@@ -1,38 +1,47 @@
 #include "z.h"
 
-#include <vector>
+Group *groups = NULL;
 
-std::vector<z_test_t> groups = std::vector<z_test_t>();
 
-bool test_bidon(void)
+#if 0
+Z_GROUP(test, "test the Z framework")
 {
-    Z_ASSERT(42 == 69);
-    
-    return true;
-}
+    Z_TEST(test1, bidon)
+    {
+        Z_ASSERT(42 == 69);
 
-void init(void) {
-    Z_GROUPS("echec", test_bidon);
-    
+        return true;
+    }
+
+    Z_TEST(test2, success)
+    {
+        Z_ASSERT(true);
+
+        return true;
+    }
 }
+#endif
 
 int main(int argc, char **argv)
 {
     int i = 0;
     int nb_failed = 0, nb_success = 0;
 
-    init();
-
-    while (i < groups.size()) {
-        std::cout << "Test " << groups[i].name;
-        if (groups[i].test_cb()) {
-            std::cout << " Ok" << std::endl;
-            nb_success++;
-        } else {
-            std::cout << " Failed" << std::endl;
-            nb_failed++;
+    dlist_for_each(z_group_t, group, groups) {
+        if (!group->tests) {
+            continue;
         }
-        i++;
+        std::cout << "Group: `" << group->name << "`" << std::endl;
+        dlist_for_each(z_test_t, test, group->tests) {
+            std::cout << "  Tests `" << test->name << "`: ";
+            if (test->test_cb()) {
+                std::cout << "Ok" << std::endl;
+                nb_success++;
+            } else {
+                std::cout << "Failed" << std::endl;
+                nb_failed++;
+            }
+        }
     }
 
     std::cout << "Results:\n\t"
