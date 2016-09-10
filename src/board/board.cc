@@ -168,6 +168,7 @@ void Board::shuffle(void)
     assert (rooms.size() == this->cells.size() - 2);
 
     srand(time(NULL));
+    /* shuffle the room vector */
     for (int i = 0; i < rooms.size() * 2; i++) {
         Room *tmp;
         int idx = rand() % rooms.size();
@@ -176,6 +177,7 @@ void Board::shuffle(void)
         rooms[idx] = rooms[i % rooms.size()];
         rooms[i % rooms.size()] = tmp;
     }
+    /* place the no exit rooms first */
     for (int i = 0; i < this->l / 2; i++) {
         for (int j = -i; j <= i; j++) {
             Cell *cell = this->cells[this->l / 2 + i * j + this->l * i];
@@ -185,14 +187,23 @@ void Board::shuffle(void)
         }
     }
     this->cells[this->l * this->l / 2]->setRoom(center);
+    for (int i = 0; i < this->l; i++) {
+        Cell *cell = this->cells[i + this->l * this->l / 2 - this->l / 2];
+
+        if (!cell->getRoom()) {
+            cell->setRoom(rooms.back());
+            rooms.pop_back();
+        }
+    }
     for (int i = this->l / 2 + 1; i < this->l; i++) {
         for (int j = (i + 1) - this->l; j <= this->l - (i + 1); j++) {
-            Cell *cell = this->cells[this->l / 2 + i * j + this->l * i];
+            Cell *cell = this->cells[this->l / 2 + (i - this->l / 2) * j + this->l * i];
 
             cell->setRoom(rooms.back());
             rooms.pop_back();
         }
     }
+    /* now only allowed place of exit room remain */
     rooms.push_back(exit);
     {
         Room *tmp;
@@ -493,8 +504,6 @@ void Board::set_avatar_to_center(Avatar *avatar)
     this->center->getRoom()->addAvatar(avatar, false);
 }
 
-/* }}} */
-
 std::vector<Cell *> Board::getNoCenterCells(void)
 {
     std::vector<Cell *> cells = this->getCells();
@@ -505,12 +514,12 @@ std::vector<Cell *> Board::getNoCenterCells(void)
             cells.erase(it);
         }
     }
-    
+
     return cells;
 }
 
-
-
+/* }}} */
+/* {{{ Tests */
 
 #include "check/z.h"
 
@@ -582,12 +591,30 @@ Z_GROUP(group_init, "")
 #undef CHECK_WITH_DOWN
 #undef CHECK_WITH_LEFT
 #undef CHECK_WITH_RIGHT
-    }
+    } Z_TEST_END;
     Z_TEST(center_room, "Center rooms is indeed into the center") {
         Board *board = new Board();
         std::vector<Cell *> cells = board->getCells();
 
-        Z_ASSERT(cells[board->getL() * board->getL() / 2]->getRoomKind()
-                 == ROOM_KIND_CENTER);
-    }
+        Z_ASSERT_EQ(cells[board->getL() * board->getL() / 2]->getRoomKind(),
+                    ROOM_KIND_CENTER);
+    } Z_TEST_END;
+    Z_TEST_RAND(exit_room, "Exit rooms is indeed into the center", 10) {
+        Board *board = new Board();
+        std::vector<Cell *> cells = board->getCells();
+
+#define ABS(n)  ((n) < 0 ? -(n) : (n))
+#define MIDDLE_IDX  (board->getL() / 2)
+
+        for (int i = 0; i < cells.size(); i++) {
+            int x = i % board->getL();
+            int y = i / board->getL();
+
+            if ((ABS(x - MIDDLE_IDX) + ABS(y - MIDDLE_IDX)) <= MIDDLE_IDX) {
+                Z_ASSERT_NEQ(cells[i]->getRoomKind(), ROOM_KIND_EXIT);
+            }
+        }
+    } Z_TEST_END;
 }
+
+/* }}} */
