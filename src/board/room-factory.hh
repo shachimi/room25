@@ -2,6 +2,7 @@
 # define ROOM_FACTORY_HH_
 
 # include "board/room.hh"
+# include "board/enum.hh"
 
 class RoomFactory {
 public:
