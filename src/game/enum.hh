@@ -1,5 +1,5 @@
-#ifndef ENUM_HH_
-# define ENUM_HH_
+#ifndef GAME_ENUM_HH_
+# define GAME_ENUM_HH_
 
 typedef enum {
     ACTION_NONE  = 0,
@@ -31,4 +31,4 @@ typedef enum {
     ROOM_KIND_DANGER,
 } room_kind_t;
 
-#endif /* !ENUM_HH_ */
+#endif /* !GAME_ENUM_HH_ */
