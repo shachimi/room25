@@ -25,6 +25,8 @@ public:
     void removeAvatar(Avatar *avatar);
     void addPlayer(Player *player);
 
+    bool checkWin(int pos, direction_t dir);
+
     /* Getter and setters */
     std::vector<Player *> getPlayers(void) { return this->players; };
     void setPlayers(std::vector<Player *> players) { this->players = players; };

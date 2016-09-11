@@ -73,8 +73,10 @@ bool StandardRule::manage_game(void)
     } catch (const char *message) {
         Log::print() << message << std::endl << *game->getBoard();
         return false;
+    } catch (bool win) {
+        return win;
     }
-    return true;
+    return false;
 }
 
 bool StandardRule::destroyPrisoner(Prisoner *prisoner)

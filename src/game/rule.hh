@@ -23,6 +23,7 @@ public:
     /* TODO: the win condition will be by knowing if we can go out during
      *       a slide
      */
+    virtual bool checkWinningCond(int pos) { return true; };
 
 public:
     int getTurn(void) { return this->turn; };

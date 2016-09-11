@@ -137,7 +137,6 @@ void Game::exec(action_t action, Player *player)
       case ACTION_SEE:
         this->execSee(player);
         break;
-        /* Add action SlideToWin with check */
       case ACTION_NONE:
         break;
       default:
@@ -267,6 +266,31 @@ void Game::execSee(Player *player)
     player->getAvatarRoom()->getEffect()->prisoner_stay(player->getAvatar());
 }
 
+bool Game::checkWin(int pos, direction_t dir)
+{
+    int x = pos % this->board->getL();
+    int y = pos / this->board->getL();
+
+    if ((x != 0 && x != this->board->getL())
+    ||  (y != 0 && y != this->board->getL()))
+    {
+        return false;
+    }
+
+    /* two way of exit:
+     *    - But first is there key?
+     *    - Second:
+     *         - Last turn and only one dead
+     *         - everybody on it
+     */
+    return this->board->getCell(pos)->getRoomKind() == ROOM_KIND_EXIT
+        && ((dir == DIRECTION_N && y == 0)
+        ||  (dir == DIRECTION_O && x == 0)
+        ||  (dir == DIRECTION_S && y == this->board->getL())
+        ||  (dir == DIRECTION_E && x == this->board->getL()))
+        && this->rule->checkWinningCond(pos);
+}
+
 void Game::execSlide(Player *player)
 {
     direction_t dir;
@@ -302,8 +326,12 @@ void Game::execSlide(Player *player)
     dir = player->selectSlide(allowed_dir);
     /* TODO: do not assert */
     assert (dir & allowed_dir);
-    this->board->slide(player, dir);
 
+    if (this->checkWin(pos, dir) && player->goOutComplex()) {
+        throw true;
+    }
+
+    this->board->slide(player, dir);
     /* resolve effects */
     player->getAvatarRoom()->getEffect()->prisoner_stay(player->getAvatar());
 }
