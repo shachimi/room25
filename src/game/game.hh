@@ -5,7 +5,6 @@
 
 # include "player/player.hh"
 # include "board/board.hh"
-# include "game/action.hh"
 # include "game/rule.hh"
 # include "player/prisoner.hh"
 
