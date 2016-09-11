@@ -283,7 +283,7 @@ bool Game::checkWin(int pos, direction_t dir)
      *         - Last turn and only one dead
      *         - everybody on it
      */
-    return this->board->getCell()->getRoomKind() == ROOM_KIND_EXIT
+    return this->board->getCell(pos)->getRoomKind() == ROOM_KIND_EXIT
         && ((dir == DIRECTION_N && y == 0)
         ||  (dir == DIRECTION_O && x == 0)
         ||  (dir == DIRECTION_S && y == this->board->getL())
@@ -300,20 +300,20 @@ void Game::execSlide(Player *player)
     /* XXX: better than looking for the center room in the line */
     if (pos % 5 /* x */ != this->board->getL() / 2) {
         if (this->board->getCell(pos)->getSlideDirs() & DIRECTION_S) {
-            allowed_dirs |= DIRECTION_S;
+            allowed_dir |= DIRECTION_S;
         } else
         if (this->board->getCell(pos)->getSlideDirs() & DIRECTION_N) {
-            allowed_dirs |= DIRECTION_N;
+            allowed_dir |= DIRECTION_N;
         } else {
             allowed_dir |= DIRECTION_N | DIRECTION_S;
         }
     }
     if (pos / 5 /* y */ != this->board->getL() / 2) {
         if (this->board->getCell(pos)->getSlideDirs() & DIRECTION_O) {
-            allowed_dirs |= DIRECTION_O;
+            allowed_dir |= DIRECTION_O;
         } else
         if (this->board->getCell(pos)->getSlideDirs() & DIRECTION_E) {
-            allowed_dirs |= DIRECTION_E;
+            allowed_dir |= DIRECTION_E;
         } else {
             allowed_dir |= DIRECTION_E | DIRECTION_O;
         }

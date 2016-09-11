@@ -31,4 +31,8 @@ typedef enum {
     ROOM_KIND_DANGER,
 } room_kind_t;
 
+typedef enum {
+    AVATAR_KIND_DEFAULT,
+} avatar_kind_t;
+
 #endif /* !GAME_ENUM_HH_ */

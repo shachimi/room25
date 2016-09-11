@@ -5,7 +5,6 @@
 
 # include "player/player.hh"
 # include "board/board.hh"
-# include "game/action.hh"
 # include "game/rule.hh"
 # include "player/prisoner.hh"
 
@@ -15,7 +14,7 @@ public:
     static Game *getInstance(void);
 
     void init_game(Rule *rule, int nb_players, int nb_turn);
-    void play_turn(void);
+    virtual void play_turn(void);
     void exec(action_t action, Player *player);
     void execMove(Player *player);
     void execSlide(Player *player);

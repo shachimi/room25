@@ -519,6 +519,7 @@ std::vector<Cell *> Board::getNoCenterCells(void)
 }
 
 /* }}} */
+#ifdef TU_MEMMERDES
 /* {{{ Tests */
 
 #include "check/z.h"
@@ -618,3 +619,4 @@ Z_GROUP(group_init, "")
 }
 
 /* }}} */
+#endif
