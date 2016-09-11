@@ -32,12 +32,15 @@ zchk: $(OBJS) src/check/z.o
 check: zchk
 	./zchk
 
+tags:
+	@etags -o TAGS `find . -name '*.[hc][hc]'`
+
 clean:
 	@find . -name '*.o' -delete -print
 	@find . -name '*_flymake.*' -delete -print
 
 .phony:
-	clean check
+	clean check tags
 
 make-doc:
 	@(cd doc && doxygen conf_file)
