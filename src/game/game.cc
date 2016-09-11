@@ -273,11 +273,26 @@ void Game::execSlide(Player *player)
     int allowed_dir = 0;
     int pos = player->getAvatar()->getRoom()->getCell()->getPos();
 
-    if (pos % 5 /* x */ != 2) {
-        allowed_dir |= DIRECTION_N | DIRECTION_S;
+    /* XXX: better than looking for the center room in the line */
+    if (pos % 5 /* x */ != this->board->getL() / 2) {
+        if (this->board->getCell(pos)->getSlideDirs() & DIRECTION_S) {
+            allowed_dir |= DIRECTION_S;
+        } else
+        if (this->board->getCell(pos)->getSlideDirs() & DIRECTION_N) {
+            allowed_dir |= DIRECTION_N;
+        } else {
+            allowed_dir |= DIRECTION_N | DIRECTION_S;
+        }
     }
-    if (pos / 5 /* y */ != 2) {
-        allowed_dir |= DIRECTION_O | DIRECTION_E;
+    if (pos / 5 /* y */ != this->board->getL() / 2) {
+        if (this->board->getCell(pos)->getSlideDirs() & DIRECTION_O) {
+            allowed_dir |= DIRECTION_O;
+        } else
+        if (this->board->getCell(pos)->getSlideDirs() & DIRECTION_E) {
+            allowed_dir |= DIRECTION_E;
+        } else {
+            allowed_dir |= DIRECTION_E | DIRECTION_O;
+        }
     }
 
     if (!allowed_dir) {
