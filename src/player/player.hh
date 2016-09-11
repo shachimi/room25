@@ -27,6 +27,8 @@ public:
     /* TODO: distinguish complex avatar from player one */
     virtual Avatar *selectPushTarget(std::vector<Avatar *> players) = 0;
 
+    virtual bool goOutComplex(void) { return true; };
+
     /* }}} */
     /* {{{ Captor */
 
