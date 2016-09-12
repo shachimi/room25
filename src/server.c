@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
 {
     int listenfd = 0, connfd = 0;
     struct sockaddr_in serv_addr;
-
     net_msg_t msg;
+    int code;
 
     listenfd = socket(AF_INET, SOCK_STREAM, 0);
     memset(&serv_addr, '0', sizeof(serv_addr));
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     listen(listenfd, 10);
 
     connfd = accept(listenfd, (struct sockaddr*)NULL, NULL);
-    printf("Client connected !\n");
+    printf("Client connected ! (%d)\n", connfd);
 
     msg.req = REQ_CREATE_CELL;
     msg.cell.id = 0;
@@ -40,17 +40,14 @@ int main(int argc, char *argv[])
     msg.cell.coords.y = 1;
     msg.cell.effect = EFFECT_CENTER;
     msg.cell.is_visible = 0;
-    send(connfd, &msg, sizeof(msg), 0);
+    code = write(connfd, &msg, sizeof(msg));
+    printf("Sent request 1 to the client. (%d)\n", code);
 
-    printf("Sent request to the client. \n");
-
-    int code;
-
-    if (code = recv(connfd, &msg, sizeof(msg), 0) < 0) {
-        perror("[Server] error receiving message from client: ");
+    if (code = read(connfd, &msg, sizeof(msg)+1) < 0) {
+        perror("\n[Server] error receiving message from client: ");
         return -1;
     } else if (code == 0) {
-        printf("Server lost connection to the client");
+        printf("Server lost connection to the client\n");
         return 0;
     }
 

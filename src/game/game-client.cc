@@ -62,7 +62,7 @@ int GameClient::init_game(Rule *rule, char *server_address, int port)
     memset(&serv_addr, '0', sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(port);
-    if (inet_pton(AF_INET, server_address, &(serv_addr.sin_addr)) <= 0) {
+    if (inet_pton(AF_INET, server_address, &serv_addr.sin_addr) <= 0) {
         perror("[GameClient] inet_pton error: ");
         return -1;
     }
@@ -72,7 +72,7 @@ int GameClient::init_game(Rule *rule, char *server_address, int port)
         perror("[GameClient] Couldn't connect to the server: ");
         return -1;
     }
-    Log::print("GameClient") << "Connected to the server ." << std::endl;
+    Log::print("GameClient") << "Connected to the server ." << this->sock_fd << std::endl;
 
     while (this->recv_msg()) { }
 
@@ -95,7 +95,7 @@ int GameClient::recv_msg()
     net_msg_t msg;
     int code;
 
-    if (code = recv(this->sock_fd, &msg, sizeof(msg), 0) < 0) {
+    if ((code = read(this->sock_fd, &msg, sizeof(msg))) < 0) {
         perror("[GameClient] error receiving message from server: ");
         return -1;
     } else if (code == 0) {

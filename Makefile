@@ -16,6 +16,10 @@ CFLAGS=-Werror -Wextra -Wall
 
 all: $(BIN)
 
+client: all
+
+server: server.o
+	g++ -g -c $^ -Isrc -o $@
 
 %.o: %.c
 	g++ -g -c $^ -Isrc -o $@
