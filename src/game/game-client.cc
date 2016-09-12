@@ -1,8 +1,3 @@
-#include "game/game-client.hh"
-#include "utils/Log.hh"
-#include "player/term-player.hh"
-#include "network/enum.hh"
-
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netinet/in.h>
@@ -13,6 +8,10 @@
 #include <unistd.h>
 #include <errno.h>
 #include <arpa/inet.h>
+
+#include "game/game-client.hh"
+#include "utils/Log.hh"
+#include "player/term-player.hh"
 
 /*
 TODO
@@ -30,6 +29,25 @@ TODO
 
  */
 
+GameClient::GameClient(void)
+    : Game(),
+      sock_fd(0)
+{
+}
+
+GameClient::~GameClient(void)
+{
+}
+
+Game *GameClient::getInstance(void)
+{
+    if (!Game::instance) {
+        Game::instance = new GameClient();
+    }
+
+    return GameClient::instance;
+}
+
 int GameClient::init_game(Rule *rule, char *server_address, int port)
 {
     struct sockaddr_in serv_addr;
@@ -44,7 +62,7 @@ int GameClient::init_game(Rule *rule, char *server_address, int port)
     memset(&serv_addr, '0', sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(port);
-    if (inet_pton(AF_INET, server_address, &serv_addr.sin_addr) <= 0) {
+    if (inet_pton(AF_INET, server_address, &(serv_addr.sin_addr)) <= 0) {
         perror("[GameClient] inet_pton error: ");
         return -1;
     }
@@ -54,8 +72,9 @@ int GameClient::init_game(Rule *rule, char *server_address, int port)
         perror("[GameClient] Couldn't connect to the server: ");
         return -1;
     }
+    Log::print("GameClient") << "Connected to the server ." << std::endl;
 
-    while (this->recv()) { }
+    while (this->recv_msg()) { }
 
     //Recv game data from the server
     //Load board from server
@@ -66,13 +85,17 @@ int GameClient::init_game(Rule *rule, char *server_address, int port)
     return 0;
 }
 
+void GameClient::play_turn(void)
+{
+}
 
-int GameClient::recv()
+
+int GameClient::recv_msg()
 {
     net_msg_t msg;
     int code;
 
-    if (code = read(this->sock_fd, &msg, sizeof(msg)) < 0) {
+    if (code = recv(this->sock_fd, &msg, sizeof(msg), 0) < 0) {
         perror("[GameClient] error receiving message from server: ");
         return -1;
     } else if (code == 0) {
@@ -95,4 +118,8 @@ int GameClient::recv()
         break;
     }
     return 1;
+}
+
+int GameClient::send(net_msg_t msg)
+{
 }

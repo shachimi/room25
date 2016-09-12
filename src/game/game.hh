@@ -46,7 +46,7 @@ protected:
     Rule *rule;
     int first_player;
 
-private:
+protected:
     Game(void);
     ~Game(void);
     static Game *instance;

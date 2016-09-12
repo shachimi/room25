@@ -7,16 +7,21 @@
 # include "player/player.hh"
 # include "board/board.hh"
 # include "game/rule.hh"
-# include "player/prisoner.hh"
-
+#include "network/enum.hh"
 
 class GameClient : public Game {
 public:
+    static Game *getInstance(void);
     int init_game(Rule *rule, char *server_address = "127.0.0.1",
                   int port = 5000);
     virtual void play_turn(void);
 
-    int recv();
+protected:
+    GameClient(void);
+    ~GameClient(void);
+
+    int recv_msg();
+    int send(net_msg_t msg);
 
 protected:
     int sock_fd;
