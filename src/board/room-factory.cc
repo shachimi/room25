@@ -175,5 +175,64 @@ Room *RoomFactory::getTunnelRoom(void)
     return room;
 }
 
-
 /* }}} */
+
+Room *RoomFactory::getRoom(effect_t effect)
+{
+    switch(effect)
+    {
+      case EFFECT_DEADLY:
+        return getDeadlyRoom();
+        break;
+      case EFFECT_ACID:
+        return getAcidRoom();
+        break;
+      case EFFECT_FLOODING:
+        return getFloodingRoom();
+        break;
+      case EFFECT_TORTURE:
+        return getTortureRoom();
+        break;
+      case EFFECT_ILLUSION:
+        return getIllusionRoom();
+        break;
+
+      case EFFECT_FREEZE:
+        return getFreezeRoom();
+        break;
+      case EFFECT_PRISON:
+        return getPrisonRoom();
+        break;
+      case EFFECT_FOG:
+        return getFogRoom();
+        break;
+      case EFFECT_VORTEX:
+        return getVortexRoom();
+        break;
+      case EFFECT_PIVOT:
+        return getPivotRoom();
+        break;
+
+      case EFFECT_CENTER:
+        return getCenterRoom();
+        break;
+      case EFFECT_EXIT:
+        return getExitRoom();
+        break;
+      case EFFECT_SAFE:
+        return getSafeRoom();
+        break;
+      case EFFECT_GEAR:
+        return getGearRoom();
+        break;
+      case EFFECT_VISION:
+        return getVisionRoom();
+        break;
+      case EFFECT_WARP:
+        return getWarpRoom();
+        break;
+      case EFFECT_TUNNEL:
+        return getTunnelRoom();
+        break;
+    }
+}

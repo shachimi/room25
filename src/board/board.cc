@@ -10,79 +10,6 @@ Board::Board(void)
       cells(std::vector<Cell *>()),
       tunnel_room_effects(std::vector<RoomEffect *>())
 {
-    int   i = 0;
-    Cell *cell;
-
-    for (int y = 0; y < this->l; y++) {
-        for (int x = 0; x < this->l; x++) {
-            Cell *cell = new Cell(x + this->l * y);
-
-            this->cells.push_back(cell);
-            if (0 < x) {
-                Cell *tmp = this->cells[x - 1 + y * this->l];
-
-                tmp->setRight(cell);
-                cell->setLeft(tmp);
-            }
-            if (0 < y) {
-                Cell *tmp = this->cells[x + (y - 1) * this->l];
-
-                tmp->setDown(cell);
-                cell->setUp(tmp);
-            }
-        }
-    }
-    this->center = this->cells[this->l * this->l / 2];
-
-    {
-        Room *room = new Room();
-        RoomEffect *effect = new RoomEffect();
-
-        cell = this->getCell(this->l / 2, this->l / 2);
-        effect->setKind(ROOM_KIND_CENTER);
-        room->setEffect(effect);
-        room->setVisible(true);
-        cell->setRoom(room);
-    }
-    {
-        Room *room = new Room();
-        RoomEffect *effect = new RoomEffect();
-
-        effect->setKind(ROOM_KIND_EXIT);
-        room->setEffect(effect);
-        this->getCell(i)->setRoom(room);
-    }
-    for (i = 1; i < 11; i++) {
-        Room *room = new Room();
-        RoomEffect *effect = new RoomEffect();
-
-        effect->setKind(ROOM_KIND_OBS);
-        room->setEffect(effect);
-        this->getCell(i)->setRoom(room);
-    }
-    for (; i < 17; i++) {
-        Room *room = new Room();
-        RoomEffect *effect = new RoomEffect();
-
-        if (i == this->l * this->l / 2) {
-            delete room;
-            delete effect;
-            continue;
-        }
-
-        effect->setKind(ROOM_KIND_DANGER);
-        room->setEffect(effect);
-        this->getCell(i)->setRoom(room);
-    }
-    for (; i < 25; i++) {
-        Room *room = new Room();
-        RoomEffect *effect = new RoomEffect();
-
-        effect->setKind(ROOM_KIND_SAFE);
-        room->setEffect(effect);
-        this->getCell(i)->setRoom(room);
-    }
-    this->shuffle();
 }
 
 Board::Board(std::vector<Room *> rooms)
@@ -509,13 +436,56 @@ std::vector<Cell *> Board::getNoCenterCells(void)
     std::vector<Cell *> cells = this->getCells();
     std::vector<Cell *>::iterator it;
 
-    for ( it = cells.begin(); it < cells.end(); it++) {
+    for (it = cells.begin(); it < cells.end(); it++) {
         if ( (*it)->getRoom()->getEffect()->getKind() == ROOM_KIND_CENTER ) {
             cells.erase(it);
         }
     }
 
     return cells;
+}
+
+Cell *Board::getCellById(int id)
+{
+    std::vector<Cell *>::iterator it;
+    for (it = this->cells.begin(); it < this->cells.end(); it++) {
+        if ((*it)->getId() == id) {
+            return (*it);
+        }
+    }
+    return NULL;
+}
+
+void Board::setCell(int x, int y, Cell *cell)
+{
+    int pos = this->getPos(x, y);
+
+    if (pos >= this->cells.size()) {
+        this->cells.push_back(cell);
+    }
+    else {
+        std::vector<Cell *>::iterator it = this->cells.begin() + pos;
+        it = this->cells.erase(it);
+        it = this->cells.insert(it, cell);
+    }
+
+    linkCell(x, y, cell);
+}
+
+void Board::linkCell(int x, int y, Cell *cell)
+{
+    if (0 < x) {
+        Cell *tmp = this->cells[this->getPos(x - 1, y)];
+
+        tmp->setRight(cell);
+        cell->setLeft(tmp);
+    }
+    if (0 < y) {
+        Cell *tmp = this->cells[this->getPos(x, y - 1)];
+
+        tmp->setDown(cell);
+        cell->setUp(tmp);
+    }
 }
 
 /* }}} */

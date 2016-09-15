@@ -26,6 +26,8 @@ public:
     static Room *getSafeRoom(void);
     static Room *getTunnelRoom(void);
 
+    static Room *getRoom(effect_t effect);
+
 private: /* Should never be instanciated */
     RoomFactory() {};
     ~RoomFactory() {};

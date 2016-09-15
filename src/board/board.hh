@@ -24,9 +24,17 @@ public:
     int getL(void) { return this->l; };
     Cell *getCell(int pos) { return this->cells[pos]; };
     Cell *getCell(int x, int y) { return this->cells[x + y * 5]; };
+    Cell *getCellById(int id);
     std::vector<Cell *> getCells(void) { return this->cells; };
     std::vector<Cell *> getNoCenterCells(void);
     std::vector<RoomEffect *> getTunnelRoomEffects(void) { return this->tunnel_room_effects; };
+    int getPos(int x, int y) { return (x + y * this->l); };
+
+    void setCells(std::vector<Cell *> cells) { this->cells = cells; };
+    void setCell(int x, int y, Cell *cell);
+
+protected:
+    void linkCell(int x, int y, Cell *cell);
 
 public: /* game mechanics */
     void slide(int x, int y, direction_t direction);

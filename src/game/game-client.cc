@@ -12,6 +12,7 @@
 #include "game/game-client.hh"
 #include "utils/Log.hh"
 #include "player/term-player.hh"
+#include "board/room-factory.hh"
 
 /*
 TODO
@@ -53,6 +54,7 @@ int GameClient::init_game(Rule *rule, char *server_address, int port)
     struct sockaddr_in serv_addr;
 
     this->rule = rule;
+    this->board = new Board();
 
     //Connect to the server
     if ((this->sock_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
@@ -94,6 +96,7 @@ int GameClient::recv_msg()
 {
     net_msg_t msg;
     int code;
+    Cell *cell;
 
     if ((code = read(this->sock_fd, &msg, sizeof(msg))) < 0) {
         perror("[GameClient] error receiving message from server: ");
@@ -105,16 +108,73 @@ int GameClient::recv_msg()
     }
 
     switch (msg.req) {
-      case REQ_CREATE_CELL:
-      case REQ_UPDATE_CELL:
+      case REQ_CREATE_CELL: //Test: Seems ok
+        Log::print("GameClient") << "Recvd request REQ_CREATE_CELL"
+                                 << std::endl;
+        Log::print("GameClient") << "Cell:\n\tid:" << msg.cell.id
+                                 << "\n\tcoords: (" << msg.cell.coords.x
+                                 << "," << msg.cell.coords.y << ")"
+                                 << "\n\teffect:" << msg.cell.effect
+                                 << "\n\tis_visible:" << msg.cell.is_visible
+                                 << std::endl;
+
+        this->board->setCell(msg.cell.coords.x, msg.cell.coords.y,
+                             new Cell(msg.cell.id,
+                                 this->board->getPos(msg.cell.coords.x,
+                                                     msg.cell.coords.y),
+                                 RoomFactory::getRoom(msg.cell.effect)));
+
+        break;
+      case REQ_UPDATE_CELL: //Test: Seems ok
+        Log::print("GameClient") << "Recvd request REQ_UPDATE_CELL"
+                                 << std::endl;
+        Log::print("GameClient") << "Cell:\n\tid:" << msg.cell.id
+                                 << "\n\tcoords: (" << msg.cell.coords.x
+                                 << "," << msg.cell.coords.y << ")"
+                                 << "\n\teffect:" << msg.cell.effect
+                                 << "\n\tis_visible:" << msg.cell.is_visible
+                                 << std::endl;
+
+        cell = this->board->getCellById(msg.cell.id);
+
+        if (cell->getX() != msg.cell.coords.x
+            || cell->getY() != msg.cell.coords.y)
+        {
+            cell->setPos(this->board->getPos(msg.cell.coords.x,
+                                            msg.cell.coords.y));
+        }
+
+        if (cell->getRoom()->isVisible() != !!(msg.cell.is_visible)) {
+            cell->getRoom()->setVisible((bool)(msg.cell.is_visible));
+        }
+        break;
       case REQ_CREATE_PLAYER:
+        break;
+      case REQ_GET_PLAYER:
+        break;
       case REQ_UPDATE_PLAYER:
-      case REQ_GET_SCHEDULING:
-      case REQ_GET_CHOICE:
+        Log::print("GameClient") << "Recvd request REQ_UPDATE_PLAYER"
+                                 << std::endl;
+        this->board->print(std::cout);
+        break;
+      case REQ_GET_SCHEDULING: //Needs REQ_CREATE_PLAYER
+        break;
+      case REQ_GET_CHOICE: //Needs REQ_CREATE_PLAYER
+        break;
       case REQ_EXEC_ACTION:
+        break;
+      case REQ_SET_RULES:
+        Log::print("GameClient") << "Recvd request REQ_SET_RULES"
+                                 << std::endl;
+        Log::print("GameClient") << "Rules:\n"
+                                 << "\n\tnb_turn:" << msg.rules.nb_turn
+                                 << std::endl;
+
+        this->rule->setTurn(msg.rules.nb_turn);
+        break;
       default:
-        Log::print("GameClient") << "Receiving req" << msg.req
-                                 << "what should I do ?" << std::endl;
+        Log::print("GameClient") << "Receiving unknown request: " << msg.req
+                                 << std::endl;
         break;
     }
     return 1;

@@ -41,16 +41,22 @@ typedef struct {
     direction_t direction;
 } net_action_t;
 
+typedef struct {
+    int nb_turn;
+} net_rules_t;
+
 typedef enum {
     REQ_CREATE_CELL,
     REQ_UPDATE_CELL,
     REQ_CREATE_PLAYER,
+    REQ_GET_PLAYER,
     REQ_UPDATE_PLAYER,
     REQ_GET_SCHEDULING,
     REQ_SET_SCHEDULING,
     REQ_GET_CHOICE,
     REQ_SET_CHOICE,
     REQ_EXEC_ACTION,
+    REQ_SET_RULES,
 } net_req_t;
 
 typedef struct {
@@ -61,6 +67,7 @@ typedef struct {
         net_scheduling_t scheduling;
         net_choice_t choice;
         net_action_t action;
+        net_rules_t rules;
     };
 } net_msg_t;
 
