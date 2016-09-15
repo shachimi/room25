@@ -32,6 +32,7 @@ typedef enum {
 } room_kind_t;
 
 typedef enum {
+    AVATAR_KIND_PRISONER,
     AVATAR_KIND_DEFAULT,
 } avatar_kind_t;
 

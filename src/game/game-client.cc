@@ -97,6 +97,7 @@ int GameClient::recv_msg()
     net_msg_t msg;
     int code;
     Cell *cell;
+    Player *player;
 
     if ((code = read(this->sock_fd, &msg, sizeof(msg))) < 0) {
         perror("[GameClient] error receiving message from server: ");
@@ -149,6 +150,26 @@ int GameClient::recv_msg()
         }
         break;
       case REQ_CREATE_PLAYER:
+        Log::print("GameClient") << "Recvd request REQ_CREATE_PLAYER"
+                                 << std::endl;
+        Log::print("GameClient") << "Cell:\n\tid:" << msg.player.id
+                                 << "\n\tcoords: (" << msg.player.coords.x
+                                 << "," << msg.player.coords.y << ")"
+                                 << "\n\tavatar kind:" << msg.player.avatar_kind
+                                 << std::endl;
+
+        player = (Player *) new TermPlayer(msg.player.id);
+
+        switch (msg.player.avatar_kind) {
+          case AVATAR_KIND_PRISONER:
+            player->setAvatar(new Prisoner(player));
+            break;
+          case AVATAR_KIND_DEFAULT:
+          default:
+            break;
+        }
+
+        this->addPlayer(player);
         break;
       case REQ_GET_PLAYER:
         break;

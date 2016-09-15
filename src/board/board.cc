@@ -469,6 +469,8 @@ void Board::setCell(int x, int y, Cell *cell)
         it = this->cells.insert(it, cell);
     }
 
+    if(x==2 && y==2)
+        this->center = cell;
     linkCell(x, y, cell);
 }
 

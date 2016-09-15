@@ -16,7 +16,10 @@ int connfd;
 
 int send_req_create_cell(int id, int x, int y, effect_t effect, int is_visible);
 int send_req_update_cell(int id, int x, int y, effect_t effect, int is_visible);
+
+int send_req_create_player(int id, int x, int y, avatar_kind_t avatar_kind);
 int send_req_update_player(int id, int x, int y, avatar_kind_t avatar_kind);
+
 int send_req_set_rules(int nb_turn);
 
 int main(int argc, char *argv[])
@@ -76,6 +79,10 @@ int main(int argc, char *argv[])
     // Set rules
     code = send_req_set_rules(10);
 
+    // Create players
+    code = send_req_create_player(0, 2, 2, AVATAR_KIND_PRISONER);
+    code = send_req_create_player(1, 2, 2, AVATAR_KIND_PRISONER);
+
     //temporary board print request
     code = send_req_update_player(0, 0, 0, AVATAR_KIND_DEFAULT);
 
@@ -123,6 +130,23 @@ int send_req_update_cell(int id, int x, int y, effect_t effect, int is_visible)
     code = write(connfd, &msg, sizeof(msg));
 
     printf("Sent REQ_UPDATE_CELLS to the client. (%d)\n", code);
+
+    return code;
+}
+
+int send_req_create_player(int id, int x, int y, avatar_kind_t avatar_kind)
+{
+    net_msg_t msg;
+    int code;
+
+    msg.req = REQ_CREATE_PLAYER;
+    msg.player.id = id;
+    msg.player.coords.x = x;
+    msg.player.coords.y = y;
+    msg.player.avatar_kind = avatar_kind;
+    code = write(connfd, &msg, sizeof(msg));
+
+    printf("Sent REQ_CREATE_PLAYER to the client. (%d)\n", code);
 
     return code;
 }
