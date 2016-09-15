@@ -12,26 +12,28 @@ src/board/warp-room.o src/board/illusion-room.o src/board/vision-room.o      \
 src/board/tunnel-room.o src/game/game-client.o
 
 LIBS=
-CFLAGS=-Werror -Wextra -Wall
+CFLAGS=
+CC=g++
+
 
 all: $(BIN)
 
 client: all
 
 server: src/server.o
-	g++ -g $^ -Isrc -o $@
+	$(CC) -g $(CFLAGS) $^ -Isrc -o $@
 
 %.o: %.c
-	g++ -g -c $^ -Isrc -o $@
+	$(CC) -g $(CFLAGS) -c $^ -Isrc -o $@
 
 %.o: %.cc
-	g++ -g -c $^ -Isrc -o $@
+	$(CC) -g $(CFLAGS) -c $^ -Isrc -o $@
 
 $(BIN): $(OBJS) src/main.o
-	g++ -g $^ -Isrc -o $@
+	$(CC) -g $(CFLAGS) $^ -Isrc -o $@
 
 zchk: $(OBJS) src/check/z.o
-	g++ -g $^ -Isrc -o $@
+	$(CC) -g $(CFLAGS) $^ -Isrc -o $@
 
 check: zchk
 	./zchk

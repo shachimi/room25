@@ -182,57 +182,57 @@ Room *RoomFactory::getRoom(effect_t effect)
     switch(effect)
     {
       case EFFECT_DEADLY:
-        return getDeadlyRoom();
+        return RoomFactory::getDeadlyRoom();
         break;
       case EFFECT_ACID:
-        return getAcidRoom();
+        return RoomFactory::getAcidRoom();
         break;
       case EFFECT_FLOODING:
-        return getFloodingRoom();
+        return RoomFactory::getFloodingRoom();
         break;
       case EFFECT_TORTURE:
-        return getTortureRoom();
+        return RoomFactory::getTortureRoom();
         break;
       case EFFECT_ILLUSION:
-        return getIllusionRoom();
+        return RoomFactory::getIllusionRoom();
         break;
 
       case EFFECT_FREEZE:
-        return getFreezeRoom();
+        return RoomFactory::getFreezeRoom();
         break;
       case EFFECT_PRISON:
-        return getPrisonRoom();
+        return RoomFactory::getPrisonRoom();
         break;
       case EFFECT_FOG:
-        return getFogRoom();
+        return RoomFactory::getFogRoom();
         break;
       case EFFECT_VORTEX:
-        return getVortexRoom();
+        return RoomFactory::getVortexRoom();
         break;
       case EFFECT_PIVOT:
-        return getPivotRoom();
+        return RoomFactory::getPivotRoom();
         break;
 
       case EFFECT_CENTER:
-        return getCenterRoom();
+        return RoomFactory::getCenterRoom();
         break;
       case EFFECT_EXIT:
-        return getExitRoom();
+        return RoomFactory::getExitRoom();
         break;
       case EFFECT_SAFE:
-        return getSafeRoom();
+        return RoomFactory::getSafeRoom();
         break;
       case EFFECT_GEAR:
-        return getGearRoom();
+        return RoomFactory::getGearRoom();
         break;
       case EFFECT_VISION:
-        return getVisionRoom();
+        return RoomFactory::getVisionRoom();
         break;
       case EFFECT_WARP:
-        return getWarpRoom();
+        return RoomFactory::getWarpRoom();
         break;
       case EFFECT_TUNNEL:
-        return getTunnelRoom();
+        return RoomFactory::getTunnelRoom();
         break;
     }
 }

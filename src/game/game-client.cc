@@ -112,38 +112,29 @@ int GameClient::recv_msg()
       case REQ_CREATE_CELL: //Test: Seems ok
         Log::print("GameClient") << "Recvd request REQ_CREATE_CELL"
                                  << std::endl;
-        Log::print("GameClient") << "Cell:\n\tid:" << msg.cell.id
-                                 << "\n\tcoords: (" << msg.cell.coords.x
+        Log::print("GameClient") << "Cell:\n\tcoords: (" << msg.cell.coords.x
                                  << "," << msg.cell.coords.y << ")"
                                  << "\n\teffect:" << msg.cell.effect
                                  << "\n\tis_visible:" << msg.cell.is_visible
                                  << std::endl;
 
-        this->board->setCell(msg.cell.coords.x, msg.cell.coords.y,
-                             new Cell(msg.cell.id,
-                                 this->board->getPos(msg.cell.coords.x,
-                                                     msg.cell.coords.y),
-                                 RoomFactory::getRoom(msg.cell.effect)));
+        this->board->getCell(msg.cell.coords.x, msg.cell.coords.y)
+                   ->setRoom(RoomFactory::getRoom(msg.cell.effect));
 
         break;
       case REQ_UPDATE_CELL: //Test: Seems ok
         Log::print("GameClient") << "Recvd request REQ_UPDATE_CELL"
                                  << std::endl;
-        Log::print("GameClient") << "Cell:\n\tid:" << msg.cell.id
-                                 << "\n\tcoords: (" << msg.cell.coords.x
+        Log::print("GameClient") << "Cell:\n\tcoords: (" << msg.cell.coords.x
                                  << "," << msg.cell.coords.y << ")"
                                  << "\n\teffect:" << msg.cell.effect
                                  << "\n\tis_visible:" << msg.cell.is_visible
                                  << std::endl;
 
-        cell = this->board->getCellById(msg.cell.id);
+        cell = this->board->getCell(msg.cell.coords.x, msg.cell.coords.y);
 
-        if (cell->getX() != msg.cell.coords.x
-            || cell->getY() != msg.cell.coords.y)
-        {
-            cell->setPos(this->board->getPos(msg.cell.coords.x,
-                                            msg.cell.coords.y));
-        }
+        std::cout << "cell (" << msg.cell.coords.x << ", "
+                  << msg.cell.coords.y << ") = " << cell << std::endl;
 
         if (cell->getRoom()->isVisible() != !!(msg.cell.is_visible)) {
             cell->getRoom()->setVisible((bool)(msg.cell.is_visible));
@@ -152,8 +143,7 @@ int GameClient::recv_msg()
       case REQ_CREATE_PLAYER:
         Log::print("GameClient") << "Recvd request REQ_CREATE_PLAYER"
                                  << std::endl;
-        Log::print("GameClient") << "Cell:\n\tid:" << msg.player.id
-                                 << "\n\tcoords: (" << msg.player.coords.x
+        Log::print("GameClient") << "Cell:\n\tcoords: (" << msg.player.coords.x
                                  << "," << msg.player.coords.y << ")"
                                  << "\n\tavatar kind:" << msg.player.avatar_kind
                                  << std::endl;

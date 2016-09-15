@@ -10,6 +10,28 @@ Board::Board(void)
       cells(std::vector<Cell *>()),
       tunnel_room_effects(std::vector<RoomEffect *>())
 {
+    for (int y = 0; y < this->l; y++) {
+        for (int x = 0; x < this->l; x++) {
+            Cell *cell = new Cell(x + this->l * y);
+
+            std::cout << "cell (" << x << ", " << y << ") = "
+                      << cell << std::endl;
+            this->cells.push_back(cell);
+            if (0 < x) {
+                Cell *tmp = this->cells[x - 1 + y * this->l];
+
+                tmp->setRight(cell);
+                cell->setLeft(tmp);
+            }
+            if (0 < y) {
+                Cell *tmp = this->cells[x + (y - 1) * this->l];
+
+                tmp->setDown(cell);
+                cell->setUp(tmp);
+            }
+        }
+    }
+    this->center = this->cells[this->l * this->l / 2];
 }
 
 Board::Board(std::vector<Room *> rooms)
@@ -445,32 +467,21 @@ std::vector<Cell *> Board::getNoCenterCells(void)
     return cells;
 }
 
-Cell *Board::getCellById(int id)
-{
-    std::vector<Cell *>::iterator it;
-    for (it = this->cells.begin(); it < this->cells.end(); it++) {
-        if ((*it)->getId() == id) {
-            return (*it);
-        }
-    }
-    return NULL;
-}
-
 void Board::setCell(int x, int y, Cell *cell)
 {
     int pos = this->getPos(x, y);
 
     if (pos >= this->cells.size()) {
         this->cells.push_back(cell);
-    }
-    else {
+    } else {
         std::vector<Cell *>::iterator it = this->cells.begin() + pos;
         it = this->cells.erase(it);
         it = this->cells.insert(it, cell);
     }
 
-    if(x==2 && y==2)
+    if(x == 2 && y == 2) {
         this->center = cell;
+    }
     linkCell(x, y, cell);
 }
 

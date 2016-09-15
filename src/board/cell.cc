@@ -1,26 +1,13 @@
 #include "cell.hh"
 
-Cell::Cell(int pos)
-    : pos(pos),
-      slide_dirs(DIRECTION_NONE),
-      room(NULL),
-      left(NULL),
-      right(NULL),
-      up(NULL),
-      down(NULL),
-      id(0)
-{
-}
-
-Cell::Cell(int id, int pos, Room *room)
+Cell::Cell(int pos, Room *room)
     : pos(pos),
       slide_dirs(DIRECTION_NONE),
       room(room),
       left(NULL),
       right(NULL),
       up(NULL),
-      down(NULL),
-      id(id)
+      down(NULL)
 {
 }
 
