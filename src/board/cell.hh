@@ -7,6 +7,7 @@
 class Cell {
 public:
     Cell(int pos);
+    Cell(int id, int pos, Room *room = NULL);
     ~Cell(void);
 
     void print(std::ostream& out);
@@ -16,6 +17,8 @@ public:
     int getPos(void) { return this->pos; };
     int getX(void) { return this->pos % 5; };
     int getY(void) { return this->pos / 5; };
+    void setPos(int pos) { this->pos = pos; }
+    int getId(void) { return this->id; };
     Room *getRoom(void) { return this->room; };
     void setRoom(Room *room);
     room_kind_t getRoomKind(void) { return this->room->getRoomKind(); };
@@ -35,6 +38,7 @@ public:
 
 
 private:
+    int id;
     int pos;
     int slide_dirs;
     Room *room;

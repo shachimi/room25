@@ -7,7 +7,20 @@ Cell::Cell(int pos)
       left(NULL),
       right(NULL),
       up(NULL),
-      down(NULL)
+      down(NULL),
+      id(0)
+{
+}
+
+Cell::Cell(int id, int pos, Room *room)
+    : pos(pos),
+      slide_dirs(DIRECTION_NONE),
+      room(room),
+      left(NULL),
+      right(NULL),
+      up(NULL),
+      down(NULL),
+      id(id)
 {
 }
 
