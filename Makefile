@@ -18,8 +18,8 @@ all: $(BIN)
 
 client: all
 
-server: server.o
-	g++ -g -c $^ -Isrc -o $@
+server: src/server.o
+	g++ -g $^ -Isrc -o $@
 
 %.o: %.c
 	g++ -g -c $^ -Isrc -o $@
