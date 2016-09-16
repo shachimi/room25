@@ -80,8 +80,8 @@ int main(int argc, char *argv[])
     code = send_req_set_rules(10);
 
     // Create players
-    code = send_req_create_player(0, 2, 2, AVATAR_KIND_PRISONER);
     code = send_req_create_player(1, 2, 2, AVATAR_KIND_PRISONER);
+    code = send_req_create_player(2, 2, 2, AVATAR_KIND_PRISONER);
 
     //temporary board print request
     code = send_req_update_player(0, 0, 0, AVATAR_KIND_DEFAULT);

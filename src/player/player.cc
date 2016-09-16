@@ -1,3 +1,5 @@
+#include <assert.h>
+
 #include "player.hh"
 #include "player/prisoner.hh"
 
@@ -6,6 +8,7 @@ Player::Player(int id)
       actions_stock(ACTION_ALL),
       avatar(NULL)
 {
+    assert(id > 0);
 }
 
 Player::~Player(void)
