@@ -7,6 +7,11 @@
 // Static singleton class
 class Network {
 public:
+    // Initialisation of the socket
+    int server_open(int port);
+    int server_accept(void);
+    int client_connect(char *server_address, int port);
+
     int wait(net_req_t req_type);
 
     int forward(Scheduling *scheduling);
@@ -19,7 +24,7 @@ public:
     Network *getInstance(void);
 
 private:
-    int sock;
+    int server_sock;
 
 private:
     // This class is a singleton so we don't want to be able to instantiate it
