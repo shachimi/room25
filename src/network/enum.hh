@@ -55,6 +55,9 @@ typedef enum {
     REQ_SET_EFFECT_ACTION,
     REQ_FWD_EFFECT_ACTION,
     REQ_SET_RULES,
+    REQ_ERROR_READ,
+    REQ_ERROR_DISCONNECT,
+    REQ_NONE,
 } net_req_t;
 
 typedef struct {

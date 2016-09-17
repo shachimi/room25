@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <arpa/inet.h>
+#include <assert.h>
 
 #include "network/network.hh"
 
@@ -95,17 +96,73 @@ int Network::client_connect(char *server_address, int port)
     return 0;
 }
 
+net_msg_t Network::recv_msg(int sock)
+{
+    int code;
+    net_msg_t msg;
+
+    assert(sock >= 0);
+    if ((code = read(sock, &msg, sizeof(msg))) < 0) {
+        perror("[Network] failed to recv msg: ");
+        msg.req = REQ_ERROR_READ;
+    } else if (code == 0) {
+        perror("[Network] connection lost: ");
+        msg.req = REQ_ERROR_DISCONNECT;
+    }
+    return msg;
+}
+
+int Network::send_msg(net_msg_t msg, int sock)
+{
+    int code;
+
+    assert(sock >= 0);
+    if ((code = write(sock, &msg, sizeof(msg))) < 0) {
+        perror("[Network] failed to send msg: ");
+    } else if (code == 0) {
+        perror("[Network] connection lost: ");
+    }
+    return code;
+}
+
 int Network::wait(net_req_t req_type)
 {
+    net_msg_t msg;
+    int req_ok = 0;
+
+    do {
+        msg = recv_msg(this->server_sock);
+        if (req_type == REQ_NONE || msg.req == req_type) {
+            // We have received the expected message
+            // Handle it
+            req_ok = 1;
+        } else {
+            // Log error for the recvd msg
+        }
+    } while (!req_ok);
     return 0;
 }
 
 int Network::forward(Scheduling *scheduling)
 {
-    return 0;
+    net_msg_t msg;
+
+    // Cast (Scheduling *) to net_scheduling_t
+    // msg.scheduling = cast
+    // Fill msg.req
+    msg.req = REQ_SET_SCHEDULING;
+
+    return send_msg(msg, this->server_sock);
 }
 
-int Network::bcast(Scheduling *scheduling)
+int Network::tell(Scheduling *scheduling, int sock)
 {
-    return 0;
+    net_msg_t msg;
+
+    // Cast (Scheduling *) to net_scheduling_t
+    // msg.scheduling = cast
+    // Fill msg.req
+    msg.req = REQ_SET_SCHEDULING;
+
+    return send_msg(msg, sock);
 }

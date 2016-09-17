@@ -12,16 +12,21 @@ public:
     int server_accept(void);
     int client_connect(char *server_address, int port);
 
-    int wait(net_req_t req_type);
-
+    //Client side
+    int wait(net_req_t req_type = REQ_NONE);
     int forward(Scheduling *scheduling);
     // TODO same with action
 
-    int bcast(Scheduling *scheduling);
+    //Server side
+    int tell(Scheduling *scheduling, int sock);
     // TODO same with action
 
     // Singleton
     Network *getInstance(void);
+
+private:
+    net_msg_t recv_msg(int sock);
+    int send_msg(net_msg_t msg, int sock);
 
 private:
     int server_sock;
