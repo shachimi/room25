@@ -20,6 +20,7 @@ public:
     virtual Avatar *selectPushTarget(std::vector<Avatar *> players);
 
     virtual room_kind_t seeRoom(const Room *room);
+    virtual void roomSaw(Player *p, room_kind_t kind);
 };
 
 

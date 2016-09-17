@@ -237,6 +237,7 @@ void Game::execPush(Player *player)
 
 void Game::execSee(Player *player)
 {
+    room_kind_t saw;
     direction_t dir;
     int allowed_dir = 0;
     Cell *cell = player->getAvatar()->getRoom()->getCell();
@@ -260,7 +261,14 @@ void Game::execSee(Player *player)
     }
     /* TODO: do not assert */
     assert (dir & allowed_dir);
-    this->board->see(player, dir);
+    saw = this->board->see(player, dir);
+
+    /* tell the others */
+    for (int i = 0; i < this->players.size(); i++) {
+        if (this->players[i] != player) {
+            this->players[i]->roomSaw(player, saw);
+        }
+    }
 
     /* resolve effects */
     player->getAvatarRoom()->getEffect()->prisoner_stay(player->getAvatar());

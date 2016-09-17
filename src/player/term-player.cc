@@ -241,3 +241,9 @@ room_kind_t TermPlayer::seeRoom(const Room *room)
     }
     return res;
 }
+
+void TermPlayer::roomSaw(Player *p, room_kind_t kind)
+{
+    Log::print() << "Player " << p->getId() << " say to have seen `"
+                 << kind << "` room" << std::endl;
+}

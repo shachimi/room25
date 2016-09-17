@@ -33,6 +33,7 @@ public:
     /* {{{ Captor */
 
     virtual room_kind_t seeRoom(const Room *room) = 0;
+    virtual void roomSaw(Player *p, room_kind_t kind) = 0;
 
     /* }}} */
     /* {{{ Getters and setters */

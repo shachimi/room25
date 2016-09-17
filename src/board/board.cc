@@ -458,8 +458,9 @@ void Board::push(Player *owner, Avatar *target, direction_t direction)
     }
 }
 
-void Board::see(Player *owner, direction_t direction)
+room_kind_t Board::see(Player *owner, direction_t direction)
 {
+    room_kind_t res = ROOM_KIND_SAFE;
     Cell *origin = owner->getAvatar()->getRoom()->getCell();
     int x = origin->getPos() % 5;
     int y = origin->getPos() / 5;
@@ -467,36 +468,37 @@ void Board::see(Player *owner, direction_t direction)
     /* Column */
     if ((y == 0 && direction == DIRECTION_N)
     ||  (y == 4 && direction == DIRECTION_S))
-    {
+    { /* TODO: return error */
         std::cerr << "attempting to see into a wrong direction NS" << std::endl;
-        return;
+        return res;
     }
     /* Line */
     if ((x == 0 && direction == DIRECTION_O)
     ||  (x == 4 && direction == DIRECTION_E))
-    {
+    { /* TODO: return error */
         std::cerr << "attempting to see into a wrong direction OE" << std::endl;
-        return;
+        return res;
     }
 
     switch (direction) {
       case DIRECTION_UP:
         assert (!origin->getUp()->getRoom()->isVisible());
-        owner->seeRoom(origin->getUp()->getRoom());
+        res = owner->seeRoom(origin->getUp()->getRoom());
         break;
       case DIRECTION_DOWN:
         assert (!origin->getDown()->getRoom()->isVisible());
-        owner->seeRoom(origin->getDown()->getRoom());
+        res = owner->seeRoom(origin->getDown()->getRoom());
         break;
       case DIRECTION_RIGHT:
         assert (!origin->getRight()->getRoom()->isVisible());
-        owner->seeRoom(origin->getRight()->getRoom());
+        res = owner->seeRoom(origin->getRight()->getRoom());
         break;
       case DIRECTION_LEFT:
         assert (!origin->getLeft()->getRoom()->isVisible());
-        owner->seeRoom(origin->getLeft()->getRoom());
+        res = owner->seeRoom(origin->getLeft()->getRoom());
         break;
     }
+    return res;
 }
 
 void Board::set_avatar_to_center(Avatar *avatar)
