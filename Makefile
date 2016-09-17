@@ -9,7 +9,7 @@ src/game/standard-rule.o src/game/rule.o src/board/prison-room.o             \
 src/board/fog-room.o src/board/freeze-room.o src/board/vortex-room.o         \
 src/board/pivot-room.o src/board/gear-room.o src/utils/utils.o               \
 src/board/warp-room.o src/board/illusion-room.o src/board/vision-room.o      \
-src/board/tunnel-room.o src/game/game-client.o
+src/board/tunnel-room.o src/game/game-client.o src/network/network.o
 
 LIBS=
 CFLAGS=
