@@ -23,16 +23,11 @@ typedef struct {
 } net_player_t;
 
 typedef struct {
+    int player_id;
     action_t action_1;
     action_t action_2;
     int adrenaline;
 } net_scheduling_t;
-
-typedef struct {
-    action_t action;
-    net_coords_t coords;
-    direction_t direction;
-} net_choice_t;
 
 typedef struct {
     action_t action;
@@ -53,9 +48,12 @@ typedef enum {
     REQ_UPDATE_PLAYER,
     REQ_GET_SCHEDULING,
     REQ_SET_SCHEDULING,
-    REQ_GET_CHOICE,
-    REQ_SET_CHOICE,
-    REQ_EXEC_ACTION,
+    REQ_GET_ACTION,
+    REQ_SET_ACTION,
+    REQ_FWD_ACTION,
+    REQ_GET_EFFECT_ACTION,
+    REQ_SET_EFFECT_ACTION,
+    REQ_FWD_EFFECT_ACTION,
     REQ_SET_RULES,
 } net_req_t;
 
@@ -65,7 +63,6 @@ typedef struct {
         net_cell_t cell;
         net_player_t player;
         net_scheduling_t scheduling;
-        net_choice_t choice;
         net_action_t action;
         net_rules_t rules;
     };

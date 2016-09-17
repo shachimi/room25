@@ -36,6 +36,9 @@ public:
     void setRule(Rule *rule) { this->rule = rule; };
 
 protected:
+    Player *getPlayerById(int id);
+
+protected:
     void ends_turn(void);
 
 protected:

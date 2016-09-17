@@ -361,3 +361,16 @@ void Game::rotatePlayer(void)
 
 
 /* }}} */
+
+Player *Game::getPlayerById(int id)
+{
+    for (std::vector<Player *>::iterator it = this->players.begin();
+         it < this->players.end(); it++)
+    {
+        if ((*it)->getId() == id) {
+            return *it;
+        }
+    }
+
+    return NULL;
+}

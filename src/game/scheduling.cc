@@ -38,3 +38,15 @@ bool Scheduling::isValid(void)
     return this->owner->getAvatar()->getRoom()->validateSchedule(this)
         && !(this->action_1 & this->action_2);
 }
+
+net_scheduling_t Scheduling::toNetScheduling(void)
+{
+    net_scheduling_t sc;
+
+    sc.player_id = this->owner->getId();
+    sc.action_1 = this->action_1;
+    sc.action_2 = this->action_2;
+    sc.adrenaline = (int)this->adrenaline;
+
+    return sc;
+}

@@ -98,6 +98,7 @@ int GameClient::recv_msg()
     int code;
     Cell *cell;
     Player *player;
+    Scheduling *scheduling;
 
     if ((code = read(this->sock_fd, &msg, sizeof(msg))) < 0) {
         perror("[GameClient] error receiving message from server: ");
@@ -168,11 +169,31 @@ int GameClient::recv_msg()
                                  << std::endl;
         this->board->print(std::cout);
         break;
-      case REQ_GET_SCHEDULING: //Needs REQ_CREATE_PLAYER
+      case REQ_GET_SCHEDULING:
+        Log::print("GameClient") << "Recvd request REQ_GET_SCHEDULING"
+                                 << std::endl;
+        Log::print("GameClient") << "Scheduling asked for player_id:"
+                                 << msg.scheduling.player_id
+                                 << std::endl;
+
+        player = this->getPlayerById(msg.scheduling.player_id);
+        if (!player) {
+            Log::error("GameClient") << "No player with id"
+                                     << msg.scheduling.player_id << std::endl;
+            return -2;
+        }
+
+        scheduling = player->getScheduling();
+        msg.scheduling = scheduling->toNetScheduling();
+        msg.req = REQ_SET_SCHEDULING;
+        write(this->sock_fd, &msg, sizeof(msg));
         break;
-      case REQ_GET_CHOICE: //Needs REQ_CREATE_PLAYER
+      case REQ_GET_ACTION:
+        Log::print("GameClient") << "Recvd request REQ_GET_CHOICE"
+                                 << std::endl;
+        // Think more about how to handle this (review net struct, ...)
         break;
-      case REQ_EXEC_ACTION:
+      case REQ_FWD_ACTION: // EXEC ? FWD ?
         break;
       case REQ_SET_RULES:
         Log::print("GameClient") << "Recvd request REQ_SET_RULES"

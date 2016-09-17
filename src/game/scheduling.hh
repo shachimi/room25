@@ -2,6 +2,7 @@
 # define SCHEDULING_HH_
 
 # include "game/enum.hh"
+# include "network/enum.hh"
 
 class Player;
 
@@ -31,6 +32,8 @@ public:
     int getAction2(void) const { return this->action_2; };
 
     /* }}} */
+
+    net_scheduling_t toNetScheduling(void);
 
 
 private:
