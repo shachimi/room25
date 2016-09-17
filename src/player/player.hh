@@ -2,11 +2,13 @@
 # define PLAYER_HH_
 
 # include <vector>
+# include "board/enum.hh"
 # include "game/enum.hh"
 # include "player/avatar.hh"
 # include "board/cell.hh"
 
 class Room;
+class Message;
 class Scheduling;
 
 class Player {
@@ -34,6 +36,8 @@ public:
 
     virtual void seeRoom(const Room *room) = 0;
 
+    virtual void inform(Message *msg) = 0;
+
     /* }}} */
     /* {{{ Getters and setters */
 
@@ -56,6 +60,7 @@ protected:
 };
 
 #include "board/room.hh"
+#include "network/message.hh"
 #include "game/scheduling.hh"
 
 #endif /* !PLAYER_HH_ */

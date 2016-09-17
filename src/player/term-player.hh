@@ -9,7 +9,6 @@ public:
     TermPlayer(int id);
     ~TermPlayer(void);
 
-
     virtual Scheduling *getScheduling(void);
     virtual bool useAction(void);
     virtual direction_t selectMove(int allowed_dir);
@@ -20,6 +19,8 @@ public:
     virtual Avatar *selectPushTarget(std::vector<Avatar *> players);
 
     virtual void seeRoom(const Room *room);
+
+    virtual void inform(Message *msg) {};
 };
 
 
