@@ -211,9 +211,33 @@ Cell* TermPlayer::selectCell(std::vector<Cell *> allowed_cells)
     return allowed_cells.at(selected-1);
 }
 
-void TermPlayer::seeRoom(const Room *room)
+room_kind_t TermPlayer::seeRoom(const Room *room)
 {
+    room_kind_t res = ROOM_KIND_SAFE;
+    char str[255];
+
     Log::print() << "I see a room ";
     room->getEffect()->print(std::cout);
-    Log::print() << std::endl;
+    Log::print() << std::endl
+                 << "What should I tell the world [SWD]?" << std::endl;
+
+    std::cin.getline(str, 255);
+    while (!is_in_ref(str[0], "SWD") || str[1]) {
+        Log::print() << "Only enter one between [SWD] please" << std::endl;
+        std::cin.getline(str, 255);
+    }
+    switch (str[0]) {
+      case 'S':
+        res = ROOM_KIND_SAFE;
+        break;
+      case 'W':
+        res = ROOM_KIND_OBS;
+        break;
+      case 'D':
+        res = ROOM_KIND_DANGER;
+        break;
+      default:
+        break;
+    }
+    return res;
 }

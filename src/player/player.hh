@@ -32,7 +32,7 @@ public:
     /* }}} */
     /* {{{ Captor */
 
-    virtual void seeRoom(const Room *room) = 0;
+    virtual room_kind_t seeRoom(const Room *room) = 0;
 
     /* }}} */
     /* {{{ Getters and setters */
