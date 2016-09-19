@@ -29,12 +29,47 @@ typedef struct {
     int adrenaline;
 } net_scheduling_t;
 
+/*{{{*/
 typedef struct {
     action_t action;
     int player_source_id;
     int player_target_id;
     direction_t direction;
 } net_action_t;
+
+typedef struct {
+    int id;
+    int from;
+    int to;
+    effect_t to_effect;
+} net_move_t;
+
+typedef struct {
+    int id;
+    int victim_id;
+    int from;
+    int to;
+    effect_t to_effect;
+} net_push_t;
+
+typedef struct {
+    int id;
+    int from;
+    int to;
+} net_see_t;
+
+typedef struct {
+    int id;
+    int from;
+    direction_t dir;
+} net_slide_t;
+
+typedef struct {
+    int id;
+    int pos;
+    effect_t effect;
+} net_select_cell_t;
+/*}}}*/
 
 typedef struct {
     int nb_turn;
@@ -68,6 +103,11 @@ typedef struct {
         net_scheduling_t scheduling;
         net_action_t action;
         net_rules_t rules;
+        net_move_t move;
+        net_move_t push;
+        net_see_t see;
+        net_slide_t slide;
+        net_select_cell_t select_cell;
     };
 } net_msg_t;
 
