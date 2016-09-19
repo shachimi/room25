@@ -29,6 +29,18 @@ std::string Move::to_str(void)
     return str;
 }
 
-// net_msg_t Move::to_net_msg(void)
-// {
-// }
+net_msg_t Move::to_net_msg(void)
+{
+    net_msg_t msg;
+    net_move_t move;
+
+    move.id = this->id;
+    move.from = this->from;
+    move.to = this->to;
+    move.to_effect = this->to_effect;
+
+    msg.req = REQ_MOVE;
+    msg.move = move;
+
+    return msg;
+}

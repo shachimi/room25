@@ -28,6 +28,17 @@ std::string See::to_str(void)
     return std::string(str);
 }
 
-// net_msg_t See::to_net_msg(void)
-// {
-// }
+net_msg_t See::to_net_msg(void)
+{
+    net_msg_t msg;
+    net_see_t see;
+
+    see.id = this->id;
+    see.from = this->from;
+    see.to = this->to;
+
+    msg.req = REQ_SEE;
+    msg.see = see;
+
+    return msg;
+}

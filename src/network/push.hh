@@ -11,7 +11,7 @@ public:
     ~Push(void);
 
     virtual std::string to_str(void);
-    // virtual net_msg_t to_net_msg(void);
+    virtual net_msg_t to_net_msg(void);
 
 public:
     int getId(void) { return this->id; };

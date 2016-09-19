@@ -29,7 +29,8 @@ typedef struct {
     int adrenaline;
 } net_scheduling_t;
 
-/*{{{*/
+/* {{{ Action */
+
 typedef struct {
     action_t action;
     int player_source_id;
@@ -69,7 +70,8 @@ typedef struct {
     int pos;
     effect_t effect;
 } net_select_cell_t;
-/*}}}*/
+
+/* }}} */
 
 typedef struct {
     int nb_turn;
@@ -111,7 +113,7 @@ typedef struct {
         net_action_t action;
         net_rules_t rules;
         net_move_t move;
-        net_move_t push;
+        net_push_t push;
         net_see_t see;
         net_slide_t slide;
         net_select_cell_t select_cell;

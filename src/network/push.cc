@@ -29,6 +29,19 @@ std::string Push::to_str(void)
     return str;
 }
 
-// net_msg_t Push::to_net_msg(void)
-// {
-// }
+net_msg_t Push::to_net_msg(void)
+{
+    net_msg_t msg;
+    net_push_t push;
+
+    push.id = this->id;
+    push.victim_id = this->victim_id;
+    push.from = this->from;
+    push.to = this->to;
+    push.to_effect = this->to_effect;
+
+    msg.req = REQ_PUSH;
+    msg.push = push;
+
+    return msg;
+}
