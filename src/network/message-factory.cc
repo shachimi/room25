@@ -1,0 +1,55 @@
+#include "message-factory.hh"
+
+Message *MessageFactory::getMessageFromNet(net_msg_t *msg)
+{
+    switch (msg->req) {
+      case REQ_SEE:
+        return MessageFactory::getSeeFromNet(msg);
+      case REQ_MOVE:
+        return MessageFactory::getMoveFromNet(msg);
+      case REQ_PUSH:
+        return MessageFactory::getPushFromNet(msg);
+      case REQ_SLIDE:
+        return MessageFactory::getSlideFromNet(msg);
+      case REQ_SELECT_CELL:
+        return MessageFactory::getSelectCellFromNet(msg);
+    }
+    return NULL;
+}
+
+See *MessageFactory::getSeeFromNet(net_msg_t *msg)
+{
+    net_see_t see = msg->see;
+
+    return new See(see.id, see.from, see.to);
+}
+
+Move *MessageFactory::getMoveFromNet(net_msg_t *msg)
+{
+    net_move_t move = msg->move;
+
+    return new Move(move.id, move.from, move.to, move.to_effect);
+}
+
+Push *MessageFactory::getPushFromNet(net_msg_t *msg)
+{
+    net_push_t push = msg->push;
+
+    return new Push(push.id, push.victim_id,
+                    push.from, push.to, push.to_effect);
+}
+
+Slide *MessageFactory::getSlideFromNet(net_msg_t *msg)
+{
+    net_slide_t slide = msg->slide;
+
+    return new Slide(slide.id, slide.from, slide.dir);
+}
+
+SelectCell *MessageFactory::getSelectCellFromNet(net_msg_t *msg)
+{
+    net_select_cell_t select_cell = msg->select_cell;
+
+    return new SelectCell(select_cell.id, select_cell.pos,
+                          select_cell.effect);
+}

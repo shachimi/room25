@@ -7,7 +7,7 @@
 class Push: public Message {
 public:
     Push(void);
-    Push(int id, int victim_id, int from, int to);
+    Push(int id, int victim_id, int from, int to, effect_t to_effect);
     ~Push(void);
 
     virtual std::string to_str(void);
