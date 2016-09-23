@@ -3,6 +3,8 @@
 
 # include "network/enum.hh"
 # include "game/scheduling.hh"
+# include "network/message-factory.hh"
+# include "network/message.hh"
 
 // Static singleton class
 class Network {
@@ -13,13 +15,11 @@ public:
     int client_connect(char *server_address, int port);
 
     //Client side
-    int wait(net_req_t req_type = REQ_NONE);
-    int forward(Scheduling *scheduling);
-    // TODO same with action
+    Message *wait(net_req_t req_type = REQ_NONE);
+    int forward(Message *message);
 
     //Server side
-    int tell(Scheduling *scheduling, int sock);
-    // TODO same with action
+    int tell(Message *message, int sock);
 
     // Singleton
     Network *getInstance(void);

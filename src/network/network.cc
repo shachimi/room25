@@ -125,7 +125,7 @@ int Network::send_msg(net_msg_t msg, int sock)
     return code;
 }
 
-int Network::wait(net_req_t req_type)
+Message *Network::wait(net_req_t req_type)
 {
     net_msg_t msg;
     int req_ok = 0;
@@ -140,28 +140,24 @@ int Network::wait(net_req_t req_type)
             // Log error for the recvd msg
         }
     } while (!req_ok);
-    return 0;
+    return MessageFactory::getMessageFromNet(&msg);
 }
 
-int Network::forward(Scheduling *scheduling)
+int Network::forward(Message *message)
 {
     net_msg_t msg;
 
-    // Cast (Scheduling *) to net_scheduling_t
-    // msg.scheduling = cast
-    // Fill msg.req
+    msg = message->to_net_msg();
     msg.req = REQ_SET_SCHEDULING;
 
     return send_msg(msg, this->server_sock);
 }
 
-int Network::tell(Scheduling *scheduling, int sock)
+int Network::tell(Message *message, int sock)
 {
     net_msg_t msg;
 
-    // Cast (Scheduling *) to net_scheduling_t
-    // msg.scheduling = cast
-    // Fill msg.req
+    msg = message->to_net_msg();
     msg.req = REQ_SET_SCHEDULING;
 
     return send_msg(msg, sock);
