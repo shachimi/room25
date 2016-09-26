@@ -8,6 +8,7 @@
 # include "network/see.hh"
 # include "network/move.hh"
 # include "network/select-cell.hh"
+# include "network/use-action.hh"
 
 class MessageFactory {
 public:
@@ -19,6 +20,7 @@ private:
     static Push *getPushFromNet(net_msg_t *msg);
     static Slide *getSlideFromNet(net_msg_t *msg);
     static SelectCell *getSelectCellFromNet(net_msg_t *msg);
+    static UseAction *getUseActionFromNet(net_msg_t *msg);
 };
 
 #endif /* !MESSAGE_FACTORY_HH_ */

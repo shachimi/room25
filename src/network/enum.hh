@@ -11,6 +11,11 @@ typedef struct {
 
 typedef struct {
     int id;
+    int value;
+} net_use_action_t;
+
+typedef struct {
+    int id;
     net_coords_t coords;
     effect_t effect;
     int is_visible;
@@ -93,11 +98,13 @@ typedef enum {
     REQ_FWD_EFFECT_ACTION,
     REQ_SET_RULES,
 
+    REQ_SCHED,
     REQ_MOVE,
     REQ_PUSH,
     REQ_SEE,
     REQ_SLIDE,
     REQ_SELECT_CELL,
+    REQ_USE_ACTION,
 
     REQ_ERROR_READ,
     REQ_ERROR_DISCONNECT,
@@ -117,6 +124,7 @@ typedef struct {
         net_see_t see;
         net_slide_t slide;
         net_select_cell_t select_cell;
+        net_use_action_t use_action;
     };
 } net_msg_t;
 

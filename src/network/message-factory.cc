@@ -13,6 +13,8 @@ Message *MessageFactory::getMessageFromNet(net_msg_t *msg)
         return MessageFactory::getSlideFromNet(msg);
       case REQ_SELECT_CELL:
         return MessageFactory::getSelectCellFromNet(msg);
+      case REQ_USE_ACTION:
+        return MessageFactory::getUseActionFromNet(msg);
     }
     return NULL;
 }
@@ -52,4 +54,11 @@ SelectCell *MessageFactory::getSelectCellFromNet(net_msg_t *msg)
 
     return new SelectCell(select_cell.id, select_cell.pos,
                           select_cell.effect);
+}
+
+UseAction *MessageFactory::getUseActionFromNet(net_msg_t *msg)
+{
+    net_use_action_t use_action = msg->use_action;
+
+    return new UseAction(use_action.id, use_action.value);
 }
