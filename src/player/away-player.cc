@@ -1,5 +1,6 @@
 #include "player/away-player.hh"
 #include "network/message.hh"
+#include "network/network.hh"
 
 AwayPlayer::AwayPlayer(int id)
     : Player(id)

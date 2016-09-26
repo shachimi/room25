@@ -22,7 +22,7 @@ public:
     int tell(Message *message, int sock);
 
     // Singleton
-    Network *getInstance(void);
+    static Network *getInstance(void);
 
 private:
     net_msg_t recv_msg(int sock);

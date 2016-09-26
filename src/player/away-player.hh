@@ -4,13 +4,14 @@
 # include "player/player.hh"
 
 # include <vector>
+# include "utils/Log.hh"
 # include "board/enum.hh"
 # include "game/enum.hh"
 # include "player/avatar.hh"
 # include "board/cell.hh"
 
 // Static singleton class
-class AwayPlayer : public Player{
+class AwayPlayer : public Player {
 public:
     AwayPlayer(int id);
     ~AwayPlayer(void);
