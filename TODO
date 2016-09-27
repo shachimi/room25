@@ -21,3 +21,47 @@ room25
 * In Game::execPush only append valid target (not myself and not Robot) /* maybe in Rule? */
 * truly handle turn (dead people does not play anymore)
 
+********************
+**** Networking ****
+********************
+SERVER --
+GameServer
+* Init game
+*? has a socket to listen on ?
+** get acknowledge of all the players
+**** wait for player request
+**** wait for end of player init message for ALL players
+     (if two distant on the same client,
+     it doesnt matter since it will send the message two times)
+** init Board (locally)
+** inform all clients about the game rules
+** inform all clients about the Board
+** inform all clients that game is ready
+
+* Run game
+** your classical game running function
+** inform all players about an action they're not aware of
+
+DistantClient
+* Create class
+** has a socket to accept clients on
+** add listening process
+SERVER --
+
+-- CLIENT
+GameClient
+* Init game
+** init local players (prompt client)
+** inform server about the players
+**** for EACH player, send a message
+** wait for game rules information (from network directly)
+** wait for board information (from network directly)
+** wait for server game ready (from network directly)
+
+* Run game
+** your classical game running function
+
+
+AwayClient
+* add all messages reception correct action to perform (not simply print)
+CLIENT --
