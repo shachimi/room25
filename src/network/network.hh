@@ -15,8 +15,10 @@ public:
     int client_connect(char *server_address, int port);
 
     //Client side
-    Message *wait(net_req_t req_type = REQ_NONE);
     int forward(Message *message);
+
+    //Both
+    Message *wait(net_req_t req_type = REQ_NONE, int sock = 0);
 
     //Server side
     int tell(Message *message, int sock);

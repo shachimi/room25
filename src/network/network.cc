@@ -153,6 +153,28 @@ int Network::forward(Message *message)
     return send_msg(msg, this->server_sock);
 }
 
+Message *Network::wait(net_req_t req_type, int sock)
+{
+    net_msg_t msg;
+    int req_ok = 0;
+
+    if (!sock) {
+        sock = this->server_sock;
+    }
+
+    do {
+        msg = recv_msg(sock);
+        if (req_type == REQ_NONE || msg.req == req_type) {
+            // We have received the expected message
+            // Handle it
+            req_ok = 1;
+        } else {
+            // Log error for the recvd msg
+        }
+    } while (!req_ok);
+    return MessageFactory::getMessageFromNet(&msg);
+}
+
 int Network::tell(Message *message, int sock)
 {
     net_msg_t msg;
