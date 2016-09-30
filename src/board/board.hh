@@ -26,6 +26,7 @@ public:
     Cell *getCell(int x, int y) { return this->cells[x + y * 5]; };
     Cell *getCellById(int id);
     std::vector<Cell *> getCells(void) { return this->cells; };
+    Cell *getCenterCell(void) { return this->center; };
     std::vector<Cell *> getNoCenterCells(void);
     std::vector<RoomEffect *> getTunnelRoomEffects(void) { return this->tunnel_room_effects; };
     int getPos(int x, int y) { return (x + y * this->l); };

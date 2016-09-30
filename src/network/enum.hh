@@ -83,6 +83,28 @@ typedef struct {
 } net_rules_t;
 
 typedef enum {
+    // Game init
+    REQ_PLAYER,
+    REQ_END_OF_PLAYER,
+    REQ_ROOM,
+    REQ_END_OF_ROOM,
+    REQ_RULES,
+    REQ_END_OF_RULES,
+
+    // Game loop
+    REQ_SCHED,
+    REQ_MOVE,
+    REQ_PUSH,
+    REQ_SEE,
+    REQ_SLIDE,
+    REQ_SELECT_CELL,
+    REQ_USE_ACTION,
+
+/* {{{ Action */
+    REQ_ERROR_READ,
+    REQ_ERROR_DISCONNECT,
+    REQ_NONE,
+
     REQ_CREATE_CELL,
     REQ_UPDATE_CELL,
     REQ_CREATE_PLAYER,
@@ -96,19 +118,7 @@ typedef enum {
     REQ_GET_EFFECT_ACTION,
     REQ_SET_EFFECT_ACTION,
     REQ_FWD_EFFECT_ACTION,
-    REQ_SET_RULES,
-
-    REQ_SCHED,
-    REQ_MOVE,
-    REQ_PUSH,
-    REQ_SEE,
-    REQ_SLIDE,
-    REQ_SELECT_CELL,
-    REQ_USE_ACTION,
-
-    REQ_ERROR_READ,
-    REQ_ERROR_DISCONNECT,
-    REQ_NONE,
+/* }}} */
 } net_req_t;
 
 typedef struct {
