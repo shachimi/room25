@@ -44,8 +44,10 @@ GameServer
 
 DistantClient
 * Create class
-** has a socket to accept clients on
-** add listening process
+** has a socket to accept clients on [OK]
+** add listening process [OK]
+** implement all selection functions [OK]
+** implement inform function ?
 SERVER --
 
 -- CLIENT
@@ -57,6 +59,8 @@ GameClient
 ** wait for game rules information (from network directly)
 ** wait for board information (from network directly)
 ** wait for server game ready (from network directly)
+** ask each player for their actions
+** inform others players
 
 * Run game
 ** your classical game running function
@@ -65,3 +69,6 @@ GameClient
 AwayClient
 * add all messages reception correct action to perform (not simply print)
 CLIENT --
+
++
+Message shceduling
