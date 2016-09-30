@@ -25,11 +25,11 @@ Network::~Network(void)
 
 Network *Network::getInstance(void)
 {
-    if (!this->instance) {
-        this->instance = new Network();
+    if (!Network::instance) {
+        Network::instance = new Network();
     }
 
-    return this->instance;
+    return Network::instance;
 }
 
 int Network::server_open(int port)
@@ -64,7 +64,7 @@ int Network::server_accept(void)
     int sock;
 
     if ((sock = accept(this->server_sock, (struct sockaddr *)NULL, NULL)) < 0) {
-        perror("[Network] Couldn't connect to the server: ");
+        perror("[Network] Couldn't connect to the client: ");
         return -1;
     }
     return sock;
@@ -125,30 +125,11 @@ int Network::send_msg(net_msg_t msg, int sock)
     return code;
 }
 
-Message *Network::wait(net_req_t req_type)
-{
-    net_msg_t msg;
-    int req_ok = 0;
-
-    do {
-        msg = recv_msg(this->server_sock);
-        if (req_type == REQ_NONE || msg.req == req_type) {
-            // We have received the expected message
-            // Handle it
-            req_ok = 1;
-        } else {
-            // Log error for the recvd msg
-        }
-    } while (!req_ok);
-    return MessageFactory::getMessageFromNet(&msg);
-}
-
 int Network::forward(Message *message)
 {
     net_msg_t msg;
 
     msg = message->to_net_msg();
-    msg.req = REQ_SET_SCHEDULING;
 
     return send_msg(msg, this->server_sock);
 }
@@ -162,16 +143,15 @@ Message *Network::wait(net_req_t req_type, int sock)
         sock = this->server_sock;
     }
 
-    do {
-        msg = recv_msg(sock);
-        if (req_type == REQ_NONE || msg.req == req_type) {
-            // We have received the expected message
-            // Handle it
-            req_ok = 1;
-        } else {
-            // Log error for the recvd msg
-        }
-    } while (!req_ok);
+    msg = recv_msg(sock);
+    if (req_type == REQ_NONE || msg.req == req_type) {
+        // We have received the expected message
+        // Handle it
+        req_ok = 1;
+    } else {
+        // Log error for the recvd msg
+        return NULL;
+    }
     return MessageFactory::getMessageFromNet(&msg);
 }
 
@@ -180,7 +160,6 @@ int Network::tell(Message *message, int sock)
     net_msg_t msg;
 
     msg = message->to_net_msg();
-    msg.req = REQ_SET_SCHEDULING;
 
     return send_msg(msg, sock);
 }
