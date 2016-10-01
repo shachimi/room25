@@ -9,12 +9,14 @@
 # include "network/move.hh"
 # include "network/select-cell.hh"
 # include "network/use-action.hh"
+# include "network/get-scheduling.hh"
 
 class MessageFactory {
 public:
     static Message *getMessageFromNet(net_msg_t *msg);
 
 private:
+    static GetScheduling *getGetSchedulingFromNet(net_msg_t *msg);
     static See *getSeeFromNet(net_msg_t *msg);
     static Move *getMoveFromNet(net_msg_t *msg);
     static Push *getPushFromNet(net_msg_t *msg);

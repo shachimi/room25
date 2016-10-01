@@ -12,7 +12,8 @@ src/board/warp-room.o src/board/illusion-room.o src/board/vision-room.o      \
 src/board/tunnel-room.o src/game/game-client.o src/network/network.o         \
 src/network/push.o src/network/move.o src/network/see.o src/network/slide.o  \
 src/network/select-cell.o src/network/message-factory.o                      \
-src/player/away-player.o src/network/use-action.o
+src/player/away-player.o src/network/use-action.o                            \
+src/network/get-scheduling.o
 
 LIBS=
 CFLAGS=
