@@ -12,9 +12,13 @@
 class GameServer : public Game {
 public:
     static Game *getInstance(void);
-    int init_game(Rule *rule, char *server_address = "127.0.0.1",
-                  int xport = 5000);
+    int init_game(Rule *rule, int nb_clients, int nb_turn,
+                  char *server_address = "127.0.0.1",
+                  int port = 5000);
     virtual void play_turn(void);
+
+protected:
+    std::vector<int> clients;
 
 protected:
     GameServer(void);
