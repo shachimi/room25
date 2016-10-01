@@ -29,6 +29,9 @@ public:
 
     virtual void inform(Message *msg) {};
 
+    void setSock(int sock) { this->sock = sock; };
+    int getSock(void) { return this->sock; };
+
 protected:
     int sock;
 };
