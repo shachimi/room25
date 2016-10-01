@@ -42,7 +42,7 @@ public: /* game mechanics */
     void slide(Player *owner, direction_t direction);
     void move(Player *owner, direction_t direction);
     void push(Player *owner, Avatar *target, direction_t direction);
-    void see(Player *owner, direction_t direction);
+    room_kind_t see(Player *owner, direction_t direction);
 
     void print(std::ostream& out) const;
 

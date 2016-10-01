@@ -68,7 +68,7 @@ Cell* AwayPlayer::selectCell(std::vector<Cell *> allowed_cells)
     Log::print() << msg->to_str();
 }
 
-void AwayPlayer::seeRoom(const Room *room)
+room_kind_t AwayPlayer::seeRoom(const Room *room)
 {
     Message *msg = Network::getInstance()->wait(REQ_SEE);
 

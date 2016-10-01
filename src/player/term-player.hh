@@ -18,8 +18,9 @@ public:
     virtual Cell* selectCell(std::vector<Cell *> allowed_cells);
     virtual Avatar *selectPushTarget(std::vector<Avatar *> players);
 
-    virtual void seeRoom(const Room *room);
 
+    virtual room_kind_t seeRoom(const Room *room);
+    virtual void roomSaw(Player *p, room_kind_t kind);
     virtual void inform(Message *msg) {};
 };
 

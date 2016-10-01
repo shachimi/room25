@@ -27,6 +27,7 @@ typedef enum {
     EFFECT_WARP     = 15,
     EFFECT_TUNNEL   = 16,
     EFFECT_count,
+
     EFFECT_NONE = -1,
 } effect_t;
 
@@ -128,6 +129,5 @@ static std::string effect_to_str(effect_t effect) {
         return "";
     }
 }
-
 
 #endif /* !BOARD_ENUM_HH_ */

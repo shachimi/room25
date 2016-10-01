@@ -102,7 +102,7 @@ Cell* DistantPlayer::selectCell(std::vector<Cell *> allowed_cells)
     return Game::getInstance()->getBoard()->getCell(selectCell->pos);
 }
 
-void DistantPlayer::seeRoom(const Room *room)
+room_kind_t DistantPlayer::seeRoom(const Room *room)
 {
     // Send message to all clients ?
 }

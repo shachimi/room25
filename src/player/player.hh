@@ -34,7 +34,8 @@ public:
     /* }}} */
     /* {{{ Captor */
 
-    virtual void seeRoom(const Room *room) = 0;
+    virtual room_kind_t seeRoom(const Room *room) = 0;
+    virtual void roomSaw(Player *p, room_kind_t kind) = 0;
 
     virtual void inform(Message *msg) = 0;
 
