@@ -10,6 +10,7 @@
 # include "network/select-cell.hh"
 # include "network/use-action.hh"
 # include "network/get-scheduling.hh"
+# include "network/player-message.hh"
 
 class MessageFactory {
 public:
@@ -23,6 +24,7 @@ private:
     static Slide *getSlideFromNet(net_msg_t *msg);
     static SelectCell *getSelectCellFromNet(net_msg_t *msg);
     static UseAction *getUseActionFromNet(net_msg_t *msg);
+    static PlayerMsg *getPlayerMsgFromNet(net_msg_t *msg);
 };
 
 #endif /* !MESSAGE_FACTORY_HH_ */

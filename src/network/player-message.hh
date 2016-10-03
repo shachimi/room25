@@ -14,15 +14,12 @@ public:
     virtual net_msg_t to_net_msg(void);
 
 public:
-    int getId(void) { return this->id; };
-    void setId(int id) { this->id = id; };
     int getPos(void) { return this->pos; };
     void setPos(int pos) { this->pos = pos; };
     avatar_kind_t getAvatarKind(void) { return this->to_effect; };
     void setAvatarKind(avatar_kind_t avatar_kind) { this->avatar_kind = avatar_kind; };
 
 private:
-    int id;
     int pos;
     avatar_kind_t avatar_kind;
 };

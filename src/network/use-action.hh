@@ -12,13 +12,10 @@ public:
     virtual std::string to_str(void);
     virtual net_msg_t to_net_msg(void);
 
-    int getId(void) { return this->id; };
-    void setId(int id) { this->id = id; };
     bool getValue(void) { return this->value; };
     void setValue(bool value) { this->value = value; };
 
 private:
-    int id;
     bool value;
 };
 

@@ -72,3 +72,10 @@ GetScheduling *MessageFactory::getGetSchedulingFromNet(net_msg_t *msg)
     return new GetScheduling(scheduling.player_id, scheduling.adrenaline,
                              scheduling.action_1, scheduling.action_2);
 }
+
+PlayerMsg *getPlayerMsgFromNet(net_msg_t *msg)
+{
+    net_player_t player = msg->player;
+
+    return new UseAction(player.id, player.pos, player.avatar_kind);
+}

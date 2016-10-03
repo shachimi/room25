@@ -28,7 +28,7 @@ typedef struct {
 } net_player_t;
 
 typedef struct {
-    int player_id;
+    int owner;
     action_t action_1;
     action_t action_2;
     int adrenaline;
