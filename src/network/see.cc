@@ -7,7 +7,7 @@ See::See(void)
 }
 
 See::See(int id, int from, int to)
-    :id(id),
+    :Message(id),
      from(from),
      to(to)
 {

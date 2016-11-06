@@ -7,6 +7,9 @@
 /** Mother class to send/log event message of game. */
 class Message {
 public:
+    Message(void);
+    Message(int id);
+    ~Message(void);
     virtual std::string to_str(void) = 0;
     virtual net_msg_t to_net_msg(void) = 0;
 

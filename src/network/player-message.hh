@@ -16,7 +16,7 @@ public:
 public:
     int getPos(void) { return this->pos; };
     void setPos(int pos) { this->pos = pos; };
-    avatar_kind_t getAvatarKind(void) { return this->to_effect; };
+    avatar_kind_t getAvatarKind(void) { return this->avatar_kind; };
     void setAvatarKind(avatar_kind_t avatar_kind) { this->avatar_kind = avatar_kind; };
 
 private:

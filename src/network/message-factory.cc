@@ -17,6 +17,8 @@ Message *MessageFactory::getMessageFromNet(net_msg_t *msg)
         return MessageFactory::getUseActionFromNet(msg);
       case REQ_SCHED:
         return MessageFactory::getGetSchedulingFromNet(msg);
+      case REQ_PLAYER:
+        return MessageFactory::getSchedulingMsgFromNet(msg);
     }
     return NULL;
 }
@@ -65,17 +67,17 @@ UseAction *MessageFactory::getUseActionFromNet(net_msg_t *msg)
     return new UseAction(use_action.id, use_action.value);
 }
 
-GetScheduling *MessageFactory::getGetSchedulingFromNet(net_msg_t *msg)
-{
-    net_scheduling_t scheduling = msg->scheduling;
-
-    return new GetScheduling(scheduling.player_id, scheduling.adrenaline,
-                             scheduling.action_1, scheduling.action_2);
-}
-
-PlayerMsg *getPlayerMsgFromNet(net_msg_t *msg)
+PlayerMsg *MessageFactory::getPlayerMsgFromNet(net_msg_t *msg)
 {
     net_player_t player = msg->player;
 
-    return new UseAction(player.id, player.pos, player.avatar_kind);
+    return new PlayerMsg(player.id, player.pos, player.avatar_kind);
+}
+
+SchedulingMsg *MessageFactory::getSchedulingMsgFromNet(net_msg_t *msg)
+{
+    net_scheduling_t sched = msg->scheduling;
+
+    return new SchedulingMsg(sched.owner, sched.action_1, sched.action_2,
+                             sched.adrenaline);
 }

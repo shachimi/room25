@@ -39,7 +39,7 @@ bool Scheduling::isValid(void)
         && !(this->action_1 & this->action_2);
 }
 
-net_scheduling_t Scheduling::toNetScheduling(void)
+/*net_scheduling_t Scheduling::toNetScheduling(void)
 {
     net_scheduling_t sc;
 
@@ -49,4 +49,4 @@ net_scheduling_t Scheduling::toNetScheduling(void)
     sc.adrenaline = (int)this->adrenaline;
 
     return sc;
-}
+    }*/

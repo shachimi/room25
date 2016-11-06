@@ -33,7 +33,7 @@ public:
 
     /* }}} */
 
-    net_scheduling_t toNetScheduling(void);
+    //net_scheduling_t toNetScheduling(void);
 
 
 private:

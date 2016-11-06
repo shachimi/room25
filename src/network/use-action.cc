@@ -2,13 +2,13 @@
 #include "network/use-action.hh"
 
 UseAction::UseAction(void)
-    :id(0),
+    :Message(0),
      value(false)
 {
 }
 
 UseAction::UseAction(int id, bool value)
-    :id(id),
+    :Message(id),
      value(value)
 {
 }

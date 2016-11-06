@@ -7,7 +7,7 @@ Move::Move(void)
 }
 
 Move::Move(int id, int from, int to, effect_t to_effect)
-    :id(id),
+    :Message(id),
      from(from),
      to(to),
      to_effect(to_effect)

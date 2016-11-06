@@ -23,7 +23,7 @@ typedef struct {
 
 typedef struct {
     int id;
-    net_coords_t coords;
+    int pos;
     avatar_kind_t avatar_kind;
 } net_player_t;
 
@@ -76,6 +76,12 @@ typedef struct {
     effect_t effect;
 } net_select_cell_t;
 
+typedef struct {
+    int id;
+    int pos;
+    effect_t effect;
+} net_room_t;
+
 /* }}} */
 
 typedef struct {
@@ -85,11 +91,8 @@ typedef struct {
 typedef enum {
     // Game init
     REQ_PLAYER,
-    REQ_END_OF_PLAYER,
     REQ_ROOM,
-    REQ_END_OF_ROOM,
     REQ_RULES,
-    REQ_END_OF_RULES,
 
     // Game loop
     REQ_SCHED,
@@ -135,6 +138,7 @@ typedef struct {
         net_slide_t slide;
         net_select_cell_t select_cell;
         net_use_action_t use_action;
+        net_room_t room;
     };
 } net_msg_t;
 

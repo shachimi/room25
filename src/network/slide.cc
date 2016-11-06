@@ -7,7 +7,7 @@ Slide::Slide(void)
 }
 
 Slide::Slide(int id, int from, direction_t dir)
-    : id(id),
+    : Message(id),
       from(from),
       dir(dir)
 {

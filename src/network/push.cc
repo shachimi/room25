@@ -7,7 +7,7 @@ Push::Push(void)
 }
 
 Push::Push(int id, int victim_id, int from, int to, effect_t to_effect)
-    :id(id),
+    :Message(id),
      victim_id(victim_id),
      from(from),
      to(to),

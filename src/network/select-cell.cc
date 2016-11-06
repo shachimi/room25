@@ -3,11 +3,12 @@
 #include "game/game.hh"
 
 SelectCell::SelectCell(void)
+    :SelectCell(0, 0, (effect_t)0)
 {
 }
 
 SelectCell::SelectCell(int id, int pos, effect_t effect)
-    :id(id),
+    :Message(id),
      pos(pos),
      effect(effect)
 {

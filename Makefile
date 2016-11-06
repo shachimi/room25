@@ -9,11 +9,12 @@ src/game/standard-rule.o src/game/rule.o src/board/prison-room.o             \
 src/board/fog-room.o src/board/freeze-room.o src/board/vortex-room.o         \
 src/board/pivot-room.o src/board/gear-room.o src/utils/utils.o               \
 src/board/warp-room.o src/board/illusion-room.o src/board/vision-room.o      \
-src/board/tunnel-room.o src/game/game-client.o src/network/network.o         \
+src/board/tunnel-room.o  src/network/network.o src/game/game-client.o        \
 src/network/push.o src/network/move.o src/network/see.o src/network/slide.o  \
 src/network/select-cell.o src/network/message-factory.o                      \
-src/player/away-player.o src/network/use-action.o                            \
-src/network/get-scheduling.o
+src/player/away-player.o src/network/use-action.o src/network/message.o      \
+src/network/player-message.o src/network/scheduling-message.o                \
+src/network/room-message.o
 
 LIBS=
 CFLAGS=
