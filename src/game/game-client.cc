@@ -13,6 +13,7 @@
 #include "utils/Log.hh"
 #include "player/term-player.hh"
 #include "board/room-factory.hh"
+#include "network/network.hh"
 
 /*
 TODO
@@ -51,39 +52,24 @@ Game *GameClient::getInstance(void)
 
 int GameClient::init_game(Rule *rule, char *server_address, int port)
 {
-    struct sockaddr_in serv_addr;
+    Message *msg;
 
     this->rule = rule;
-    this->board = new Board();
+    this->board = this->rule->init_board();
+    //rule->setTurn(nbTurn);
 
     //Connect to the server
-    if ((this->sock_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-        perror("[GameClient] Error creating socket: ");
-        return -1;
-    }
-    memset(&serv_addr, '0', sizeof(serv_addr));
-    serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(port);
-    if (inet_pton(AF_INET, server_address, &serv_addr.sin_addr) <= 0) {
-        perror("[GameClient] inet_pton error: ");
-        return -1;
-    }
-    if (connect(this->sock_fd, (struct sockaddr *)&serv_addr,
-                sizeof(serv_addr)) < 0)
-    {
-        perror("[GameClient] Couldn't connect to the server: ");
-        return -1;
-    }
-    Log::print("GameClient") << "Connected to the server ." << this->sock_fd << std::endl;
+    Network::getInstance()->client_connect("127.0.0.1", 5000);
 
-    while (this->recv_msg()) { }
+    //wait(RULES)
+    //init empty board
+    //While wait(BOARD), change board rooms one by one
 
-    //Recv game data from the server
-    //Load board from server
-    //this->board = this->rule->init_board();
+    //Send players to the server
+    //At this point, all the local players are only true local players
+    //Just send them to the server
+    //Forall players, tell server
 
-    //Get number of turn from server
-    //rule->setTurn(nb_turn);
     return 0;
 }
 
@@ -94,7 +80,7 @@ void GameClient::play_turn(void)
 
 int GameClient::recv_msg()
 {
-    net_msg_t msg;
+    /*net_msg_t msg;
     int code;
     Cell *cell;
     Player *player;
@@ -195,7 +181,7 @@ int GameClient::recv_msg()
         break;
       case REQ_FWD_ACTION: // EXEC ? FWD ?
         break;
-      case REQ_SET_RULES:
+      case REQ_RULES:
         Log::print("GameClient") << "Recvd request REQ_SET_RULES"
                                  << std::endl;
         Log::print("GameClient") << "Rules:\n"
@@ -208,7 +194,7 @@ int GameClient::recv_msg()
         Log::print("GameClient") << "Receiving unknown request: " << msg.req
                                  << std::endl;
         break;
-    }
+        }*/
     return 1;
 }
 

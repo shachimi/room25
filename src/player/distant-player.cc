@@ -7,15 +7,17 @@ direction_t get_direction(int from, int to)
     int l = Game::getInstance()->getBoard()->getL();
 
     //N-S
-    if (from/l < to/l) {
+    if (from / l < to / l) {
         return DIRECTION_N;
-    } else if (from/l > to/l) {
+    } else
+    if (from / l > to / l) {
         return DIRECTION_S;
     } else {
         //O-E
-        if (from%l < to%l) {
+        if (from % l < to % l) {
             return DIRECTION_O;
-        } else if (from%l > to%l) {
+        } else
+        if (from % l > to % l) {
             return DIRECTION_E;
         }
     }
@@ -49,8 +51,8 @@ bool DistantPlayer::useAction(void)
 
 direction_t DistantPlayer::selectMove(int allowed_dir)
 {
-    Move *move = static_cast<Move *>(
-        Network::getInstance()->wait(REQ_MOVE, this->sock));
+    Move *move = static_cast<Move *>(Network::getInstance()->wait(REQ_MOVE,
+                                                                  this->sock));
 
     return get_direction(move->getFrom(), move->getTo());
 }

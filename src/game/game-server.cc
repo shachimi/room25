@@ -43,6 +43,9 @@ int GameServer::init_game(Rule *rule, int nb_clients, int nb_turn, char *server_
             Network::getInstance()->server_accept());
     }
 
+    // Forall clients, tell rules
+    //Forall clients, tell board
+
     for (int i = 0; i < this->clients.size(); i++) {
         PlayerMsg *msg;
         while ((msg = static_cast<PlayerMsg *>(
@@ -50,7 +53,7 @@ int GameServer::init_game(Rule *rule, int nb_clients, int nb_turn, char *server_
                         REQ_PLAYER, this->clients[i]))) != NULL)
         {
             DistantPlayer *p = new DistantPlayer(1);
-            p->setId(msg->getId());
+            p->setId(msg->getId()); //Gérer ID par le server
             p->setCell(Game::getInstance()->getBoard()->getCenterCell());
             p->setAvatar(AvatarFactory::getAvatar(msg->getAvatarKind()));
             p->setSock(this->clients[i]);
