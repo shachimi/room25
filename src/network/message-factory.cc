@@ -16,9 +16,9 @@ Message *MessageFactory::getMessageFromNet(net_msg_t *msg)
       case REQ_USE_ACTION:
         return MessageFactory::getUseActionFromNet(msg);
       case REQ_SCHED:
-        return MessageFactory::getGetSchedulingFromNet(msg);
-      case REQ_PLAYER:
         return MessageFactory::getSchedulingMsgFromNet(msg);
+      case REQ_PLAYER:
+        return MessageFactory::getPlayerMsgFromNet(msg);
     }
     return NULL;
 }
