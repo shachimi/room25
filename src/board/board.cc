@@ -522,7 +522,7 @@ std::vector<Cell *> Board::getNoCenterCells(void)
 
 /* }}} */
 /* {{{ Tests */
-
+#ifdef ZTEST_ON
 #include "check/z.h"
 
 Z_GROUP(group_init, "")
@@ -618,5 +618,5 @@ Z_GROUP(group_init, "")
         }
     } Z_TEST_END;
 }
-
+#endif
 /* }}} */
