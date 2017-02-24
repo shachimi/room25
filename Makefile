@@ -35,7 +35,7 @@ check: zchk
 	./zchk
 
 tags:
-	@etags -o TAGS `find . -name '*.[hc][hc]'`
+	@ctags -e -o TAGS `find . -name '*.[hc][hc]'`
 
 clean:
 	@find . -name '*.o' -delete -print
