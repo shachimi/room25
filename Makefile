@@ -9,7 +9,7 @@ src/game/standard-rule.o src/game/rule.o src/board/prison-room.o             \
 src/board/fog-room.o src/board/freeze-room.o src/board/vortex-room.o         \
 src/board/pivot-room.o src/board/gear-room.o src/utils/utils.o               \
 src/board/warp-room.o src/board/illusion-room.o src/board/vision-room.o      \
-src/board/tunnel-room.o src/network/network.o
+src/board/tunnel-room.o src/network/network.o src/network/network-client.o
 PRE_PROC=
 
 LIBS=
@@ -17,19 +17,19 @@ CFLAGS=-Werror -Wextra -Wall
 
 all: $(BIN)
 
-
 %.o: %.c
-	g++ $(PRE_PROC) -g -c $^ -Isrc -o $@
+	g++ $(PRE_PROC) -g -c $^ -Isrc -o $@ $(LDLIBS)
 
 %.o: %.cc
-	g++ $(PRE_PROC) -g -c $^ -Isrc -o $@
+	g++ $(PRE_PROC) -g -c $^ -Isrc -o $@ $(LDLIBS)
 
 $(BIN): $(OBJS) src/main.o
-	g++ -g $^ -Isrc -o $@
+	g++ -g $^ -Isrc -o $@ $(LDLIBBS)
 
 zchk: PRE_PROC=-D ZTEST_ON
+zchk: LDLIBS=-lpthread
 zchk: $(OBJS) src/check/z.o
-	g++ $(PRE_PROC) -g $^ -Isrc -o $@
+	g++ $(PRE_PROC) -g $^ -Isrc -o $@ $(LDLIBS)
 
 check: zchk
 	./zchk
