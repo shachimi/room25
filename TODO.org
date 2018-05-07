@@ -21,3 +21,27 @@ room25
 * In Game::execPush only append valid target (not myself and not Robot) /* maybe in Rule? */
 * truly handle turn (dead people does not play anymore)
 
+
+* NetworkPlayer
+Il n'aura pas toutes les infos bien claires mais il pourra envoyer au game.
+Quitte a ce qu'il ait un main degueu.
+
+- Refaire la communication network de base
+- NetworkHostPlayer
+- NetworkClientPlayer
+- Le main en mode on s'emmerde pas
+
+Pas trop s'emmerder avec le display des infos. On fait ce qui est necessaire
+(alias demander les actions que le joueur veut faire).
+* PlaybackPlayer
+Se connecte au network et de la même manière que le main degueu, il rejoue une
+action qu'on lui dit.
+
+- Interroge le reseau quand on lui demande son scheduling, ...
+- Nouveau main d'envoi d'actions vers lui
+* GameClient
+Juste un NetworkPlayer et des PlaybackPlayer.
+
+- Modifier le game server pour qu'il broadcast les infos recues d'un network
+  player.
+- pas clair a voir
