@@ -1,8 +1,5 @@
 #include "z.h"
 
-Group *groups = NULL;
-
-
 #if 0
 Z_GROUP(test, "test the Z framework")
 {
